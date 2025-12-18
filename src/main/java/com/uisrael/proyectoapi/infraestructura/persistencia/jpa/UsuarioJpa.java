@@ -1,7 +1,6 @@
 package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -14,25 +13,21 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ordenes")
-public class OrdenesJpa implements Serializable{
+@Table(name = "usuario")
+public class UsuarioJpa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idOrdenes;
-	private String codigoOrden;
-	private int idCliente;
-	private int idPrioridad;
-	private int idEstado;
-	private int tecnicoAsignado;
-	private LocalDateTime fechaIngreso;
-	private LocalDateTime fechaSalida;
-	private String detalleProblema;
-	private String observaciones;
-	private BigDecimal totalCobro;
-	private boolean pagado;
+	private int idUsuario;
+	private String Usuario; // Se coloca el nombre de Usuario para el ingreso. Debe ser único.
+	private String nombre;
+	private String apellido;
+	private String rol;
+	private String telefono;
+	private String correo;
 	@Column(name = "creado en",length = 80)
 	private LocalDateTime creadoEn;
 	private boolean estado; //true: activo - false: eliminado
+	
 }

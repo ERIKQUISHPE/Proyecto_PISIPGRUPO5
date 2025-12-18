@@ -3,7 +3,7 @@ package com.uisrael.proyectoapi.dominio.entidades;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public final class Ordenes {
+public final class Orden {
 	
 	private final int idOrdenes;
 	private final String codigoOrden;
@@ -20,10 +20,9 @@ public final class Ordenes {
 	private final LocalDateTime creadoEn;
 	private final boolean estado; //true: activo - false: eliminado
 	
-	public Ordenes(int idOrdenes, String codigoOrden, int idCliente, int idPrioridad, int idEstado, int tecnicoAsignado,
+	public Orden(int idOrdenes, String codigoOrden, int idCliente, int idPrioridad, int idEstado, int tecnicoAsignado,
 			LocalDateTime fechaIngreso, LocalDateTime fechaSalida, String detalleProblema, String observaciones,
 			BigDecimal totalCobro, boolean pagado, LocalDateTime creadoEn, boolean estado) {
-		super();
 		this.idOrdenes = idOrdenes;
 		this.codigoOrden = codigoOrden;
 		this.idCliente = idCliente;
@@ -104,8 +103,4 @@ public final class Ordenes {
 				+ detalleProblema + ", observaciones=" + observaciones + ", totalCobro=" + totalCobro + ", pagado="
 				+ pagado + ", creadoEn=" + creadoEn + ", estado=" + estado + "]";
 	}
-	
-	
-	
-	
 }
