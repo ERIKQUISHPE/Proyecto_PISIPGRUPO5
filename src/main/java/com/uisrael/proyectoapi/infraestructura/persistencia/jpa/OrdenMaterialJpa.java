@@ -2,6 +2,7 @@ package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class OrdenMaterialJpa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrdenMaterial;
 
-    private int idOrdenes;
+    private int idOrden;
     private int idMaterial;
     private int cantidad;
     private BigDecimal costoUnitario;

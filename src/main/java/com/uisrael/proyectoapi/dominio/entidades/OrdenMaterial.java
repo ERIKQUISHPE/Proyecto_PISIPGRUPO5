@@ -5,22 +5,16 @@ import java.math.BigDecimal;
 public final class OrdenMaterial {
 
     private final int idOrdenMaterial;
-    private final int idOrdenes;     // referencia a Orden.idOrdenes
-    private final int idMaterial;    // referencia a Material.idMaterial
+    private final int idOrden;
+    private final int idMaterial;
     private final int cantidad;
     private final BigDecimal costoUnitario;
     private final BigDecimal precioUnitario;
 
-    public OrdenMaterial(
-            int idOrdenMaterial,
-            int idOrdenes,
-            int idMaterial,
-            int cantidad,
-            BigDecimal costoUnitario,
-            BigDecimal precioUnitario
-    ) {
+    public OrdenMaterial(int idOrdenMaterial, int idOrden, int idMaterial, int cantidad,
+                         BigDecimal costoUnitario, BigDecimal precioUnitario) {
         this.idOrdenMaterial = idOrdenMaterial;
-        this.idOrdenes = idOrdenes;
+        this.idOrden = idOrden;
         this.idMaterial = idMaterial;
         this.cantidad = cantidad;
         this.costoUnitario = costoUnitario;
@@ -31,8 +25,8 @@ public final class OrdenMaterial {
         return idOrdenMaterial;
     }
 
-    public int getIdOrdenes() {
-        return idOrdenes;
+    public int getIdOrden() {
+        return idOrden;
     }
 
     public int getIdMaterial() {
@@ -54,7 +48,7 @@ public final class OrdenMaterial {
     @Override
     public String toString() {
         return "OrdenMaterial [idOrdenMaterial=" + idOrdenMaterial +
-                ", idOrdenes=" + idOrdenes +
+                ", idOrden=" + idOrden +
                 ", idMaterial=" + idMaterial +
                 ", cantidad=" + cantidad +
                 ", costoUnitario=" + costoUnitario +
