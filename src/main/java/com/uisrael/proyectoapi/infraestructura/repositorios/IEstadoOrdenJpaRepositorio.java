@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.EstadoOrdenJpa;
 
-public interface IEstadoOrdenRepositorio extends JpaRepository<EstadoOrdenJpa, Integer> {
+public interface IEstadoOrdenJpaRepositorio extends JpaRepository<EstadoOrdenJpa, Integer> {
 
 }

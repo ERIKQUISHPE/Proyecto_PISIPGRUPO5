@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ClienteJpa;
 
-public interface IClienteRepositorio extends JpaRepository<ClienteJpa, Integer>{
+public interface IClienteJpaRepositorio extends JpaRepository<ClienteJpa, Integer>{
 
 }

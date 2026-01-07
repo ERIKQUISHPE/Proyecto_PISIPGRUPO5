@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ProveedorJpa;
 
-public interface IProveedorRepositorio extends JpaRepository<ProveedorJpa, Integer>{
+public interface IProveedorJpaRepositorio extends JpaRepository<ProveedorJpa, Integer>{
 
 }

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.EquipoJpa;
 
-public interface IEquipoRepositorio extends JpaRepository<EquipoJpa, Integer> {
+public interface IEquipoJpaRepositorio extends JpaRepository<EquipoJpa, Integer> {
 
 }

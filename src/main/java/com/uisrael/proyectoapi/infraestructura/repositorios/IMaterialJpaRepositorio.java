@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.MaterialJpa;
 
-public interface IMaterialRepositorio extends JpaRepository<MaterialJpa, Integer>{
+public interface IMaterialJpaRepositorio extends JpaRepository<MaterialJpa, Integer>{
 
 }
