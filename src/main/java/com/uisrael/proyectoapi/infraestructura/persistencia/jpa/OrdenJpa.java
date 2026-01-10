@@ -20,7 +20,7 @@ public class OrdenJpa implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idOrdenes;
+	private int idOrden;
 	private String codigoOrden;
 	private int idCliente;
 	private int idPrioridad;

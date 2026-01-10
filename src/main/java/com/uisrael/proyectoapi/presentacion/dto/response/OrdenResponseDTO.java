@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class OrdenResponseDTO {
 
-	private int idOrdenes;
+	private int idOrden;
 	private String codigoOrden;
 	private int idCliente;
 	private int idPrioridad;
@@ -20,10 +20,10 @@ public class OrdenResponseDTO {
 	private LocalDateTime creadoEn;
 	private boolean estado;
 	public int getIdOrdenes() {
-		return idOrdenes;
+		return idOrden;
 	}
 	public void setIdOrdenes(int idOrdenes) {
-		this.idOrdenes = idOrdenes;
+		this.idOrden = idOrdenes;
 	}
 	public String getCodigoOrden() {
 		return codigoOrden;

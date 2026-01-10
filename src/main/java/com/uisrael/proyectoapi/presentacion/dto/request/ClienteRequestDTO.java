@@ -22,8 +22,8 @@ public class ClienteRequestDTO {
 	private String correo;
 	@NotBlank
 	private String direccion;
-	@NotNull // Porque fecha no es texto, @NotNull para fechas
-	private LocalDateTime creadoEn;
+	//@NotNull // Porque fecha no es texto, @NotNull para fechas
+	//private LocalDateTime creadoEn;
 
 	private boolean estado;
 	

@@ -39,12 +39,4 @@ public class ClienteControlador {
 	public ClienteResponseDTO crear(@Valid @RequestBody ClienteRequestDTO request) {
 		return mapper.toResponseDto(clienteCasoUso.crear(mapper.toDomain(request)));
 	}
-	
-	
-	//casos de uso
-	//mapeadores
-	//metodos
-		//post
-		//get
-	
 }

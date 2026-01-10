@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public final class Orden {
 	
-	private final int idOrdenes;
+	private final int idOrden;
 	private final String codigoOrden;
 	private final int idCliente;
 	private final int idPrioridad;
@@ -20,10 +20,10 @@ public final class Orden {
 	private final LocalDateTime creadoEn;
 	private final boolean estado; //true: activo - false: eliminado
 	
-	public Orden(int idOrdenes, String codigoOrden, int idCliente, int idPrioridad, int idEstado, int tecnicoAsignado,
+	public Orden(int idOrden, String codigoOrden, int idCliente, int idPrioridad, int idEstado, int tecnicoAsignado,
 			LocalDateTime fechaIngreso, LocalDateTime fechaSalida, String detalleProblema, String observaciones,
 			BigDecimal totalCobro, boolean pagado, LocalDateTime creadoEn, boolean estado) {
-		this.idOrdenes = idOrdenes;
+		this.idOrden = idOrden;
 		this.codigoOrden = codigoOrden;
 		this.idCliente = idCliente;
 		this.idPrioridad = idPrioridad;
@@ -39,8 +39,8 @@ public final class Orden {
 		this.estado = estado;
 	}
 
-	public int getIdOrdenes() {
-		return idOrdenes;
+	public int getIdOrden() {
+		return idOrden;
 	}
 
 	public String getCodigoOrden() {
@@ -97,7 +97,7 @@ public final class Orden {
 
 	@Override
 	public String toString() {
-		return "Ordenes [idOrdenes=" + idOrdenes + ", codigoOrden=" + codigoOrden + ", idCliente=" + idCliente
+		return " [idOrden=" + idOrden + ", codigoOrden=" + codigoOrden + ", idCliente=" + idCliente
 				+ ", idPrioridad=" + idPrioridad + ", idEstado=" + idEstado + ", tecnicoAsignado=" + tecnicoAsignado
 				+ ", fechaIngreso=" + fechaIngreso + ", fechaSalida=" + fechaSalida + ", detalleProblema="
 				+ detalleProblema + ", observaciones=" + observaciones + ", totalCobro=" + totalCobro + ", pagado="

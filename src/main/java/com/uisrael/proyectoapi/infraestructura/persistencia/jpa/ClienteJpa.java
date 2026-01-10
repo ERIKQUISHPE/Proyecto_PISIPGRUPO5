@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.PrePersist;
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,13 +30,9 @@ public class ClienteJpa implements Serializable{
 	private String correo;
 	private String direccion;
 	
+	@CreationTimestamp
     @Column(name = "creado_en", nullable = false, updatable = false)
     private LocalDateTime creadoEn;
 
     private boolean estado; // true: activo - false: eliminado
-
-    @PrePersist
-    public void asignarFechaCreacion() {
-        this.creadoEn = LocalDateTime.now();
-    }
 }
