@@ -1,8 +1,10 @@
 package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +28,14 @@ public class ClienteJpa implements Serializable{
 	private String telefono;
 	private String correo;
 	private String direccion;
-	@Column(name = "creado en",length = 80)
-	private LocalDateTime creadoEn;
-	private boolean estado; //true: activo - false: eliminado
+	
+    @Column(name = "creado_en", nullable = false, updatable = false)
+    private LocalDateTime creadoEn;
+
+    private boolean estado; // true: activo - false: eliminado
+
+    @PrePersist
+    public void asignarFechaCreacion() {
+        this.creadoEn = LocalDateTime.now();
+    }
 }
