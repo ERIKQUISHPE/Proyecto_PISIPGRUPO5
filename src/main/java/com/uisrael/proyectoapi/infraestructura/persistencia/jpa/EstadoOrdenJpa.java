@@ -1,9 +1,11 @@
 package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -18,4 +20,7 @@ public class EstadoOrdenJpa implements Serializable {
     private int idEstado;
 
     private String nombre;
+    
+    @OneToMany(mappedBy = "fkEstadoOrden")
+    private List<OrdenJpa> orden;
 }

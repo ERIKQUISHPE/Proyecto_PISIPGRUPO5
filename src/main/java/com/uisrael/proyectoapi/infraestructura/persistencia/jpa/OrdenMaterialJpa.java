@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -26,4 +28,13 @@ public class OrdenMaterialJpa implements Serializable {
     private int cantidad;
     private BigDecimal costoUnitario;
     private BigDecimal precioUnitario;
+    
+    @ManyToOne
+	@JoinColumn(name = "fkOrden")
+	private OrdenJpa fkOrden;
+    
+    @ManyToOne
+	@JoinColumn(name = "fkMaterial")
+	private MaterialJpa fkMaterial;
+    
 }

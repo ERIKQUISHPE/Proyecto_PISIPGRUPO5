@@ -2,12 +2,14 @@ package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -30,4 +32,6 @@ public class UsuarioJpa implements Serializable{
 	private LocalDateTime creadoEn;
 	private boolean estado; //true: activo - false: eliminado
 	
+	@OneToMany(mappedBy = "fkUsuario")
+    private List<OrdenJpa> orden;
 }

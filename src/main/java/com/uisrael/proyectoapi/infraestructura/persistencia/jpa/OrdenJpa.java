@@ -3,18 +3,22 @@ package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ordenes")
+@Table(name = "orden")
 public class OrdenJpa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -35,4 +39,41 @@ public class OrdenJpa implements Serializable{
 	@Column(name = "creado en",length = 80)
 	private LocalDateTime creadoEn;
 	private boolean estado; //true: activo - false: eliminado
+	
+	@ManyToOne
+	@JoinColumn(name = "fkCliente")
+	private ClienteJpa fkCliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "fkPrioridad")
+	private PrioridadJpa fkPrioridad;
+	
+	@ManyToOne
+	@JoinColumn(name = "fkEstadoOrden")
+	private EstadoOrdenJpa fkEstadoOrden;
+	
+	@ManyToOne
+	@JoinColumn(name = "fkUsuario")
+	private UsuarioJpa fkUsuario;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<EquipoJpa> equipo;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<PagoJpa> pago;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<OrdenInternaJpa> orden_interna;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<EntregaJpa> entrega;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<MaterialJpa> material;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<AccionReparacionJpa> accion_reparacion;
+	
+	@OneToMany(mappedBy = "fkOrden")
+    private List<OrdenMaterialJpa> orden_material;
 }
