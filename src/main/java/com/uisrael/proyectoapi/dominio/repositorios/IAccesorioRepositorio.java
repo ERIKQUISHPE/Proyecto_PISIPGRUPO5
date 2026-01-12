@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.uisrael.proyectoapi.dominio.entidades.Accesorio;
+import com.uisrael.proyectoapi.dominio.entidades.Cliente;
 
 public interface IAccesorioRepositorio {
 
@@ -15,3 +16,5 @@ public interface IAccesorioRepositorio {
 	
 	void eliminar(int id);
 }
+
+

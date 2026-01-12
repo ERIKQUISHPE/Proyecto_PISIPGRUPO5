@@ -31,12 +31,12 @@ public class OrdenControlador {
 	
 	@GetMapping
 	public List<OrdenResponseDTO> listar() {
-		return ordenCasoUso.listar().stream().map(mapper::toResponseDto).toList();
+		return ordenCasoUso.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public OrdenResponseDTO crear(@Valid @RequestBody OrdenRequestDTO request) {
-		return mapper.toResponseDto(ordenCasoUso.crear(mapper.toDomain(request)));
+		return mapper.toResponseDto(ordenCasoUso.guardar(mapper.toDomain(request)));
 	}
 }

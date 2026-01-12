@@ -103,4 +103,5 @@ public final class Orden {
 				+ detalleProblema + ", observaciones=" + observaciones + ", totalCobro=" + totalCobro + ", pagado="
 				+ pagado + ", creadoEn=" + creadoEn + ", estado=" + estado + "]";
 	}
+
 }

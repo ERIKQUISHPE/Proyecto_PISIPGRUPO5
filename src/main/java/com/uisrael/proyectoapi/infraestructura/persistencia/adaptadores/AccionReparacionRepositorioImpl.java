@@ -9,22 +9,22 @@ import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.AccionReparacion
 import com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores.IAccionReparacionJpaMapper;
 import com.uisrael.proyectoapi.infraestructura.repositorios.IAccionReparacionJpaRepositorio;
 
-public class AccionReparacionRepositorioImpl implements IAccionReparacionRepositorio{
+public class AccionReparacionRepositorioImpl implements IAccionReparacionRepositorio {
 
-	//dependencias
+	// dependencias
 	private final IAccionReparacionJpaRepositorio jpaRepositorio;
 	private final IAccionReparacionJpaMapper entityMapper;
-	
-	//constructor
-	public AccionReparacionRepositorioImpl(IAccionReparacionJpaRepositorio jpaRepositorio, IAccionReparacionJpaMapper entityMapper) {
+
+	// constructor
+	public AccionReparacionRepositorioImpl(IAccionReparacionJpaRepositorio jpaRepositorio,IAccionReparacionJpaMapper mapper) {
 		this.jpaRepositorio = jpaRepositorio;
-		this.entityMapper = entityMapper;
+		this.entityMapper = mapper;
 	}
 
 	@Override
 	public AccionReparacion guardar(AccionReparacion accionReparacion) {
-		AccionReparacionJpa entity= entityMapper.toEntity(accionReparacion);
-		AccionReparacionJpa guardado=jpaRepositorio.save(entity);
+		AccionReparacionJpa entity = entityMapper.toEntity(accionReparacion);
+		AccionReparacionJpa guardado = jpaRepositorio.save(entity);
 		return entityMapper.toDomain(guardado);
 	}
 
@@ -43,4 +43,3 @@ public class AccionReparacionRepositorioImpl implements IAccionReparacionReposit
 		jpaRepositorio.deleteById(id);
 	}
 }
-

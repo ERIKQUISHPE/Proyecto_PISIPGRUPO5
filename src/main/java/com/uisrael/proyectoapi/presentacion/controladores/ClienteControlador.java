@@ -31,12 +31,12 @@ public class ClienteControlador {
 	
 	@GetMapping
 	public List<ClienteResponseDTO> listar() {
-		return clienteCasoUso.listar().stream().map(mapper::toResponseDto).toList();
+		return clienteCasoUso.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ClienteResponseDTO crear(@Valid @RequestBody ClienteRequestDTO request) {
-		return mapper.toResponseDto(clienteCasoUso.crear(mapper.toDomain(request)));
+		return mapper.toResponseDto(clienteCasoUso.guardar(mapper.toDomain(request)));
 	}
 }

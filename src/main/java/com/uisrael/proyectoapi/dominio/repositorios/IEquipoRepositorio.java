@@ -3,6 +3,7 @@ package com.uisrael.proyectoapi.dominio.repositorios;
 import java.util.List;
 import java.util.Optional;
 
+import com.uisrael.proyectoapi.dominio.entidades.Entrega;
 import com.uisrael.proyectoapi.dominio.entidades.Equipo;
 
 public interface IEquipoRepositorio {

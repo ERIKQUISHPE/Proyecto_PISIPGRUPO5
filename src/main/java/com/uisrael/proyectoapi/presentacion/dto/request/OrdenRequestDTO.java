@@ -31,7 +31,7 @@ public class OrdenRequestDTO {
 	private String observaciones;
 	@NotBlank
 	private BigDecimal totalCobro;
-	@NotBlank
+
 	private boolean pagado;
 	@NotNull // Porque fecha no es texto, @NotNull para fechas
 	private LocalDateTime creadoEn;

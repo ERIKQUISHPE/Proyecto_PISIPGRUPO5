@@ -1,17 +1,16 @@
 package com.uisrael.proyectoapi.aplicacion.casosuso.entradas;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.uisrael.proyectoapi.dominio.entidades.Cliente;
 
 public interface IClienteCasoUso {
+
+Cliente guardar(Cliente cliente);
 	
-	Cliente crear(Cliente cliente);
+	Cliente buscarPorId(int id);
 	
-	Cliente obtenerPorId(int id);
-	
-	List<Cliente> listar();
+	List<Cliente> listarTodos();
 	
 	void eliminar(int id);
 }
