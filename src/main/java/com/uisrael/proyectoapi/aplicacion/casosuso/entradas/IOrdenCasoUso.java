@@ -5,7 +5,7 @@ import java.util.List;
 import com.uisrael.proyectoapi.dominio.entidades.Orden;
 public interface IOrdenCasoUso {
 	
-Orden guardar(Orden orden);
+	Orden guardar(Orden orden);
 	
 	Orden buscarPorId(int id);
 	

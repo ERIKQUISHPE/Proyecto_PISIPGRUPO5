@@ -1,0 +1,49 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Inventario;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.InventarioJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IInventarioJpaMapperImpl implements IInventarioJpaMapper {
+
+    @Override
+    public Inventario toDomain(InventarioJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idInventario = 0;
+        int stock = 0;
+        boolean estado = false;
+
+        idInventario = entity.getIdInventario();
+        stock = entity.getStock();
+        estado = entity.isEstado();
+
+        Inventario inventario = new Inventario( idInventario, stock, estado );
+
+        return inventario;
+    }
+
+    @Override
+    public InventarioJpa toEntity(Inventario inventario) {
+        if ( inventario == null ) {
+            return null;
+        }
+
+        InventarioJpa inventarioJpa = new InventarioJpa();
+
+        inventarioJpa.setEstado( inventario.isEstado() );
+        inventarioJpa.setIdInventario( inventario.getIdInventario() );
+        inventarioJpa.setStock( inventario.getStock() );
+
+        return inventarioJpa;
+    }
+}

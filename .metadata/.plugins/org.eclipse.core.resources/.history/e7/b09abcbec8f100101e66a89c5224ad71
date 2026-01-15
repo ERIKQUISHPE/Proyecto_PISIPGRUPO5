@@ -1,0 +1,70 @@
+package com.uisrael.proyectoapi.presentacion.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Cliente;
+import com.uisrael.proyectoapi.presentacion.dto.request.ClienteRequestDTO;
+import com.uisrael.proyectoapi.presentacion.dto.response.ClienteResponseDTO;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T22:34:56-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IClienteDtoMapperImpl implements IClienteDtoMapper {
+
+    @Override
+    public Cliente toDomain(ClienteRequestDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        String nombre = null;
+        String apellido = null;
+        String ci = null;
+        String telefono = null;
+        String correo = null;
+        String direccion = null;
+        boolean estado = false;
+
+        nombre = dto.getNombre();
+        apellido = dto.getApellido();
+        ci = dto.getCi();
+        telefono = dto.getTelefono();
+        correo = dto.getCorreo();
+        direccion = dto.getDireccion();
+        estado = dto.isEstado();
+
+        int idCliente = 0;
+        LocalDateTime creadoEn = null;
+
+        Cliente cliente = new Cliente( idCliente, nombre, apellido, ci, telefono, correo, direccion, creadoEn, estado );
+
+        return cliente;
+    }
+
+    @Override
+    public ClienteResponseDTO toResponseDto(Cliente cliente) {
+        if ( cliente == null ) {
+            return null;
+        }
+
+        ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO();
+
+        clienteResponseDTO.setApellido( cliente.getApellido() );
+        clienteResponseDTO.setCi( cliente.getCi() );
+        clienteResponseDTO.setCorreo( cliente.getCorreo() );
+        clienteResponseDTO.setCreadoEn( cliente.getCreadoEn() );
+        clienteResponseDTO.setDireccion( cliente.getDireccion() );
+        if ( cliente.getEstado() != null ) {
+            clienteResponseDTO.setEstado( cliente.getEstado() );
+        }
+        clienteResponseDTO.setIdCliente( cliente.getIdCliente() );
+        clienteResponseDTO.setNombre( cliente.getNombre() );
+        clienteResponseDTO.setTelefono( cliente.getTelefono() );
+
+        return clienteResponseDTO;
+    }
+}

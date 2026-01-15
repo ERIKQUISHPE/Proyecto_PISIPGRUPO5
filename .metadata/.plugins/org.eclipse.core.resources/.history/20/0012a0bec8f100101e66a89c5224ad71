@@ -1,0 +1,59 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Entrega;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.EntregaJpa;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IEntregaJpaMapperImpl implements IEntregaJpaMapper {
+
+    @Override
+    public Entrega toDomain(EntregaJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idEntrega = 0;
+        int idOrdenes = 0;
+        int entregadoPor = 0;
+        int recibidoPor = 0;
+        LocalDateTime fechaEntrega = null;
+        String notas = null;
+
+        idEntrega = entity.getIdEntrega();
+        idOrdenes = entity.getIdOrdenes();
+        entregadoPor = entity.getEntregadoPor();
+        recibidoPor = entity.getRecibidoPor();
+        fechaEntrega = entity.getFechaEntrega();
+        notas = entity.getNotas();
+
+        Entrega entrega = new Entrega( idEntrega, idOrdenes, entregadoPor, recibidoPor, fechaEntrega, notas );
+
+        return entrega;
+    }
+
+    @Override
+    public EntregaJpa toEntity(Entrega entrega) {
+        if ( entrega == null ) {
+            return null;
+        }
+
+        EntregaJpa entregaJpa = new EntregaJpa();
+
+        entregaJpa.setEntregadoPor( entrega.getEntregadoPor() );
+        entregaJpa.setFechaEntrega( entrega.getFechaEntrega() );
+        entregaJpa.setIdEntrega( entrega.getIdEntrega() );
+        entregaJpa.setIdOrdenes( entrega.getIdOrdenes() );
+        entregaJpa.setNotas( entrega.getNotas() );
+        entregaJpa.setRecibidoPor( entrega.getRecibidoPor() );
+
+        return entregaJpa;
+    }
+}

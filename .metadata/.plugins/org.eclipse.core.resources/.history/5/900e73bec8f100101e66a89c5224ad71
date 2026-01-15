@@ -1,0 +1,84 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Orden;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.OrdenJpa;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T23:10:20-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IOrdenJpaMapperImpl implements IOrdenJpaMapper {
+
+    @Override
+    public Orden toDomain(OrdenJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idOrden = 0;
+        String codigoOrden = null;
+        int idCliente = 0;
+        int idPrioridad = 0;
+        int idEstado = 0;
+        int tecnicoAsignado = 0;
+        LocalDateTime fechaIngreso = null;
+        LocalDateTime fechaSalida = null;
+        String detalleProblema = null;
+        String observaciones = null;
+        BigDecimal totalCobro = null;
+        boolean pagado = false;
+        LocalDateTime creadoEn = null;
+        boolean estado = false;
+
+        idOrden = entity.getIdOrden();
+        codigoOrden = entity.getCodigoOrden();
+        idCliente = entity.getIdCliente();
+        idPrioridad = entity.getIdPrioridad();
+        idEstado = entity.getIdEstado();
+        tecnicoAsignado = entity.getTecnicoAsignado();
+        fechaIngreso = entity.getFechaIngreso();
+        fechaSalida = entity.getFechaSalida();
+        detalleProblema = entity.getDetalleProblema();
+        observaciones = entity.getObservaciones();
+        totalCobro = entity.getTotalCobro();
+        pagado = entity.isPagado();
+        creadoEn = entity.getCreadoEn();
+        estado = entity.isEstado();
+
+        Orden orden = new Orden( idOrden, codigoOrden, idCliente, idPrioridad, idEstado, tecnicoAsignado, fechaIngreso, fechaSalida, detalleProblema, observaciones, totalCobro, pagado, creadoEn, estado );
+
+        return orden;
+    }
+
+    @Override
+    public OrdenJpa toEntity(Orden orden) {
+        if ( orden == null ) {
+            return null;
+        }
+
+        OrdenJpa ordenJpa = new OrdenJpa();
+
+        ordenJpa.setCodigoOrden( orden.getCodigoOrden() );
+        ordenJpa.setCreadoEn( orden.getCreadoEn() );
+        ordenJpa.setDetalleProblema( orden.getDetalleProblema() );
+        ordenJpa.setEstado( orden.isEstado() );
+        ordenJpa.setFechaIngreso( orden.getFechaIngreso() );
+        ordenJpa.setFechaSalida( orden.getFechaSalida() );
+        ordenJpa.setIdCliente( orden.getIdCliente() );
+        ordenJpa.setIdEstado( orden.getIdEstado() );
+        ordenJpa.setIdOrden( orden.getIdOrden() );
+        ordenJpa.setIdPrioridad( orden.getIdPrioridad() );
+        ordenJpa.setObservaciones( orden.getObservaciones() );
+        ordenJpa.setPagado( orden.isPagado() );
+        ordenJpa.setTecnicoAsignado( orden.getTecnicoAsignado() );
+        ordenJpa.setTotalCobro( orden.getTotalCobro() );
+
+        return ordenJpa;
+    }
+}

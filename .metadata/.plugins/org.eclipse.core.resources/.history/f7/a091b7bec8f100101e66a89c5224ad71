@@ -1,0 +1,46 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Prioridad;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.PrioridadJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IPrioridadJpaMapperImpl implements IPrioridadJpaMapper {
+
+    @Override
+    public Prioridad toDomain(PrioridadJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idPrioridad = 0;
+        String nombre = null;
+
+        idPrioridad = entity.getIdPrioridad();
+        nombre = entity.getNombre();
+
+        Prioridad prioridad = new Prioridad( idPrioridad, nombre );
+
+        return prioridad;
+    }
+
+    @Override
+    public PrioridadJpa toEntity(Prioridad prioridad) {
+        if ( prioridad == null ) {
+            return null;
+        }
+
+        PrioridadJpa prioridadJpa = new PrioridadJpa();
+
+        prioridadJpa.setIdPrioridad( prioridad.getIdPrioridad() );
+        prioridadJpa.setNombre( prioridad.getNombre() );
+
+        return prioridadJpa;
+    }
+}

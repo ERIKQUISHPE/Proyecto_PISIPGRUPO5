@@ -1,0 +1,65 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.OrdenInterna;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.OrdenInternaJpa;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IOrdenInternaJpaMapperImpl implements IOrdenInternaJpaMapper {
+
+    @Override
+    public OrdenInterna toDomain(OrdenInternaJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idOrdenInterna = 0;
+        int idOrdenes = 0;
+        int tecnicoId = 0;
+        int estadoId = 0;
+        String diagnostico = null;
+        String observaciones = null;
+        int creadoPor = 0;
+        LocalDateTime creadoEn = null;
+
+        idOrdenInterna = entity.getIdOrdenInterna();
+        idOrdenes = entity.getIdOrdenes();
+        tecnicoId = entity.getTecnicoId();
+        estadoId = entity.getEstadoId();
+        diagnostico = entity.getDiagnostico();
+        observaciones = entity.getObservaciones();
+        creadoPor = entity.getCreadoPor();
+        creadoEn = entity.getCreadoEn();
+
+        OrdenInterna ordenInterna = new OrdenInterna( idOrdenInterna, idOrdenes, tecnicoId, estadoId, diagnostico, observaciones, creadoPor, creadoEn );
+
+        return ordenInterna;
+    }
+
+    @Override
+    public OrdenInternaJpa toEntity(OrdenInterna ordenInterna) {
+        if ( ordenInterna == null ) {
+            return null;
+        }
+
+        OrdenInternaJpa ordenInternaJpa = new OrdenInternaJpa();
+
+        ordenInternaJpa.setCreadoEn( ordenInterna.getCreadoEn() );
+        ordenInternaJpa.setCreadoPor( ordenInterna.getCreadoPor() );
+        ordenInternaJpa.setDiagnostico( ordenInterna.getDiagnostico() );
+        ordenInternaJpa.setEstadoId( ordenInterna.getEstadoId() );
+        ordenInternaJpa.setIdOrdenInterna( ordenInterna.getIdOrdenInterna() );
+        ordenInternaJpa.setIdOrdenes( ordenInterna.getIdOrdenes() );
+        ordenInternaJpa.setObservaciones( ordenInterna.getObservaciones() );
+        ordenInternaJpa.setTecnicoId( ordenInterna.getTecnicoId() );
+
+        return ordenInternaJpa;
+    }
+}

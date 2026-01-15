@@ -1,0 +1,68 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Usuario;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.UsuarioJpa;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IUsuarioJpaMapperImpl implements IUsuarioJpaMapper {
+
+    @Override
+    public Usuario toDomain(UsuarioJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idUsuario = 0;
+        String usuario = null;
+        String nombre = null;
+        String apellido = null;
+        String rol = null;
+        String telefono = null;
+        String correo = null;
+        LocalDateTime creadoEn = null;
+        boolean estado = false;
+
+        idUsuario = entity.getIdUsuario();
+        usuario = entity.getUsuario();
+        nombre = entity.getNombre();
+        apellido = entity.getApellido();
+        rol = entity.getRol();
+        telefono = entity.getTelefono();
+        correo = entity.getCorreo();
+        creadoEn = entity.getCreadoEn();
+        estado = entity.isEstado();
+
+        Usuario usuario1 = new Usuario( idUsuario, usuario, nombre, apellido, rol, telefono, correo, creadoEn, estado );
+
+        return usuario1;
+    }
+
+    @Override
+    public UsuarioJpa toEntity(Usuario usuario) {
+        if ( usuario == null ) {
+            return null;
+        }
+
+        UsuarioJpa usuarioJpa = new UsuarioJpa();
+
+        usuarioJpa.setApellido( usuario.getApellido() );
+        usuarioJpa.setCorreo( usuario.getCorreo() );
+        usuarioJpa.setCreadoEn( usuario.getCreadoEn() );
+        usuarioJpa.setEstado( usuario.isEstado() );
+        usuarioJpa.setIdUsuario( usuario.getIdUsuario() );
+        usuarioJpa.setNombre( usuario.getNombre() );
+        usuarioJpa.setRol( usuario.getRol() );
+        usuarioJpa.setTelefono( usuario.getTelefono() );
+        usuarioJpa.setUsuario( usuario.getUsuario() );
+
+        return usuarioJpa;
+    }
+}

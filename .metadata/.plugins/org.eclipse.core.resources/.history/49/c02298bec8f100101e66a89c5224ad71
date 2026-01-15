@@ -1,0 +1,68 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Material;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.MaterialJpa;
+import java.math.BigDecimal;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IMaterialJpaMapperImpl implements IMaterialJpaMapper {
+
+    @Override
+    public Material toDomain(MaterialJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idMaterial = 0;
+        String codigoMaterial = null;
+        String nombre = null;
+        String descripcion = null;
+        BigDecimal costoCompra = null;
+        BigDecimal costoVenta = null;
+        int idProveedor = 0;
+        Integer stock = null;
+        boolean estado = false;
+
+        idMaterial = entity.getIdMaterial();
+        codigoMaterial = entity.getCodigoMaterial();
+        nombre = entity.getNombre();
+        descripcion = entity.getDescripcion();
+        costoCompra = entity.getCostoCompra();
+        costoVenta = entity.getCostoVenta();
+        idProveedor = entity.getIdProveedor();
+        stock = entity.getStock();
+        estado = entity.isEstado();
+
+        Material material = new Material( idMaterial, codigoMaterial, nombre, descripcion, costoCompra, costoVenta, idProveedor, stock, estado );
+
+        return material;
+    }
+
+    @Override
+    public MaterialJpa toEntity(Material material) {
+        if ( material == null ) {
+            return null;
+        }
+
+        MaterialJpa materialJpa = new MaterialJpa();
+
+        materialJpa.setCodigoMaterial( material.getCodigoMaterial() );
+        materialJpa.setCostoCompra( material.getCostoCompra() );
+        materialJpa.setCostoVenta( material.getCostoVenta() );
+        materialJpa.setDescripcion( material.getDescripcion() );
+        materialJpa.setEstado( material.isEstado() );
+        materialJpa.setIdMaterial( material.getIdMaterial() );
+        materialJpa.setIdProveedor( material.getIdProveedor() );
+        materialJpa.setNombre( material.getNombre() );
+        materialJpa.setStock( material.getStock() );
+
+        return materialJpa;
+    }
+}

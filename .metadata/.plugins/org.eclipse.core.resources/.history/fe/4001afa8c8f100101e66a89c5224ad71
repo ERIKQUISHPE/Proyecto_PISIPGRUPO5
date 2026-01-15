@@ -1,0 +1,52 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.DetalleOrdenCompra;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.DetalleOrdenCompraJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IDetalleOrdenCompraJpaMapperImpl implements IDetalleOrdenCompraJpaMapper {
+
+    @Override
+    public DetalleOrdenCompra toDomain(DetalleOrdenCompraJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idDetalle = 0;
+        int cantidad = 0;
+        long costo = 0L;
+        boolean estado = false;
+
+        idDetalle = entity.getIdDetalle();
+        cantidad = entity.getCantidad();
+        costo = entity.getCosto();
+        estado = entity.isEstado();
+
+        DetalleOrdenCompra detalleOrdenCompra = new DetalleOrdenCompra( idDetalle, cantidad, costo, estado );
+
+        return detalleOrdenCompra;
+    }
+
+    @Override
+    public DetalleOrdenCompraJpa toEntity(DetalleOrdenCompra detalleOrdenCompra) {
+        if ( detalleOrdenCompra == null ) {
+            return null;
+        }
+
+        DetalleOrdenCompraJpa detalleOrdenCompraJpa = new DetalleOrdenCompraJpa();
+
+        detalleOrdenCompraJpa.setCantidad( detalleOrdenCompra.getCantidad() );
+        detalleOrdenCompraJpa.setCosto( detalleOrdenCompra.getCosto() );
+        detalleOrdenCompraJpa.setEstado( detalleOrdenCompra.isEstado() );
+        detalleOrdenCompraJpa.setIdDetalle( detalleOrdenCompra.getIdDetalle() );
+
+        return detalleOrdenCompraJpa;
+    }
+}

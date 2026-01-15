@@ -1,0 +1,69 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Cliente;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ClienteJpa;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T22:34:56-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IClienteJpaMapperImpl implements IClienteJpaMapper {
+
+    @Override
+    public Cliente toDomain(ClienteJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idCliente = 0;
+        String nombre = null;
+        String apellido = null;
+        String ci = null;
+        String telefono = null;
+        String correo = null;
+        String direccion = null;
+        LocalDateTime creadoEn = null;
+        boolean estado = false;
+
+        idCliente = entity.getIdCliente();
+        nombre = entity.getNombre();
+        apellido = entity.getApellido();
+        ci = entity.getCi();
+        telefono = entity.getTelefono();
+        correo = entity.getCorreo();
+        direccion = entity.getDireccion();
+        creadoEn = entity.getCreadoEn();
+        estado = entity.isEstado();
+
+        Cliente cliente = new Cliente( idCliente, nombre, apellido, ci, telefono, correo, direccion, creadoEn, estado );
+
+        return cliente;
+    }
+
+    @Override
+    public ClienteJpa toEntity(Cliente cliente) {
+        if ( cliente == null ) {
+            return null;
+        }
+
+        ClienteJpa clienteJpa = new ClienteJpa();
+
+        clienteJpa.setApellido( cliente.getApellido() );
+        clienteJpa.setCi( cliente.getCi() );
+        clienteJpa.setCorreo( cliente.getCorreo() );
+        clienteJpa.setDireccion( cliente.getDireccion() );
+        if ( cliente.getEstado() != null ) {
+            clienteJpa.setEstado( cliente.getEstado() );
+        }
+        clienteJpa.setIdCliente( cliente.getIdCliente() );
+        clienteJpa.setNombre( cliente.getNombre() );
+        clienteJpa.setTelefono( cliente.getTelefono() );
+
+        return clienteJpa;
+    }
+}

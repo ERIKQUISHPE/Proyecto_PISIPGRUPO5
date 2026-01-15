@@ -1,0 +1,84 @@
+package com.uisrael.proyectoapi.presentacion.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Orden;
+import com.uisrael.proyectoapi.presentacion.dto.request.OrdenRequestDTO;
+import com.uisrael.proyectoapi.presentacion.dto.response.OrdenResponseDTO;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T23:10:20-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IOrdenDtoMapperImpl implements IOrdenDtoMapper {
+
+    @Override
+    public Orden toDomain(OrdenRequestDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        String codigoOrden = null;
+        int idCliente = 0;
+        int idPrioridad = 0;
+        int idEstado = 0;
+        int tecnicoAsignado = 0;
+        LocalDateTime fechaIngreso = null;
+        LocalDateTime fechaSalida = null;
+        String detalleProblema = null;
+        String observaciones = null;
+        BigDecimal totalCobro = null;
+        boolean pagado = false;
+        LocalDateTime creadoEn = null;
+        boolean estado = false;
+
+        codigoOrden = dto.getCodigoOrden();
+        idCliente = dto.getIdCliente();
+        idPrioridad = dto.getIdPrioridad();
+        idEstado = dto.getIdEstado();
+        tecnicoAsignado = dto.getTecnicoAsignado();
+        fechaIngreso = dto.getFechaIngreso();
+        fechaSalida = dto.getFechaSalida();
+        detalleProblema = dto.getDetalleProblema();
+        observaciones = dto.getObservaciones();
+        totalCobro = dto.getTotalCobro();
+        pagado = dto.isPagado();
+        creadoEn = dto.getCreadoEn();
+        estado = dto.isEstado();
+
+        int idOrden = 0;
+
+        Orden orden = new Orden( idOrden, codigoOrden, idCliente, idPrioridad, idEstado, tecnicoAsignado, fechaIngreso, fechaSalida, detalleProblema, observaciones, totalCobro, pagado, creadoEn, estado );
+
+        return orden;
+    }
+
+    @Override
+    public OrdenResponseDTO toResponseDto(Orden orden) {
+        if ( orden == null ) {
+            return null;
+        }
+
+        OrdenResponseDTO ordenResponseDTO = new OrdenResponseDTO();
+
+        ordenResponseDTO.setCodigoOrden( orden.getCodigoOrden() );
+        ordenResponseDTO.setCreadoEn( orden.getCreadoEn() );
+        ordenResponseDTO.setDetalleProblema( orden.getDetalleProblema() );
+        ordenResponseDTO.setEstado( orden.isEstado() );
+        ordenResponseDTO.setFechaIngreso( orden.getFechaIngreso() );
+        ordenResponseDTO.setFechaSalida( orden.getFechaSalida() );
+        ordenResponseDTO.setIdCliente( orden.getIdCliente() );
+        ordenResponseDTO.setIdEstado( orden.getIdEstado() );
+        ordenResponseDTO.setIdPrioridad( orden.getIdPrioridad() );
+        ordenResponseDTO.setObservaciones( orden.getObservaciones() );
+        ordenResponseDTO.setPagado( orden.isPagado() );
+        ordenResponseDTO.setTecnicoAsignado( orden.getTecnicoAsignado() );
+        ordenResponseDTO.setTotalCobro( orden.getTotalCobro() );
+
+        return ordenResponseDTO;
+    }
+}

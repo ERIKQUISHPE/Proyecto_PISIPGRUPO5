@@ -1,0 +1,56 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.AccionReparacion;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.AccionReparacionJpa;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IAccionReparacionJpaMapperImpl implements IAccionReparacionJpaMapper {
+
+    @Override
+    public AccionReparacion toDomain(AccionReparacionJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idAccion = 0;
+        int idOrdenes = 0;
+        int tecnicoId = 0;
+        String descripcion = null;
+        LocalDateTime fechaAccion = null;
+
+        idAccion = entity.getIdAccion();
+        idOrdenes = entity.getIdOrdenes();
+        tecnicoId = entity.getTecnicoId();
+        descripcion = entity.getDescripcion();
+        fechaAccion = entity.getFechaAccion();
+
+        AccionReparacion accionReparacion = new AccionReparacion( idAccion, idOrdenes, tecnicoId, descripcion, fechaAccion );
+
+        return accionReparacion;
+    }
+
+    @Override
+    public AccionReparacionJpa toEntity(AccionReparacion accionReparacion) {
+        if ( accionReparacion == null ) {
+            return null;
+        }
+
+        AccionReparacionJpa accionReparacionJpa = new AccionReparacionJpa();
+
+        accionReparacionJpa.setDescripcion( accionReparacion.getDescripcion() );
+        accionReparacionJpa.setFechaAccion( accionReparacion.getFechaAccion() );
+        accionReparacionJpa.setIdAccion( accionReparacion.getIdAccion() );
+        accionReparacionJpa.setIdOrdenes( accionReparacion.getIdOrdenes() );
+        accionReparacionJpa.setTecnicoId( accionReparacion.getTecnicoId() );
+
+        return accionReparacionJpa;
+    }
+}

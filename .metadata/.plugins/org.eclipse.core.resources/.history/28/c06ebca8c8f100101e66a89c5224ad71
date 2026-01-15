@@ -1,0 +1,55 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Producto;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ProductoJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IProductoJpaMapperImpl implements IProductoJpaMapper {
+
+    @Override
+    public Producto toDomain(ProductoJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idProducto = 0;
+        String nombre = null;
+        String tipo = null;
+        String unidad_medida = null;
+        boolean estado = false;
+
+        idProducto = entity.getIdProducto();
+        nombre = entity.getNombre();
+        tipo = entity.getTipo();
+        unidad_medida = entity.getUnidad_medida();
+        estado = entity.isEstado();
+
+        Producto producto = new Producto( idProducto, nombre, tipo, unidad_medida, estado );
+
+        return producto;
+    }
+
+    @Override
+    public ProductoJpa toEntity(Producto producto) {
+        if ( producto == null ) {
+            return null;
+        }
+
+        ProductoJpa productoJpa = new ProductoJpa();
+
+        productoJpa.setEstado( producto.isEstado() );
+        productoJpa.setIdProducto( producto.getIdProducto() );
+        productoJpa.setNombre( producto.getNombre() );
+        productoJpa.setTipo( producto.getTipo() );
+        productoJpa.setUnidad_medida( producto.getUnidad_medida() );
+
+        return productoJpa;
+    }
+}

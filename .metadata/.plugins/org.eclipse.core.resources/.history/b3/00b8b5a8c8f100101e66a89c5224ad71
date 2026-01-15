@@ -1,0 +1,55 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.OrdenCompra;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.OrdenCompraJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IOrdenCompraJpaMapperImpl implements IOrdenCompraJpaMapper {
+
+    @Override
+    public OrdenCompra toDomain(OrdenCompraJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idOrden = 0;
+        String codigo = null;
+        String fecha = null;
+        long total = 0L;
+        boolean estado = false;
+
+        idOrden = entity.getIdOrden();
+        codigo = entity.getCodigo();
+        fecha = entity.getFecha();
+        total = entity.getTotal();
+        estado = entity.isEstado();
+
+        OrdenCompra ordenCompra = new OrdenCompra( idOrden, codigo, fecha, total, estado );
+
+        return ordenCompra;
+    }
+
+    @Override
+    public OrdenCompraJpa toEntity(OrdenCompra ordenCompra) {
+        if ( ordenCompra == null ) {
+            return null;
+        }
+
+        OrdenCompraJpa ordenCompraJpa = new OrdenCompraJpa();
+
+        ordenCompraJpa.setCodigo( ordenCompra.getCodigo() );
+        ordenCompraJpa.setEstado( ordenCompra.isEstado() );
+        ordenCompraJpa.setFecha( ordenCompra.getFecha() );
+        ordenCompraJpa.setIdOrden( ordenCompra.getIdOrden() );
+        ordenCompraJpa.setTotal( ordenCompra.getTotal() );
+
+        return ordenCompraJpa;
+    }
+}

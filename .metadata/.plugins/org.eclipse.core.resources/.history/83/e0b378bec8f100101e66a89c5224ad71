@@ -1,0 +1,60 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Pago;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.PagoJpa;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IPagoJpaMapperImpl implements IPagoJpaMapper {
+
+    @Override
+    public Pago toDomain(PagoJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idPago = 0;
+        int idOrdenes = 0;
+        BigDecimal monto = null;
+        String metodoPago = null;
+        LocalDateTime fechaPago = null;
+        int registradoPor = 0;
+
+        idPago = entity.getIdPago();
+        idOrdenes = entity.getIdOrdenes();
+        monto = entity.getMonto();
+        metodoPago = entity.getMetodoPago();
+        fechaPago = entity.getFechaPago();
+        registradoPor = entity.getRegistradoPor();
+
+        Pago pago = new Pago( idPago, idOrdenes, monto, metodoPago, fechaPago, registradoPor );
+
+        return pago;
+    }
+
+    @Override
+    public PagoJpa toEntity(Pago pago) {
+        if ( pago == null ) {
+            return null;
+        }
+
+        PagoJpa pagoJpa = new PagoJpa();
+
+        pagoJpa.setFechaPago( pago.getFechaPago() );
+        pagoJpa.setIdOrdenes( pago.getIdOrdenes() );
+        pagoJpa.setIdPago( pago.getIdPago() );
+        pagoJpa.setMetodoPago( pago.getMetodoPago() );
+        pagoJpa.setMonto( pago.getMonto() );
+        pagoJpa.setRegistradoPor( pago.getRegistradoPor() );
+
+        return pagoJpa;
+    }
+}

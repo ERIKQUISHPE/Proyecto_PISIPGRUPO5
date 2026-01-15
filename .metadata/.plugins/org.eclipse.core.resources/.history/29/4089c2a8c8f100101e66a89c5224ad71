@@ -1,0 +1,56 @@
+package com.uisrael.proyectoapi.presentacion.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Proveedor;
+import com.uisrael.proyectoapi.presentacion.dto.request.ProveedorRequestDTO;
+import com.uisrael.proyectoapi.presentacion.dto.response.ProveedorResponseDTO;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IProveedorDtoMapperImpl implements IProveedorDtoMapper {
+
+    @Override
+    public Proveedor toDomain(ProveedorRequestDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        String nombre = null;
+        String ruc = null;
+        String telefono = null;
+        boolean estado = false;
+
+        nombre = dto.getNombre();
+        ruc = dto.getRuc();
+        telefono = dto.getTelefono();
+        estado = dto.isEstado();
+
+        int idProveedor = 0;
+
+        Proveedor proveedor = new Proveedor( idProveedor, nombre, ruc, telefono, estado );
+
+        return proveedor;
+    }
+
+    @Override
+    public ProveedorResponseDTO toResponseDto(Proveedor proveedor) {
+        if ( proveedor == null ) {
+            return null;
+        }
+
+        ProveedorResponseDTO proveedorResponseDTO = new ProveedorResponseDTO();
+
+        proveedorResponseDTO.setIdProveedor( proveedor.getIdProveedor() );
+        proveedorResponseDTO.setNombre( proveedor.getNombre() );
+        proveedorResponseDTO.setRuc( proveedor.getRuc() );
+        proveedorResponseDTO.setTelefono( proveedor.getTelefono() );
+        proveedorResponseDTO.setEstado( proveedor.isEstado() );
+
+        return proveedorResponseDTO;
+    }
+}

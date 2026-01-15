@@ -1,6 +1,6 @@
 package com.uisrael.proyectoapi.infraestructura.configuracion;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;	
 import org.springframework.context.annotation.Configuration;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IAccesorioCasoUso;

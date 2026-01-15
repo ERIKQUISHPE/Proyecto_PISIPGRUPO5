@@ -1,0 +1,64 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Equipo;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.EquipoJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IEquipoJpaMapperImpl implements IEquipoJpaMapper {
+
+    @Override
+    public Equipo toDomain(EquipoJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idEquipo = 0;
+        int idOrdenes = 0;
+        String tipo = null;
+        String marca = null;
+        String modelo = null;
+        String serial = null;
+        String estadoEquipo = null;
+        String observaciones = null;
+
+        idEquipo = entity.getIdEquipo();
+        idOrdenes = entity.getIdOrdenes();
+        tipo = entity.getTipo();
+        marca = entity.getMarca();
+        modelo = entity.getModelo();
+        serial = entity.getSerial();
+        estadoEquipo = entity.getEstadoEquipo();
+        observaciones = entity.getObservaciones();
+
+        Equipo equipo = new Equipo( idEquipo, idOrdenes, tipo, marca, modelo, serial, estadoEquipo, observaciones );
+
+        return equipo;
+    }
+
+    @Override
+    public EquipoJpa toEntity(Equipo equipo) {
+        if ( equipo == null ) {
+            return null;
+        }
+
+        EquipoJpa equipoJpa = new EquipoJpa();
+
+        equipoJpa.setEstadoEquipo( equipo.getEstadoEquipo() );
+        equipoJpa.setIdEquipo( equipo.getIdEquipo() );
+        equipoJpa.setIdOrdenes( equipo.getIdOrdenes() );
+        equipoJpa.setMarca( equipo.getMarca() );
+        equipoJpa.setModelo( equipo.getModelo() );
+        equipoJpa.setObservaciones( equipo.getObservaciones() );
+        equipoJpa.setSerial( equipo.getSerial() );
+        equipoJpa.setTipo( equipo.getTipo() );
+
+        return equipoJpa;
+    }
+}

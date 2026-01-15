@@ -1,0 +1,56 @@
+package com.uisrael.proyectoapi.presentacion.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Producto;
+import com.uisrael.proyectoapi.presentacion.dto.request.ProductoRequestDTO;
+import com.uisrael.proyectoapi.presentacion.dto.response.ProductoResponseDTO;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IProductoDtoMapperImpl implements IProductoDtoMapper {
+
+    @Override
+    public Producto toDomain(ProductoRequestDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        String nombre = null;
+        String tipo = null;
+        String unidad_medida = null;
+        boolean estado = false;
+
+        nombre = dto.getNombre();
+        tipo = dto.getTipo();
+        unidad_medida = dto.getUnidad_medida();
+        estado = dto.isEstado();
+
+        int idProducto = 0;
+
+        Producto producto = new Producto( idProducto, nombre, tipo, unidad_medida, estado );
+
+        return producto;
+    }
+
+    @Override
+    public ProductoResponseDTO toResponseDto(Producto producto) {
+        if ( producto == null ) {
+            return null;
+        }
+
+        ProductoResponseDTO productoResponseDTO = new ProductoResponseDTO();
+
+        productoResponseDTO.setIdProducto( producto.getIdProducto() );
+        productoResponseDTO.setNombre( producto.getNombre() );
+        productoResponseDTO.setTipo( producto.getTipo() );
+        productoResponseDTO.setUnidad_medida( producto.getUnidad_medida() );
+        productoResponseDTO.setEstado( producto.isEstado() );
+
+        return productoResponseDTO;
+    }
+}

@@ -1,0 +1,46 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.EstadoOrden;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.EstadoOrdenJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IEstadoOrdenJpaMapperImpl implements IEstadoOrdenJpaMapper {
+
+    @Override
+    public EstadoOrden toDomain(EstadoOrdenJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idEstado = 0;
+        String nombre = null;
+
+        idEstado = entity.getIdEstado();
+        nombre = entity.getNombre();
+
+        EstadoOrden estadoOrden = new EstadoOrden( idEstado, nombre );
+
+        return estadoOrden;
+    }
+
+    @Override
+    public EstadoOrdenJpa toEntity(EstadoOrden estadoOrden) {
+        if ( estadoOrden == null ) {
+            return null;
+        }
+
+        EstadoOrdenJpa estadoOrdenJpa = new EstadoOrdenJpa();
+
+        estadoOrdenJpa.setIdEstado( estadoOrden.getIdEstado() );
+        estadoOrdenJpa.setNombre( estadoOrden.getNombre() );
+
+        return estadoOrdenJpa;
+    }
+}

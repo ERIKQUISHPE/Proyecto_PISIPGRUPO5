@@ -1,6 +1,6 @@
 package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
-import java.io.Serializable;
+import java.io.Serializable;	
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

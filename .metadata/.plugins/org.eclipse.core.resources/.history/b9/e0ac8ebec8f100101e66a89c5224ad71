@@ -1,0 +1,59 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.OrdenMaterial;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.OrdenMaterialJpa;
+import java.math.BigDecimal;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:23-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IOrdenMaterialJpaMapperImpl implements IOrdenMaterialJpaMapper {
+
+    @Override
+    public OrdenMaterial toDomain(OrdenMaterialJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idOrdenMaterial = 0;
+        int idOrden = 0;
+        int idMaterial = 0;
+        int cantidad = 0;
+        BigDecimal costoUnitario = null;
+        BigDecimal precioUnitario = null;
+
+        idOrdenMaterial = entity.getIdOrdenMaterial();
+        idOrden = entity.getIdOrden();
+        idMaterial = entity.getIdMaterial();
+        cantidad = entity.getCantidad();
+        costoUnitario = entity.getCostoUnitario();
+        precioUnitario = entity.getPrecioUnitario();
+
+        OrdenMaterial ordenMaterial = new OrdenMaterial( idOrdenMaterial, idOrden, idMaterial, cantidad, costoUnitario, precioUnitario );
+
+        return ordenMaterial;
+    }
+
+    @Override
+    public OrdenMaterialJpa toEntity(OrdenMaterial ordenMaterial) {
+        if ( ordenMaterial == null ) {
+            return null;
+        }
+
+        OrdenMaterialJpa ordenMaterialJpa = new OrdenMaterialJpa();
+
+        ordenMaterialJpa.setCantidad( ordenMaterial.getCantidad() );
+        ordenMaterialJpa.setCostoUnitario( ordenMaterial.getCostoUnitario() );
+        ordenMaterialJpa.setIdMaterial( ordenMaterial.getIdMaterial() );
+        ordenMaterialJpa.setIdOrden( ordenMaterial.getIdOrden() );
+        ordenMaterialJpa.setIdOrdenMaterial( ordenMaterial.getIdOrdenMaterial() );
+        ordenMaterialJpa.setPrecioUnitario( ordenMaterial.getPrecioUnitario() );
+
+        return ordenMaterialJpa;
+    }
+}

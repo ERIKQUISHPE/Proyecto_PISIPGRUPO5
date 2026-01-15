@@ -1,0 +1,68 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Proveedor;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ProveedorJpa;
+import java.time.LocalDateTime;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-09T10:43:22-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IProveedorJpaMapperImpl implements IProveedorJpaMapper {
+
+    @Override
+    public Proveedor toDomain(ProveedorJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idProveedor = 0;
+        String proveedor = null;
+        String nombreContacto = null;
+        String apellidoContacto = null;
+        String telefono = null;
+        String correo = null;
+        String notas = null;
+        LocalDateTime creadoEn = null;
+        boolean estado = false;
+
+        idProveedor = entity.getIdProveedor();
+        proveedor = entity.getProveedor();
+        nombreContacto = entity.getNombreContacto();
+        apellidoContacto = entity.getApellidoContacto();
+        telefono = entity.getTelefono();
+        correo = entity.getCorreo();
+        notas = entity.getNotas();
+        creadoEn = entity.getCreadoEn();
+        estado = entity.isEstado();
+
+        Proveedor proveedor1 = new Proveedor( idProveedor, proveedor, nombreContacto, apellidoContacto, telefono, correo, notas, creadoEn, estado );
+
+        return proveedor1;
+    }
+
+    @Override
+    public ProveedorJpa toEntity(Proveedor proveedor) {
+        if ( proveedor == null ) {
+            return null;
+        }
+
+        ProveedorJpa proveedorJpa = new ProveedorJpa();
+
+        proveedorJpa.setApellidoContacto( proveedor.getApellidoContacto() );
+        proveedorJpa.setCorreo( proveedor.getCorreo() );
+        proveedorJpa.setCreadoEn( proveedor.getCreadoEn() );
+        proveedorJpa.setEstado( proveedor.isEstado() );
+        proveedorJpa.setIdProveedor( proveedor.getIdProveedor() );
+        proveedorJpa.setNombreContacto( proveedor.getNombreContacto() );
+        proveedorJpa.setNotas( proveedor.getNotas() );
+        proveedorJpa.setProveedor( proveedor.getProveedor() );
+        proveedorJpa.setTelefono( proveedor.getTelefono() );
+
+        return proveedorJpa;
+    }
+}

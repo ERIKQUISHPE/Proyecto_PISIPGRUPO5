@@ -1,0 +1,55 @@
+package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
+
+import com.uisrael.proyectoapi.dominio.entidades.Proveedor;
+import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ProveedorJpa;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-14T22:35:18-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.9 (Eclipse Adoptium)"
+)
+@Component
+public class IProveedorJpaMapperImpl implements IProveedorJpaMapper {
+
+    @Override
+    public Proveedor toDomain(ProveedorJpa entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        int idProveedor = 0;
+        String nombre = null;
+        String ruc = null;
+        String telefono = null;
+        boolean estado = false;
+
+        idProveedor = entity.getIdProveedor();
+        nombre = entity.getNombre();
+        ruc = entity.getRuc();
+        telefono = entity.getTelefono();
+        estado = entity.isEstado();
+
+        Proveedor proveedor = new Proveedor( idProveedor, nombre, ruc, telefono, estado );
+
+        return proveedor;
+    }
+
+    @Override
+    public ProveedorJpa toEntity(Proveedor proveedor) {
+        if ( proveedor == null ) {
+            return null;
+        }
+
+        ProveedorJpa proveedorJpa = new ProveedorJpa();
+
+        proveedorJpa.setEstado( proveedor.isEstado() );
+        proveedorJpa.setIdProveedor( proveedor.getIdProveedor() );
+        proveedorJpa.setNombre( proveedor.getNombre() );
+        proveedorJpa.setRuc( proveedor.getRuc() );
+        proveedorJpa.setTelefono( proveedor.getTelefono() );
+
+        return proveedorJpa;
+    }
+}
