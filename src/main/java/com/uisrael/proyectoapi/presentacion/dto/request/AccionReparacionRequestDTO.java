@@ -9,8 +9,6 @@ import lombok.Data;
 public class AccionReparacionRequestDTO {
 	//private int idAccion;
 	@NotBlank
-	private int idOrdenes;
-	@NotBlank
 	private int tecnicoId;
 	@NotBlank
 	private String descripcion;

@@ -18,8 +18,6 @@ public class MaterialRequestDTO {
 	@NotBlank
 	private  BigDecimal costoVenta;
 	@NotBlank
-	private  int idProveedor; 
-	@NotBlank
 	private  Integer stock; 
 	
 	private  boolean estado; 

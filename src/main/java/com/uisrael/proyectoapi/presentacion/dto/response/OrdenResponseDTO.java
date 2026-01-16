@@ -1,16 +1,12 @@
 package com.uisrael.proyectoapi.presentacion.dto.response;
 
-import java.math.BigDecimal;	
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OrdenResponseDTO {
 
 	private int idOrden;
 	private String codigoOrden;
-	private int idCliente;
-	private int idPrioridad;
-	private int idEstado;
-	private int tecnicoAsignado;
 	private LocalDateTime fechaIngreso;
 	private LocalDateTime fechaSalida;
 	private String detalleProblema;
@@ -19,41 +15,18 @@ public class OrdenResponseDTO {
 	private boolean pagado;
 	private LocalDateTime creadoEn;
 	private boolean estado;
-	public int getIdOrdenes() {
+	
+	public int getIdOrden() {
 		return idOrden;
 	}
-	public void setIdOrdenes(int idOrdenes) {
-		this.idOrden = idOrdenes;
+	public void setIdOrden(int idOrden) {
+		this.idOrden = idOrden;
 	}
 	public String getCodigoOrden() {
 		return codigoOrden;
 	}
 	public void setCodigoOrden(String codigoOrden) {
 		this.codigoOrden = codigoOrden;
-	}
-	public int getIdCliente() {
-		return idCliente;
-	}
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
-	}
-	public int getIdPrioridad() {
-		return idPrioridad;
-	}
-	public void setIdPrioridad(int idPrioridad) {
-		this.idPrioridad = idPrioridad;
-	}
-	public int getIdEstado() {
-		return idEstado;
-	}
-	public void setIdEstado(int idEstado) {
-		this.idEstado = idEstado;
-	}
-	public int getTecnicoAsignado() {
-		return tecnicoAsignado;
-	}
-	public void setTecnicoAsignado(int tecnicoAsignado) {
-		this.tecnicoAsignado = tecnicoAsignado;
 	}
 	public LocalDateTime getFechaIngreso() {
 		return fechaIngreso;

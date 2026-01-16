@@ -23,8 +23,6 @@ public class EquipoJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEquipo;
-
-    private int idOrdenes;
     private String tipo;
     private String marca;
     private String modelo;

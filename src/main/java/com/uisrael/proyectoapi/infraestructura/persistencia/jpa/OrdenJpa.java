@@ -26,10 +26,6 @@ public class OrdenJpa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrden;
 	private String codigoOrden;
-	private int idCliente;
-	private int idPrioridad;
-	private int idEstado;
-	private int tecnicoAsignado;
 	private LocalDateTime fechaIngreso;
 	private LocalDateTime fechaSalida;
 	private String detalleProblema;

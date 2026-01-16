@@ -7,8 +7,6 @@ import lombok.Data;
 public class EquipoRequestDTO {
 	//private final int idEquipo;
 	@NotBlank
-    private  int idOrdenes;
-	@NotBlank
     private  String tipo;
 	@NotBlank
     private  String marca;

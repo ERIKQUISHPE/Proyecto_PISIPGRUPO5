@@ -22,8 +22,6 @@ public class OrdenInternaJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrdenInterna;
-
-    private int idOrdenes;
     private int tecnicoId;
     private int estadoId;
     private String diagnostico;

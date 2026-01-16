@@ -18,7 +18,6 @@ public class EstadoOrdenJpa implements Serializable {
 
     @Id
     private int idEstado;
-
     private String nombre;
     
     @OneToMany(mappedBy = "fkEstadoOrden")

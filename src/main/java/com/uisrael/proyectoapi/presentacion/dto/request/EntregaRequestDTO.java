@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 public class EntregaRequestDTO {
 	//private int idEntrega;
 	@NotBlank
-	private int idOrdenes;
-	@NotBlank
 	private int entregadoPor;
 	@NotBlank
 	private int recibidoPor;

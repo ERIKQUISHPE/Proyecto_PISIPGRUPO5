@@ -22,8 +22,6 @@ public class AccionReparacionJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAccion;
-
-    private int idOrdenes;
     private int tecnicoId;
     private String descripcion;
     private LocalDateTime fechaAccion;

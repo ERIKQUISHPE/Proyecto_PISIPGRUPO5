@@ -1,6 +1,6 @@
 package com.uisrael.proyectoapi.presentacion.mapeadores;
 
-import org.mapstruct.Mapper;
+import org.mapstruct.Mapper;	
 
 import com.uisrael.proyectoapi.dominio.entidades.AccionReparacion;
 import com.uisrael.proyectoapi.presentacion.dto.request.AccionReparacionRequestDTO;

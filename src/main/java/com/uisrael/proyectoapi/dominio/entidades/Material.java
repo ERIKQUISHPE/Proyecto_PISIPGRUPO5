@@ -10,19 +10,17 @@ public final class Material {
 	private final String descripcion;
 	private final BigDecimal costoCompra;
 	private final BigDecimal costoVenta;
-	private final int idProveedor; // Relacion con Clase "Proveedor"
 	private final Integer stock; // Puede ser null
 	private final boolean estado; //true: activo - false: eliminado
 	
 	public Material(int idMaterial, String codigoMaterial, String nombre, String descripcion, BigDecimal costoCompra,
-			BigDecimal costoVenta, int idProveedor, Integer stock, boolean estado) {
+			BigDecimal costoVenta, Integer stock, boolean estado) {
 		this.idMaterial = idMaterial;
 		this.codigoMaterial = codigoMaterial;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.costoCompra = costoCompra;
 		this.costoVenta = costoVenta;
-		this.idProveedor = idProveedor;
 		this.stock = stock;
 		this.estado = estado;
 	}
@@ -51,10 +49,6 @@ public final class Material {
 		return costoVenta;
 	}
 
-	public int getIdProveedor() {
-		return idProveedor;
-	}
-
 	public Integer getStock() {
 		return stock;
 	}
@@ -65,8 +59,8 @@ public final class Material {
 
 	@Override
 	public String toString() {
-		return "Materiales [idMaterial=" + idMaterial + ", codigoMaterial=" + codigoMaterial + ", nombre=" + nombre
+		return "Material [idMaterial=" + idMaterial + ", codigoMaterial=" + codigoMaterial + ", nombre=" + nombre
 				+ ", descripcion=" + descripcion + ", costoCompra=" + costoCompra + ", costoVenta=" + costoVenta
-				+ ", idProveedor=" + idProveedor + ", stock=" + stock + ", estado=" + estado + "]";
+				+ ", stock=" + stock + ", estado=" + estado + "]";
 	}
 }

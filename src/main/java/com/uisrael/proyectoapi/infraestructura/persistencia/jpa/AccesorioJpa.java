@@ -21,8 +21,6 @@ public class AccesorioJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAccesorio;
-
-    private int idEquipo;
     private String descripcion;
     private boolean incluido;
     

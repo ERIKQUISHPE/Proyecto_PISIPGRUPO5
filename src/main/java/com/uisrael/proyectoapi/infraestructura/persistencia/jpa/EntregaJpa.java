@@ -22,8 +22,6 @@ public class EntregaJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEntrega;
-
-    private int idOrdenes;
     private int entregadoPor;
     private int recibidoPor;
     private LocalDateTime fechaEntrega;

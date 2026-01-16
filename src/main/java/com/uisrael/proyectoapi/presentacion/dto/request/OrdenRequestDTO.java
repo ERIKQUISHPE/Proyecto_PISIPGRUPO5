@@ -14,14 +14,6 @@ public class OrdenRequestDTO {
 	@NotBlank
 	private String codigoOrden;
 	@NotBlank
-	private int idCliente;
-	@NotBlank
-	private int idPrioridad;
-	@NotBlank
-	private int idEstado;
-	@NotBlank
-	private int tecnicoAsignado;
-	@NotBlank
 	private LocalDateTime fechaIngreso;
 	@NotBlank
 	private LocalDateTime fechaSalida;

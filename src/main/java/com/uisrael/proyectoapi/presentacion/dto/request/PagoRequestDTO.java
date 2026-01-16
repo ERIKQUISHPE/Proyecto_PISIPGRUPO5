@@ -9,8 +9,6 @@ import lombok.Data;
 public class PagoRequestDTO {
 	//private final int idPago;
 	@NotBlank
-    private  int idOrdenes;
-	@NotBlank
     private  BigDecimal monto;
 	@NotBlank
     private  String metodoPago;

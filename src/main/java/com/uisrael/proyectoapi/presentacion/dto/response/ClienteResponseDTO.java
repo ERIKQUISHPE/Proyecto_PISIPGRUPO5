@@ -13,6 +13,7 @@ public class ClienteResponseDTO {
 	private String direccion;
 	private LocalDateTime creadoEn;
 	private boolean estado;
+	
 	public int getIdCliente() {
 		return idCliente;
 	}

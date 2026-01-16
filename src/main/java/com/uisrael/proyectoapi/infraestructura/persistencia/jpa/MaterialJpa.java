@@ -28,7 +28,6 @@ public class MaterialJpa implements Serializable{
 	private String descripcion;
 	private BigDecimal costoCompra;
 	private BigDecimal costoVenta;
-	private int idProveedor; // Relacion con Clase "Proveedor"
 	private Integer stock; // Puede ser null
 	private boolean estado; //true: activo - false: eliminado
 	

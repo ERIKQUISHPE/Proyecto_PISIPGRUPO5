@@ -8,8 +8,6 @@ import lombok.Data;
 public class OrdenInternaRequestDTO {
 	//private final int idOrdenInterna;
 	@NotBlank
-    private  int idOrdenes;
-	@NotBlank
     private  int tecnicoId;
 	@NotBlank
     private  int estadoId;

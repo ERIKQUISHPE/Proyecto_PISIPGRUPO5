@@ -22,9 +22,6 @@ public class OrdenMaterialJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrdenMaterial;
-
-    private int idOrden;
-    private int idMaterial;
     private int cantidad;
     private BigDecimal costoUnitario;
     private BigDecimal precioUnitario;

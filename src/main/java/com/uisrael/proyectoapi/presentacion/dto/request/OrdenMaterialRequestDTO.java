@@ -8,10 +8,6 @@ import lombok.Data;
 public class OrdenMaterialRequestDTO {
 	//private final int idOrdenMaterial;
 	@NotBlank
-    private  int idOrden;
-	@NotBlank
-    private  int idMaterial;
-	@NotBlank
     private  int cantidad;
 	@NotBlank
     private  BigDecimal costoUnitario;

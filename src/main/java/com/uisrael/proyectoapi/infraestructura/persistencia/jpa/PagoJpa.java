@@ -23,8 +23,6 @@ public class PagoJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPago;
-
-    private int idOrdenes;
     private BigDecimal monto;
     private String metodoPago;
     private LocalDateTime fechaPago;

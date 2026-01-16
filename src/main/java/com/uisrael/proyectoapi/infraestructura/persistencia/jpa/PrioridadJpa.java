@@ -18,7 +18,6 @@ public class PrioridadJpa implements Serializable {
 
     @Id
     private int idPrioridad;
-
     private String nombre;
     
     @OneToMany(mappedBy = "fkPrioridad")
