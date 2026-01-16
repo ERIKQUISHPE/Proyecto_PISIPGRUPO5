@@ -25,7 +25,7 @@ public class OrdenRequestDTO {
 	private BigDecimal totalCobro;
 
 	private boolean pagado;
-	@NotNull // Porque fecha no es texto, @NotNull para fechas
+	
 	private LocalDateTime creadoEn;
 	
 	private boolean estado;

@@ -17,7 +17,7 @@ public class OrdenInternaRequestDTO {
     private  String observaciones;
 	@NotBlank
     private  int creadoPor;
-	@NotBlank
+	
     private  LocalDateTime creadoEn;
 
 }

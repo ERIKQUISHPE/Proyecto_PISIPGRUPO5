@@ -19,7 +19,7 @@ public class ProveedorRequestDTO {
 	private  String correo;
 	@NotBlank
 	private  String notas;
-	@NotBlank
+	
 	private  LocalDateTime creadoEn;
 	
 	private  boolean estado; 

@@ -12,7 +12,7 @@ public class PagoRequestDTO {
     private  BigDecimal monto;
 	@NotBlank
     private  String metodoPago;
-	@NotBlank
+	
     private  LocalDateTime fechaPago;
 	@NotBlank
     private  int registradoPor;

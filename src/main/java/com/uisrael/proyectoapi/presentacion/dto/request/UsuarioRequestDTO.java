@@ -19,7 +19,7 @@ public class UsuarioRequestDTO {
 	private  String telefono;
 	@NotBlank
 	private  String correo;
-	@NotBlank
+	
 	private  LocalDateTime creadoEn;
 	
 	private  boolean estado; 
