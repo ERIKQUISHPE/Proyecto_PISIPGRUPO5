@@ -13,15 +13,15 @@ public class OrdenRequestDTO {
 	// private int idOrdenes; porque trabaja en FJPA
 	@NotBlank
 	private String codigoOrden;
-	@NotBlank
+	
 	private LocalDateTime fechaIngreso;
-	@NotBlank
+	
 	private LocalDateTime fechaSalida;
 	@NotBlank
 	private String detalleProblema;
 	@NotBlank
 	private String observaciones;
-	@NotBlank
+	@NotNull
 	private BigDecimal totalCobro;
 
 	private boolean pagado;

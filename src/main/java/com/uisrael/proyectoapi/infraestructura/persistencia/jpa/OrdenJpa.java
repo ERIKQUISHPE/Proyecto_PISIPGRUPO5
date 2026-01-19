@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,13 +28,16 @@ public class OrdenJpa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrden;
 	private String codigoOrden;
+	@CreationTimestamp
+	@Column(name = "fecha_ingreso", nullable = false, updatable = false)
 	private LocalDateTime fechaIngreso;
 	private LocalDateTime fechaSalida;
 	private String detalleProblema;
 	private String observaciones;
 	private BigDecimal totalCobro;
 	private boolean pagado;
-	@Column(name = "creado en",length = 80)
+	@CreationTimestamp
+	@Column(name = "creado_en", nullable = false, updatable = false)
 	private LocalDateTime creadoEn;
 	private boolean estado; //true: activo - false: eliminado
 	
