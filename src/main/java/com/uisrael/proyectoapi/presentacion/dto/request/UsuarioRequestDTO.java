@@ -1,14 +1,14 @@
 package com.uisrael.proyectoapi.presentacion.dto.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime;	
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-@Data
+@Data	
 public class UsuarioRequestDTO {
 	//private final int idUsuario;
 	@NotBlank
-	private  String Usuario;
+	private  String usuario;
 	@NotBlank
 	private  String nombre;
 	@NotBlank

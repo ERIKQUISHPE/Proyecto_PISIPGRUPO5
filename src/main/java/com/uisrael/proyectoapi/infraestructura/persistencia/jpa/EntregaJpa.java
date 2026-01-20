@@ -3,6 +3,9 @@ package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +27,8 @@ public class EntregaJpa implements Serializable {
     private int idEntrega;
     private int entregadoPor;
     private int recibidoPor;
+    @CreationTimestamp
+	@Column(name = "fecha_entrega", nullable = false, updatable = false)
     private LocalDateTime fechaEntrega;
     private String notas;
     

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,13 +24,14 @@ public class ProveedorJpa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProveedor;
-	private String Proveedor;
+	private String proveedor;
 	private String nombreContacto;
 	private String apellidoContacto;
 	private String telefono;
 	private String correo;
 	private String notas;
-	@Column(name = "creado en",length = 80)
+	@CreationTimestamp
+	@Column(name = "creado_en", nullable = false, updatable = false)
 	private LocalDateTime creadoEn;
 	private boolean estado; //true: activo - false: eliminado
 	

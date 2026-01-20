@@ -8,7 +8,7 @@ import lombok.Data;
 public class ProveedorRequestDTO {
 	//private final int idProveedor;
 	@NotBlank
-	private  String Proveedor; 
+	private  String proveedor; 
 	@NotBlank
 	private  String nombreContacto;
 	@NotBlank

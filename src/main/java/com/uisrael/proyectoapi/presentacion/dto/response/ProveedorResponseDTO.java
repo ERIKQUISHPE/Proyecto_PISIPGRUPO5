@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class ProveedorResponseDTO {
 	private int idProveedor;
-	private String Proveedor;
+	private String proveedor;
 	private String nombreContacto;
 	private String apellidoContacto;
 	private String telefono;
@@ -20,10 +20,10 @@ public class ProveedorResponseDTO {
 		this.idProveedor = idProveedor;
 	}
 	public String getProveedor() {
-		return Proveedor;
+		return proveedor;
 	}
 	public void setProveedor(String proveedor) {
-		Proveedor = proveedor;
+		this.proveedor = proveedor;
 	}
 	public String getNombreContacto() {
 		return nombreContacto;

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class UsuarioResponseDTO {
 	private  int idUsuario;
-	private  String Usuario;
+	private  String usuario;
 	private  String nombre;
 	private  String apellido;
 	private  String rol;
@@ -20,10 +20,10 @@ public class UsuarioResponseDTO {
 		this.idUsuario = idUsuario;
 	}
 	public String getUsuario() {
-		return Usuario;
+		return usuario;
 	}
 	public void setUsuario(String usuario) {
-		Usuario = usuario;
+		this.usuario = usuario;
 	}
 	public String getNombre() {
 		return nombre;

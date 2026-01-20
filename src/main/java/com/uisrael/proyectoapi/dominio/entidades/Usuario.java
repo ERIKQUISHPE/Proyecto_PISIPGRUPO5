@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public final class Usuario {
 
 	private final int idUsuario;
-	private final String Usuario; // Se coloca el nombre de Usuario para el ingreso. Debe ser único.
+	private final String usuario; // Se coloca el nombre de Usuario para el ingreso. Debe ser único.
 	private final String nombre;
 	private final String apellido;
 	private final String rol;
@@ -17,7 +17,7 @@ public final class Usuario {
 	public Usuario(int idUsuario, String usuario, String nombre, String apellido, String rol, String telefono,
 			String correo, LocalDateTime creadoEn, boolean estado) {
 		this.idUsuario = idUsuario;
-		Usuario = usuario;
+		this.usuario = usuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.rol = rol;
@@ -32,7 +32,7 @@ public final class Usuario {
 	}
 
 	public String getUsuario() {
-		return Usuario;
+		return usuario;
 	}
 
 	public String getNombre() {
@@ -65,7 +65,7 @@ public final class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", Usuario=" + Usuario + ", nombre=" + nombre + ", apellido="
+		return "Usuario [idUsuario=" + idUsuario + ", usuario=" + usuario + ", nombre=" + nombre + ", apellido="
 				+ apellido + ", rol=" + rol + ", telefono=" + telefono + ", correo=" + correo + ", creadoEn=" + creadoEn
 				+ ", estado=" + estado + "]";
 	}

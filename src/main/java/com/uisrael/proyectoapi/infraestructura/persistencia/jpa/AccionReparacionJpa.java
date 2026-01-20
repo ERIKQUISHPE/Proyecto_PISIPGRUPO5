@@ -3,6 +3,9 @@ package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +27,8 @@ public class AccionReparacionJpa implements Serializable {
     private int idAccion;
     private int tecnicoId;
     private String descripcion;
+    @CreationTimestamp
+	@Column(name = "fecha_accion", nullable = false, updatable = false)
     private LocalDateTime fechaAccion;
     
     @ManyToOne

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public final class Proveedor {
 
 	private final int idProveedor;
-	private final String Proveedor; // Ejemplo: CompuParts S.A.
+	private final String proveedor; // Ejemplo: CompuParts S.A.
 	private final String nombreContacto;
 	private final String apellidoContacto;
 	private final String telefono;
@@ -17,7 +17,7 @@ public final class Proveedor {
 	public Proveedor(int idProveedor, String proveedor, String nombreContacto, String apellidoContacto, String telefono,
 			String correo, String notas, LocalDateTime creadoEn, boolean estado) {
 		this.idProveedor = idProveedor;
-		Proveedor = proveedor;
+		this.proveedor = proveedor;
 		this.nombreContacto = nombreContacto;
 		this.apellidoContacto = apellidoContacto;
 		this.telefono = telefono;
@@ -32,7 +32,7 @@ public final class Proveedor {
 	}
 
 	public String getProveedor() {
-		return Proveedor;
+		return proveedor;
 	}
 
 	public String getNombreContacto() {
@@ -65,7 +65,7 @@ public final class Proveedor {
 
 	@Override
 	public String toString() {
-		return "Proveedor [idProveedor=" + idProveedor + ", Proveedor=" + Proveedor + ", nombreContacto="
+		return "Proveedor [idProveedor=" + idProveedor + ", proveedor=" + proveedor + ", nombreContacto="
 				+ nombreContacto + ", apellidoContacto=" + apellidoContacto + ", telefono=" + telefono + ", correo="
 				+ correo + ", notas=" + notas + ", creadoEn=" + creadoEn + ", estado=" + estado + "]";
 	}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,13 +24,14 @@ public class UsuarioJpa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idUsuario;
-	private String Usuario; // Se coloca el nombre de Usuario para el ingreso. Debe ser único.
+	private String usuario; // Se coloca el nombre de Usuario para el ingreso. Debe ser único.
 	private String nombre;
 	private String apellido;
 	private String rol;
 	private String telefono;
 	private String correo;
-	@Column(name = "creado en",length = 80)
+	@CreationTimestamp
+	@Column(name = "creado_en", nullable = false, updatable = false)
 	private LocalDateTime creadoEn;
 	private boolean estado; //true: activo - false: eliminado
 	

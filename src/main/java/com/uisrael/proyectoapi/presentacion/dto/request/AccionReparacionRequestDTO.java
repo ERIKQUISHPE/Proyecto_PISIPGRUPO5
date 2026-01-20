@@ -12,7 +12,7 @@ public class AccionReparacionRequestDTO {
 	private int tecnicoId;
 	@NotBlank
 	private String descripcion;
-	@NotBlank
+	
 	private LocalDateTime fechaAccion;
 
 }
