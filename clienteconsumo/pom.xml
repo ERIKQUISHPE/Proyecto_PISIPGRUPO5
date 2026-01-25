@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.1</version>
+		<version>4.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.uisrael</groupId>
 	<artifactId>clienteconsumo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>clienteconsumo</name>
-	<description>Web que consume un APIRest</description>
+	<description>ConsumeAPI</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -60,19 +60,12 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		
+		<!-- Source: https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
 		<dependency>
 		    <groupId>nz.net.ultraq.thymeleaf</groupId>
 		    <artifactId>thymeleaf-layout-dialect</artifactId>
-		    <version>3.4.0</version>
 		    <scope>compile</scope>
-		</dependency>
-
-
+</dependency>
 	</dependencies>
 
 	<build>
