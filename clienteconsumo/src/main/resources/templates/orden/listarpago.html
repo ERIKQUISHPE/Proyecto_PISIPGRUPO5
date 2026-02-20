@@ -1,0 +1,129 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+
+<head>
+<meta charset="utf-8">
+<title>Lista de Pagos</title>
+</head>
+
+<body>
+	<div layout:fragment="espaciopaginas">
+
+		<h2>Lista de Pagos</h2>
+
+	<a th:href="@{/pagos/nuevo}" class="btn-centronet">
+  				<i class="material-symbols-outlined">request_quote</i>
+  				Añadir Pago
+			</a>
+
+		<div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+            <div class="mdc-card p-0">
+                <div class="table-responsive">
+<table class="table table-hover table-dark-mdc">
+  <thead>
+    <tr>
+      <th>Orden</th>
+      <th>Cliente</th>
+      <th>Acciones realizadas</th>
+      <th>Monto cobrado</th>
+      <th>Método de pago</th>
+      <th>Fecha de pago</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr th:each="p : ${listapago}">
+
+
+      <td>
+        <span th:if="${p.idOrden != null}"
+              th:text="${'Orden #' + p.idOrden}"></span>
+        <span th:if="${p.idOrden == null}">SIN ORDEN</span>
+      </td>
+
+
+      <td>
+        <div th:if="${p.idOrden != null and ordenMap[p.idOrden] != null and ordenMap[p.idOrden].fkCliente != null}">
+          <div th:text="${ordenMap[p.idOrden].fkCliente.nombre + ' ' + ordenMap[p.idOrden].fkCliente.apellido}"></div>
+
+          <small style="color:#9ca3af"
+                 th:text="${'CI: ' + ordenMap[p.idOrden].fkCliente.ci + ', Tel: ' + ordenMap[p.idOrden].fkCliente.telefono}">
+          </small>
+        </div>
+
+        <span th:if="${p.idOrden == null or ordenMap[p.idOrden] == null or ordenMap[p.idOrden].fkCliente == null}">
+          SIN CLIENTE
+        </span>
+      </td>
+
+ 
+      <td>
+        <span th:if="${p.idOrden != null}"
+              th:text="${accionesMap[p.idOrden] != null ? accionesMap[p.idOrden] : 'SIN ACCIONES'}"></span>
+        <span th:if="${p.idOrden == null}">SIN ACCIONES</span>
+      </td>
+
+
+      <td th:text="${p.monto != null ? p.monto : '0.00'}"></td>
+
+
+      <td th:text="${p.metodoPago != null ? p.metodoPago : 'SIN MÉTODO'}"></td>
+
+
+      <td th:text="${p.fechaPago != null ? #temporals.format(p.fechaPago, 'dd/MM/yyyy HH:mm') : ''}"></td>
+
+
+
+<td>
+
+
+  <a th:if="${p.idOrden != null
+             and ordenMap[p.idOrden] != null
+             and ordenMap[p.idOrden].estadoOrden != null
+             and #strings.containsIgnoreCase(ordenMap[p.idOrden].estadoOrden,'finaliz')
+             and (p.monto == null or p.monto.compareTo(T(java.math.BigDecimal).ZERO) == 0)}"
+     th:href="@{/pagos/editar/{id}(id=${p.idPago})}"
+     class="btn btn-sm btn-warning"
+     title="Pendiente de cobro">
+    <i class="fa-solid fa-file-invoice-dollar"></i>
+  </a>
+
+
+  <span th:if="${p.idOrden != null
+                and ordenMap[p.idOrden] != null
+                and ordenMap[p.idOrden].estadoOrden != null
+                and #strings.containsIgnoreCase(ordenMap[p.idOrden].estadoOrden,'finaliz')
+                and p.monto != null
+                and p.monto.compareTo(T(java.math.BigDecimal).ZERO) > 0}">
+
+ 
+      <a th:href="@{/pagos/editar/{id}(id=${p.idPago})}" class="btn btn-sm btn-primary" title="Editar pago">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </a>
+
+
+      <a th:href="@{/pagos/eliminar/{id}(id=${p.idPago})}"
+         class="btn btn-sm btn-dark"
+         onclick="return confirm('Seguro que deseas eliminar?');"
+         title="Eliminar pago">
+        <i class="fa-solid fa-trash"></i>
+      </a>
+
+  </span>
+
+</td>
+
+
+
+    </tr>
+  </tbody>
+</table>
+
+		</div>
+
+	</div>
+</body>
+</html>

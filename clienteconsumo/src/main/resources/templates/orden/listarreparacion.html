@@ -1,0 +1,116 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>GESTIÓN DE REPARACIONES</title>
+</head>
+
+<body>
+<div layout:fragment="espaciopaginas">
+
+  <h2>Lista de Reparaciones</h2>
+
+  <a th:href="@{/reparaciones/nuevo}" class="btn-centronet">
+    <i class="material-symbols-outlined">build</i>
+    Añadir Reparación
+  </a>
+
+  <div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+    <div class="mdc-card p-0">
+      <div class="table-responsive">
+
+        <table class="table table-hover table-dark-mdc">
+          <thead>
+            <tr>
+              <th>Orden</th>
+              <th>Estado</th>
+              <th>Técnico</th>
+              <th>Acción realizada</th>
+              <th>Material</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr th:if="${#lists.isEmpty(listareparaciones)}">
+              <td colspan="7" class="text-center">No existen reparaciones registradas</td>
+            </tr>
+
+            <tr th:each="r : ${listareparaciones}">
+
+              <td th:text="${r.textoOrden != null ? r.textoOrden : ('Orden #' + r.idOrden)}">Orden</td>
+
+              <td th:text="${r.estadoOrden != null ? r.estadoOrden : ''}">EN PROCESO</td>
+
+              <td th:text="${(r.tecnicoNombre != null and r.tecnicoApellido != null)
+                    ? (r.tecnicoNombre + ' ' + r.tecnicoApellido)
+                    : ('ID ' + r.tecnicoId)}">Técnico</td>
+
+              <td th:text="${r.descripcion != null and !#strings.isEmpty(r.descripcion)
+                    ? ( #strings.length(r.descripcion) > 45 ? (#strings.substring(r.descripcion,0,45) + '...') : r.descripcion )
+                    : 'Sin reparación'}">Acción</td>
+
+              <!-- ✅ CAMBIO: permitir que muestre varios materiales sin cortarse -->
+              <td style="white-space: normal;"
+                  th:text="${r.materialNombre != null and !#strings.isEmpty(r.materialNombre)
+                    ? r.materialNombre
+                    : 'Sin material'}">Material</td>
+
+              <td th:text="${r.fechaAccion != null ? #temporals.format(r.fechaAccion, 'dd/MM/yyyy HH:mm') : ''}">Fecha</td>
+
+              <td class="text-center">
+
+                <span th:if="${r.estadoOrden != null and #strings.equalsIgnoreCase(r.estadoOrden,'INGRESADO')}"
+                      title="Sin acciones disponibles">
+                  <i class="fa-solid fa-lock"></i>
+                </span>
+
+                <span th:if="${r.estadoOrden != null and #strings.equalsIgnoreCase(r.estadoOrden,'EN PROCESO')}">
+                  <a th:href="@{/reparaciones/editar(idAccion=${r.idAccion})}"
+                     class="btn btn-sm btn-warning"
+                     title="Reparar">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                  </a>
+                </span>
+
+                <span th:if="${r.estadoOrden != null and #strings.equalsIgnoreCase(r.estadoOrden,'FINALIZADO')}">
+                  <a th:href="@{/reparaciones/editar(idAccion=${r.idAccion})}"
+                     class="btn btn-sm btn-primary"
+                     title="Editar">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+
+                  <a th:href="@{/reparaciones/eliminar(idAccion=${r.idAccion})}"
+                     class="btn btn-sm btn-danger"
+                     onclick="return confirm('Seguro que deseas reiniciar esta reparación?');"
+                     title="Reiniciar">
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </span>
+
+                <span th:if="${r.estadoOrden == null or !(#strings.equalsIgnoreCase(r.estadoOrden,'INGRESADO')
+                                or #strings.equalsIgnoreCase(r.estadoOrden,'EN PROCESO')
+                                or #strings.equalsIgnoreCase(r.estadoOrden,'FINALIZADO'))}"
+                      title="Sin acciones disponibles">
+                  <i class="fa-solid fa-lock"></i>
+                </span>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

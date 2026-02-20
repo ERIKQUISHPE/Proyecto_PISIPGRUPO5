@@ -1,0 +1,103 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+
+<head>
+<meta charset="utf-8">
+<title>LISTA DE ENTREGAS</title>
+</head>
+
+<body>
+	<div layout:fragment="espaciopaginas">
+
+		<h2>Lista de Entregas</h2>
+
+		<a th:href="@{/entregas/nuevo}" class="btn-centronet">
+			<i class="material-symbols-outlined">local_shipping</i>
+			Añadir Entrega
+		</a>
+
+		<div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+			<div class="mdc-card p-0">
+				<div class="table-responsive">
+
+					<table class="table table-hover table-dark-mdc">
+
+						<thead>
+							<tr style="text-align: center;">
+								<th>#</th>
+								<th>Orden</th>
+								<th>Entregado por</th>
+								<th>Recibido por</th>
+								<th>Fecha entrega</th>
+								<th>Notas</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr th:each="entregadato: ${listaentrega}">
+
+								<td th:text="${entregadato.idEntrega}"></td>
+
+								<td
+									th:text="${entregadato.fkOrden != null 
+									  ? (entregadato.fkOrden.codigoOrden != null 
+									      ? entregadato.fkOrden.codigoOrden 
+									      : entregadato.fkOrden.idOrden) 
+									  : 'SIN ORDEN'}">
+								</td>
+
+								<td
+									th:text="${entregadato.entregadoPor != null 
+							              ? entregadato.entregadoPor.nombre + ' ' + entregadato.entregadoPor.apellido 
+							              : 'SIN ADMIN'}">
+								</td>
+
+								<td
+									th:text="${entregadato.recibidoPor != null && !#strings.isEmpty(entregadato.recibidoPor) 
+							              ? entregadato.recibidoPor 
+							              : 'SIN RECEPTOR'}">
+								</td>
+
+								<td
+									th:text="${entregadato.fechaEntrega != null 
+									  ? #strings.substring(#strings.replace(entregadato.fechaEntrega.toString(),'T',' '),0,16) 
+									  : '—'}">
+								</td>
+
+								<td th:text="${entregadato.notas}"></td>
+
+								<td>
+
+									<a th:href="@{/entregas/editar(idEntrega=${entregadato.idEntrega})}"
+										class="btn btn-sm btn-primary"
+										title="Editar">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</a>
+
+									<a class="btn btn-danger btn-sm"
+										th:href="@{/entregas/eliminar(idEntrega=${entregadato.idEntrega})}"
+										onclick="return confirm('¿Eliminar esta entrega?')"
+										title="Eliminar">
+										<i class="fa-solid fa-trash"></i>
+									</a>
+
+								</td>
+
+							</tr>
+
+						</tbody>
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

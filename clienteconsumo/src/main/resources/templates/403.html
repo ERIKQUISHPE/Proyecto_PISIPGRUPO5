@@ -1,0 +1,18 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>Acceso denegado</title>
+</head>
+
+<body>
+  <div layout:fragment="espaciopaginas" style="max-width:900px;margin:0 auto;padding:30px;">
+    <h2 style="margin-bottom:10px;">No tienes permisos para entrar aquí</h2>
+    <p style="margin-bottom:18px;">Tu rol no tiene acceso a esta sección</p>
+    <a th:href="@{/dashboard}" class="btn-centronet">Volver al Dashboard</a>
+  </div>
+</body>
+</html>

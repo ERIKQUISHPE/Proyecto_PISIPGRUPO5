@@ -1,0 +1,91 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+
+<head>
+<meta charset="utf-8">
+<title>Nuevo Equipo</title>
+</head>
+
+<body>
+	<div layout:fragment="espaciopaginas">
+		<h2>
+			<span class="material-icons">add_circle</span> Añadir Equipo
+		</h2>
+
+		<form th:action="@{/equipos/guardar}" th:object="${equipo}"
+			method="post">
+			<input type="hidden" th:field="*{idEquipo}">
+
+			<div class="form-group"
+				style="border: 1px solid rgba(0, 0, 0, .08); background: #fff; padding: 14px; border-radius: 12px; margin-bottom: 18px;">
+				<label class="form-label" style="font-weight: 600;">Orden</label> <input
+					type="hidden" th:field="*{idOrden}" /> <input type="text"
+					class="form-control" th:value="${'Orden #' + equipo.idOrden}"
+					readonly>
+			</div>
+
+			<div class="form-group">
+				<label for="txttipo" class="form-label">Tipo</label> <input
+					th:field="*{tipo}" type="text" class="form-control" id="txttipo"
+					required>
+			</div>
+
+			<div class="form-group">
+				<label for="txtmarca" class="form-label">Marca</label> <input
+					th:field="*{marca}" type="text" class="form-control" id="txtmarca"
+					required>
+			</div>
+
+			<div class="form-group">
+				<label for="txtmodelo" class="form-label">Modelo</label> <input
+					th:field="*{modelo}" type="text" class="form-control"
+					id="txtmodelo" required>
+			</div>
+
+			<div class="form-group">
+				<label for="txtserial" class="form-label">SN</label>
+
+				<div
+					style="display: flex; align-items: center; gap: 10px; width: 100%;">
+
+					<input th:field="*{serial}" type="text" class="form-control"
+						id="txtserial" style="flex: 1; width: 100%;">
+
+					<div th:if="${errorSerial}"
+						style="color: #d32f2f; font-size: 13px; margin-top: 5px;">
+						<span th:text="${errorSerial}"></span>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<label for="txtestadoEquipo" class="form-label">Estado del
+					Equipo</label> <input th:field="*{estadoEquipo}" type="text"
+					class="form-control" id="txtestadoEquipo">
+			</div>
+
+			<div class="form-group">
+				<label for="txtobservaciones" class="form-label">Observaciones</label>
+				<input th:field="*{observaciones}" type="text" class="form-control"
+					id="txtobservaciones">
+			</div>
+
+			<div class="form-actions">
+				<button type="submit" class="btn-centronet">
+					<i class="fa fa-save"></i> Guardar
+				</button>
+
+				<a th:href="@{/ordenes}" class="btn-outline"> <i
+					class="fa fa-times"></i> Cancelar
+				</a>
+			</div>
+
+		</form>
+
+	</div>
+</body>
+</html>

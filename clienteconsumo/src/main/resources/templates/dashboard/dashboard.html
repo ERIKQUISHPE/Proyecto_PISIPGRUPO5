@@ -1,0 +1,166 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard</title>
+
+  <style>
+    .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:12px}
+    @media(max-width:1100px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+    .kpi{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 16px;box-shadow:0 8px 18px rgba(0,0,0,.05)}
+    .kpi .label{font-size:12px;opacity:.75}
+    .kpi .value{font-size:26px;font-weight:800;margin-top:6px}
+
+    .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+    @media(max-width:1100px){.dash-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:700px){.dash-grid{grid-template-columns:1fr}}
+    .dash-card{display:flex;align-items:center;justify-content:space-between;padding:18px;border-radius:16px;border:1px solid rgba(0,0,0,.08);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);text-decoration:none;color:inherit;transition:transform .12s ease,box-shadow .12s ease;min-height:92px}
+    .dash-card:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(0,0,0,.10)}
+    .dash-card .title{font-weight:800;font-size:16px}
+    .dash-card .desc{font-size:12px;opacity:.75;margin-top:6px}
+    .dash-card .icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,165,0,.12)}
+
+    .chart-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-top:20px}
+    @media(max-width:1100px){.chart-grid{grid-template-columns:1fr}}
+    .panel{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:16px;box-shadow:0 8px 18px rgba(0,0,0,.05)}
+    .panel h4{margin:0 0 12px 0;font-size:16px;font-weight:800}
+  </style>
+</head>
+
+<body>
+<section layout:fragment="espaciopaginas">
+
+  <h2><span class="material-icons">dashboard</span> Dashboard</h2>
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+	  <div class="kpi">
+	    <div class="label">Ingresados</div>
+	    <div class="value" th:text="${resumen.pendientes}">0</div>
+	  </div>
+	  <div class="kpi">
+	    <div class="label">En proceso</div>
+	    <div class="value" th:text="${resumen.diagnostico}">0</div>
+	  </div>
+	  <div class="kpi">
+	    <div class="label">Finalizados</div>
+	    <div class="value" th:text="${resumen.entregadas}">0</div>
+	  </div>
+  </div>
+
+
+  <div class="dash-grid">
+    <a class="dash-card" th:href="@{/ordenes}">
+      <div>
+        <div class="title">Órdenes</div>
+        <div class="desc">Crear y listar</div>
+      </div>
+      <div class="icon"><span class="material-icons">assignment</span></div>
+    </a>
+
+    <a class="dash-card" th:href="@{/entregas}">
+      <div>
+        <div class="title">Entregas</div>
+        <div class="desc">Cerrar servicio</div>
+      </div>
+      <div class="icon"><span class="material-icons">local_shipping</span></div>
+    </a>
+
+    <a class="dash-card" th:href="@{/clientes}">
+      <div>
+        <div class="title">Clientes</div>
+        <div class="desc">Buscar y gestionar</div>
+      </div>
+      <div class="icon"><span class="material-icons">people</span></div>
+    </a>
+
+    <a class="dash-card" th:href="@{/pagos}">
+      <div>
+        <div class="title">Pagos</div>
+        <div class="desc">Cobros</div>
+      </div>
+      <div class="icon"><span class="material-icons">payments</span></div>
+    </a>
+  </div>
+
+  <div class="chart-grid">
+    <div class="panel">
+      <h4>Órdenes por estado</h4>
+      <canvas id="chartEstado" height="140"></canvas>
+    </div>
+
+    <div class="panel">
+      <h4>Órdenes por mes</h4>
+      <canvas id="chartMes" height="140"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script th:inline="javascript">
+    const estadoLabels = /*[[${estadoLabels}]]*/ [];
+    const estadoValues = /*[[${estadoValues}]]*/ [];
+    const mesLabels = /*[[${mesLabels}]]*/ [];
+    const mesValues = /*[[${mesValues}]]*/ [];
+
+    new Chart(document.getElementById("chartEstado"), {
+      type: "pie",
+      data: { 
+        labels: estadoLabels, 
+        datasets: [{ 
+          data: estadoValues,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.8)',   // Pendiente - Azul
+            'rgba(255, 99, 132, 0.8)',   // Diagnóstico - Rojo/Rosa
+            'rgba(255, 159, 64, 0.8)',   // Reparación - Naranja
+            'rgba(255, 205, 86, 0.8)',   // Listo entrega - Amarillo
+            'rgba(75, 192, 192, 0.8)'    // Entregada - Verde azulado
+          ],
+          borderWidth: 1
+        }] 
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // Gráfico de barras - Órdenes por mes
+    new Chart(document.getElementById("chartMes"), {
+      type: "bar",
+      data: { 
+        labels: mesLabels, 
+        datasets: [{ 
+          label: 'Órdenes',
+          data: mesValues,
+          backgroundColor: 'rgba(54, 162, 235, 0.8)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }] 
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  </script>
+
+</section>
+</body>
+</html>

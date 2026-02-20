@@ -1,0 +1,80 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>GESTION DE CLIENTES</title>
+  <link rel="stylesheet" href="../../../assets/css/tabla.css">
+</head>
+
+<body>
+  <div layout:fragment="espaciopaginas">
+
+    <h2>Lista de Clientes</h2>
+
+    <a th:href="@{/clientes/nuevo}" class="btn-centronet">
+      <i class="material-symbols-outlined">person_add</i> Añadir Cliente
+    </a>
+
+    <!-- MENSAJES -->
+    <div th:if="${msg}" style="margin:10px 0;padding:10px;border-radius:10px;border:1px solid #b7e1c1;background:#eaf7ee;color:#0a7a2f;">
+      <span th:text="${msg}"></span>
+    </div>
+
+    <div th:if="${error}" style="margin:10px 0;padding:10px;border-radius:10px;border:1px solid #f1b6b6;background:#fdecec;color:#b00020;">
+      <span th:text="${error}"></span>
+    </div>
+
+    <!-- TABLA -->
+    <div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+      <div class="mdc-card p-0">
+        <div class="table-responsive">
+          <table class="table table-hover table-dark-mdc">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI/C.I./CC</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Direccion</th>
+                <th>Fecha de creación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr th:each="clientedato: ${listacliente}">
+                <td th:text="${clientedato.idCliente}"></td>
+                <td th:text="${clientedato.nombre}"></td>
+                <td th:text="${clientedato.apellido}"></td>
+                <td th:text="${clientedato.ci}"></td>
+                <td th:text="${clientedato.telefono}"></td>
+                <td th:text="${clientedato.correo}"></td>
+                <td th:text="${clientedato.direccion}"></td>
+                <td th:text="${clientedato.creadoEn}"></td>
+                <td>
+                  <a th:href="@{/clientes/editar(idCliente=${clientedato.idCliente})}"
+                     class="btn btn-sm btn-primary" title="Editar">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+
+                  <a th:href="@{/clientes/eliminar(idCliente=${clientedato.idCliente})}"
+                     class="btn btn-sm btn-danger" title="Eliminar"
+                     onclick="return confirm('Seguro que deseas eliminar este cliente?');">
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

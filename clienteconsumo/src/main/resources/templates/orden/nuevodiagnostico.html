@@ -1,0 +1,197 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>Diagnóstico</title>
+
+  <style>
+    :root { --mdc-theme-primary: #fbc02d; }
+
+    .select-beauty{
+      width: 420px;
+      max-width: 100%;
+      padding: 10px 42px 10px 14px;
+      border-radius: 14px;
+      border: 1px solid #d6d6d6;
+      background: #fff;
+      outline: none;
+      transition: .15s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    }
+    .select-beauty:focus{
+      border-color: #fbc02d;
+      box-shadow: 0 0 0 3px rgba(251,192,45,.25);
+    }
+    .select-wrap{
+      position: relative;
+      display: inline-block;
+      width: 420px;
+      max-width: 100%;
+    }
+    .select-wrap::after{
+      content: "";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-right: 3px solid #333;
+      border-bottom: 3px solid #333;
+      transform: translateY(-55%) rotate(45deg);
+      pointer-events: none;
+      opacity: .7;
+    }
+  </style>
+</head>
+
+<body>
+<div layout:fragment="espaciopaginas">
+
+  <h2>
+    <span class="material-icons"
+          th:text="${idOrdenInternaEdit != null} ? 'edit' : 'add_circle'">add_circle</span>
+    <span th:text="${idOrdenInternaEdit != null} ? 'Editar Diagnóstico' : 'Añadir Diagnóstico'">Añadir Diagnóstico</span>
+  </h2>
+
+  <div th:if="${error != null and !#strings.isEmpty(error)}"
+       class="alert alert-danger"
+       th:text="${error}">
+  </div>
+
+  <form class="form-centronet"
+        th:object="${diagnostico}"
+        th:action="${idOrdenInternaEdit != null} ? @{/diagnosticos/actualizar} : @{/diagnosticos/guardar}"
+        method="post"
+        id="formDiagnostico">
+
+    <input type="hidden" name="idOrdenInterna" id="idOrdenInternaHidden"
+           th:value="${idOrdenInternaEdit != null} ? ${idOrdenInternaEdit} : ''">
+
+    <input type="hidden" name="tecnicoId" id="tecnicoIdHidden"
+           th:value="${tecnicoIdEdit != null} ? ${tecnicoIdEdit} : ''">
+
+    <div class="form-group">
+      <label>Orden</label>
+
+      <input th:if="${idOrdenInternaEdit != null}"
+             type="text"
+             class="form-control"
+             th:value="${textoOrdenEdit != null and !#strings.isEmpty(textoOrdenEdit)} ? ${textoOrdenEdit} : ('Orden Interna #' + ${idOrdenInternaEdit})"
+             readonly>
+
+      <div th:if="${idOrdenInternaEdit == null}" class="select-wrap">
+        <select class="select-beauty"
+                id="ordenSelect"
+                required>
+          <option value="">Seleccione una orden</option>
+
+          <option th:each="o : ${listaOrdenInternaDisponible}"
+                  th:value="${o.idOrdenInterna}"
+                  th:attr="
+                    data-tecnico-id=${o.tecnicoId},
+                    data-tecnico-nombre=${o.tecnicoNombre},
+                    data-tecnico-apellido=${o.tecnicoApellido}"
+                  th:text="${o.textoOrden != null and !#strings.isEmpty(o.textoOrden)} ? ${o.textoOrden} : ('Orden Interna #' + ${o.idOrdenInterna})">
+          </option>
+        </select>
+      </div>
+    </div>
+
+<div class="form-group">
+  <label>Técnico asignado</label>
+
+  <input type="text"
+         class="form-control"
+         id="tecnicoNombreInput"
+         th:value="${ (tecnicoNombreEdit != null and !#strings.isEmpty(tecnicoNombreEdit))
+                      ? (tecnicoNombreEdit + ' ' + (tecnicoApellidoEdit != null ? tecnicoApellidoEdit : ''))
+                      : (tecnicoIdEdit != null ? ('ID ' + tecnicoIdEdit) : '') }"
+         placeholder="Se llena al elegir la orden"
+         readonly>
+</div>
+
+    <div class="form-group">
+      <label>Diagnóstico</label>
+      <input type="text"
+             class="form-control"
+             th:field="*{diagnostico}"
+             placeholder="Ingrese el diagnóstico"
+             required>
+    </div>
+
+    <div class="form-group">
+      <label>Observaciones</label>
+      <input type="text"
+             class="form-control"
+             th:field="*{observaciones}"
+             placeholder="Ingrese observaciones">
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-centronet">
+        <i class="fa fa-save"></i>
+        <span th:text="${idOrdenInternaEdit != null} ? 'Actualizar' : 'Guardar'">Guardar</span>
+      </button>
+
+      <a th:href="@{/diagnosticos}" class="btn-outline">
+        <i class="fa fa-times"></i> Cancelar
+      </a>
+    </div>
+
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("formDiagnostico")
+      const select = document.getElementById("ordenSelect")
+
+      const idOrdenInternaHidden = document.getElementById("idOrdenInternaHidden")
+      const tecnicoIdHidden = document.getElementById("tecnicoIdHidden")
+      const tecnicoNombreInput = document.getElementById("tecnicoNombreInput")
+
+      if (select) {
+        select.addEventListener("change", () => {
+          const val = (select.value || "").trim()
+          idOrdenInternaHidden.value = val
+
+          if (!val) {
+            tecnicoIdHidden.value = ""
+            if (tecnicoNombreInput) tecnicoNombreInput.value = ""
+            return
+          }
+
+          const opt = select.options[select.selectedIndex]
+          const tecnicoId = (opt.getAttribute("data-tecnico-id") || "").trim()
+          const tecNombre = (opt.getAttribute("data-tecnico-nombre") || "").trim()
+          const tecApellido = (opt.getAttribute("data-tecnico-apellido") || "").trim()
+
+          tecnicoIdHidden.value = tecnicoId
+
+          if (tecnicoNombreInput) {
+            const full = (tecNombre + " " + tecApellido).trim()
+            tecnicoNombreInput.value = full ? full : (tecnicoId ? ("ID " + tecnicoId) : "")
+          }
+        })
+      }
+
+      if (form) {
+        form.addEventListener("submit", (ev) => {
+          const ordenId = (idOrdenInternaHidden.value || "").trim()
+          if (!ordenId) {
+            ev.preventDefault()
+            alert("Primero selecciona una orden")
+          }
+        })
+      }
+    })
+  </script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+
+<head>
+<meta charset="utf-8">
+<title>Nuevo Proveedor</title>
+</head>
+
+<body>
+	<div layout:fragment="espaciopaginas">
+		<h2>
+			<span class="material-icons">add_circle</span> Añadir Proveedor
+		</h2>
+
+
+		<div th:if="${error}"
+			style="margin: 10px 0; padding: 10px; border-radius: 10px; border: 1px solid #f1b6b6; background: #fdecec; color: #b00020;">
+			<span th:text="${error}"></span>
+		</div>
+
+		<div th:if="${msg}"
+			style="margin: 10px 0; padding: 10px; border-radius: 10px; border: 1px solid #b7e1c1; background: #eaf7ee; color: #0a7a2f;">
+			<span th:text="${msg}"></span>
+		</div>
+
+
+		<form th:action="@{/proveedores/guardar}" th:object="${proveedor}"
+			method="post">
+
+
+			<input type="hidden" name="returnTo" th:value="${returnTo}">
+
+		
+			<input type="hidden" th:field="*{idProveedor}">
+
+
+			<div class="form-group">
+
+				<label for="txtproveedor" class="form-label">Empresa</label>
+
+				<div
+					style="display: flex; align-items: center; gap: 10px; width: 100%;">
+
+					<input th:field="*{proveedor}" type="text" class="form-control"
+						id="txtproveedor" style="flex: 1; width: 100%;"> <span
+						th:if="${errorEmpresa}"
+						style="color: #d32f2f; font-size: 13px; white-space: nowrap;">
+						<span th:text="${errorEmpresa}"></span>
+					</span>
+
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<label for="txtnombreContacto" class="form-label">Nombres</label><input
+					th:field="*{nombreContacto}" type="text" class="form-control"
+					id="txtnombreContacto">
+			</div>
+
+			<div class="form-group">
+				<label for="txtapellidoContacto" class="form-label">Apellidos</label><input
+					th:field="*{apellidoContacto}" type="text" class="form-control"
+					id="txtapellidoContacto">
+			</div>
+
+			<div class="form-group">
+				<label for="txttelefono" class="form-label">Teléfono</label><input
+					th:field="*{telefono}" type="text" class="form-control"
+					id="txttelefono">
+			</div>
+
+			<div class="form-group">
+
+				<label for="txtcorreo" class="form-label">Correo</label>
+
+				<div
+					style="display: flex; align-items: center; gap: 10px; width: 100%;">
+
+					<input th:field="*{correo}" type="text" class="form-control"
+						id="txtcorreo" style="flex: 1; width: 100%;"> <span
+						th:if="${errorCorreo}"
+						style="color: #d32f2f; font-size: 13px; white-space: nowrap;">
+						<span th:text="${errorCorreo}"></span>
+					</span>
+
+				</div>
+
+			</div>
+
+
+
+			<div class="form-group">
+				<label for="txtnotas" class="form-label">Notas</label><input
+					th:field="*{notas}" type="text" class="form-control" id="txtnotas">
+			</div>
+
+			<div class="form-actions">
+				<button type="submit" class="btn-centronet">
+					<i class="fa fa-save"></i> Guardar
+				</button>
+
+				<a th:href="@{/proveedores}" class="btn-outline"> <i
+					class="fa fa-times"></i> Cancelar
+				</a>
+			</div>
+
+
+		</form>
+
+	</div>
+</body>
+</html>

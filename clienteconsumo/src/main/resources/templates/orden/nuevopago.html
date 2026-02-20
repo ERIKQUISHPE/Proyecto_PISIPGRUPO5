@@ -1,0 +1,452 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>Nuevo Pago</title>
+
+  <style>
+    .pago-wrap{ max-width: 1100px; }
+
+    .row2{
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .row2 > label{
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .select-beauty{
+      width: 360px;
+      padding: 10px 40px 10px 14px;
+      border-radius: 12px;
+      border: 1px solid #d6d6d6;
+      background: #fff;
+      outline: none;
+      transition: .15s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,.05);
+      height: 42px;
+    }
+    .select-wrap{ position: relative; width: 360px; }
+    .select-wrap:after{
+      content: "▾";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: .7;
+      font-size: 16px;
+    }
+    .select-beauty:focus{
+      border-color: #f59f0b;
+      box-shadow: 0 0 0 4px rgba(245,159,11,.18);
+    }
+
+    .form-centronet input[type="text"],
+    .form-centronet input[type="number"]{
+      border-radius: 12px;
+      border: 1px solid #d6d6d6;
+      box-shadow: 0 2px 6px rgba(0,0,0,.05);
+      transition: .15s ease;
+      height: 42px;
+      width: 100%;
+    }
+    .form-centronet input:focus{
+      border-color: #f59f0b;
+      box-shadow: 0 0 0 4px rgba(245,159,11,.18);
+      outline: none;
+    }
+
+    .money-row{ max-width: 360px; }
+    .money-in{ position: relative; width: 360px; }
+    .money-in:before{
+      content: "$";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    .money-in input{ padding-left: 28px; }
+
+    .input-reducido{
+      max-width: 560px;
+      width: 560px;
+    }
+
+    .tabla-reducida{
+      width: 560px;
+      max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .tabla-wrap{
+      width: 560px;
+      max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    #tablaMateriales th{ font-weight: 600; white-space: nowrap; }
+
+    .acciones-text{
+      color: #6b7280;
+      font-style: italic;
+      font-size: 13px;
+      line-height: 42px;
+      height: 42px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+<div layout:fragment="espaciopaginas">
+
+  <div class="pago-wrap">
+
+    <!-- ✅ título dinámico, no rompe nada -->
+    <h2>
+      <span class="material-icons" th:text="${modoEditar} ? 'edit' : 'add_circle'">add_circle</span>
+      <span th:text="${modoEditar} ? 'Editar Pago' : 'Añadir Pago'">Añadir Pago</span>
+    </h2>
+
+    <form class="form-centronet" th:action="@{/pagos/guardar}" method="post" autocomplete="off">
+
+      <!-- ✅ hidden para que el controller sepa si es EDIT -->
+      <input type="hidden" name="idPago" th:if="${modoEditar}" th:value="${pagoEdit.idPago}">
+
+      <div class="row2">
+        <label>Orden</label>
+        <div class="select-wrap">
+
+          <!-- ✅ si es editar, se bloquea el select, pero se manda hidden -->
+          <select class="form-select select-beauty" id="idOrden" name="idOrden" required
+                  th:disabled="${modoEditar}">
+            <option value="">Seleccione una orden</option>
+
+            <option th:each="o : ${listaorden}"
+                    th:value="${o.idOrden}"
+                    th:selected="${modoEditar} ? (${pagoEdit.idOrden} == ${o.idOrden}) : false"
+                    th:attr="data-cliente=${(o.fkCliente != null ? (o.fkCliente.nombre + ' ' + o.fkCliente.apellido) : 'SIN CLIENTE')},
+                             data-abonos=${(o.totalCobro != null ? o.totalCobro : 0)}"
+                    th:text="${'Orden #' + o.idOrden + ' - ' + o.detalleProblema}">
+            </option>
+          </select>
+
+          <!-- ✅ importantísimo: disabled NO manda value -->
+          <input type="hidden" name="idOrden" th:if="${modoEditar}" th:value="${pagoEdit.idOrden}">
+
+        </div>
+      </div>
+
+      <div class="row2">
+        <label>Cliente</label>
+        <input type="text" id="clienteNombre" class="input-reducido" readonly value="">
+      </div>
+
+      <div class="row2">
+        <label></label>
+        <div class="table-responsive tabla-wrap">
+          <table class="table table-hover table-dark-mdc" id="tablaMateriales">
+            <thead>
+            <tr>
+              <th style="width:60%">Materiales usados</th>
+              <th style="width:20%">Cant.</th>
+              <th style="width:20%">Precio sin IVA</th>
+            </tr>
+            </thead>
+            <tbody id="tbodyMateriales">
+            <tr>
+              <td colspan="3">Seleccione una orden para ver materiales</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row2">
+        <label>Acciones realizadas</label>
+        <span id="accionesText" class="acciones-text">Seleccione una orden para ver acciones</span>
+      </div>
+
+      <div class="row2">
+        <label>Total materiales</label>
+        <div class="money-in money-row">
+          <input type="text" id="totalMateriales" readonly value="0.00">
+        </div>
+      </div>
+
+      <div class="row2">
+        <label>Abonos</label>
+        <div class="money-in money-row">
+          <input type="text" id="abonos" readonly value="0.00">
+        </div>
+      </div>
+
+      <!-- ✅ en editar no pedimos mano de obra, porque no existe guardada -->
+		<div class="row2">
+		  <label>Mano de obra</label>
+		  <div class="money-in money-row">
+		    <input type="number" step="0.01" min="0"
+		           id="manoObra" name="manoObra"
+		           placeholder="Ingrese el valor"
+		           th:value="${modoEditar} ? ${pagoEdit.monto} : ''"
+		           required>
+		  </div>
+		</div>
+
+      <div class="row2">
+        <label>Subtotal</label>
+        <div class="money-in money-row">
+          <input type="text" id="subtotal" readonly value="0.00">
+        </div>
+      </div>
+
+      <div class="row2">
+        <label>Valor del IVA</label>
+        <div class="money-in money-row">
+          <input type="text" id="iva" readonly value="0.00">
+        </div>
+      </div>
+
+      <!-- ✅ total a cobrar:
+           - en crear, lo calculas (igual que antes)
+           - en editar, es el único editable, y carga monto del pago -->
+      <div class="row2">
+        <label>Total a cobrar</label>
+        <div class="money-in money-row">
+
+          <!-- CREAR (igual que antes) -->
+          <input type="text" id="totalCobrarView" readonly value="0.00" th:if="${modoEditar} != true">
+          <input type="hidden" id="totalCobrar" name="totalCobrar" value="0.00" th:if="${modoEditar} != true">
+
+          <!-- EDITAR (editable) -->
+          <input type="number" step="0.01" min="0"
+                 id="totalCobrarEdit" name="totalCobrar"
+                 th:if="${modoEditar} == true"
+                 th:value="${pagoEdit.monto}">
+        </div>
+      </div>
+
+      <div class="row2">
+        <label>Método de pago</label>
+        <div class="select-wrap">
+
+<select name="metodoPago" class="select-beauty" required>
+  <option value="">Seleccione el método de pago</option>
+
+  <option value="EFECTIVO"
+          th:selected="${modoEditar} ? (${pagoEdit.metodoPago} == 'EFECTIVO') : false">
+    Efectivo
+  </option>
+
+  <option value="TRANSFERENCIA"
+          th:selected="${modoEditar} ? (${pagoEdit.metodoPago} == 'TRANSFERENCIA') : false">
+    Transferencia
+  </option>
+
+  <option value="TARJETA_DEBITO"
+          th:selected="${modoEditar} ? (${pagoEdit.metodoPago} == 'TARJETA_DEBITO') : false">
+    Tarjeta débito
+  </option>
+
+  <option value="TARJETA_CREDITO"
+          th:selected="${modoEditar} ? (${pagoEdit.metodoPago} == 'TARJETA_CREDITO') : false">
+    Tarjeta crédito
+  </option>
+</select>
+
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-centronet">
+          <i class="fa fa-save"></i>
+          <span th:text="${modoEditar} ? 'Actualizar' : 'Guardar'">Guardar</span>
+        </button>
+
+        <a th:href="@{/pagos}" class="btn-outline">
+          <i class="fa fa-times"></i> Cancelar
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+
+<script>
+  const IVA_RATE = 0.15;
+
+  const selOrden = document.getElementById('idOrden');
+  const clienteNombre = document.getElementById('clienteNombre');
+  const tbody = document.getElementById('tbodyMateriales');
+  const totalMat = document.getElementById('totalMateriales');
+  const abonos = document.getElementById('abonos');
+  const manoObra = document.getElementById('manoObra');
+  const subtotal = document.getElementById('subtotal');
+  const iva = document.getElementById('iva');
+
+  const totalView = document.getElementById('totalCobrarView');
+  const totalHidden = document.getElementById('totalCobrar');
+
+  // ✅ NUEVO, existe solo en editar
+  const totalEdit = document.getElementById('totalCobrarEdit');
+
+  const accionesText = document.getElementById('accionesText');
+
+  function toNum(v) {
+    const n = parseFloat(v);
+    return isNaN(n) ? 0 : n;
+  }
+  function fmt(n) {
+    return (Math.round(n * 100) / 100).toFixed(2);
+  }
+
+  function recalcular() {
+    const tMat = toNum(totalMat.value);
+
+    const mObra = manoObra ? toNum(manoObra.value) : 0;
+
+    // ✅ abonos sí se usan
+    const ab = toNum(abonos.value);
+
+    const sub = tMat + mObra;
+    const vIva = sub * IVA_RATE;
+
+    // ✅ total final restando abonos
+    const total = (sub + vIva) - ab;
+
+    subtotal.value = fmt(sub);
+    iva.value = fmt(vIva);
+
+    // ✅ crear
+    if (totalView) totalView.value = fmt(total);
+    if (totalHidden) totalHidden.value = fmt(total);
+
+    // ✅ editar, ahora sí se actualiza el input editable
+    if (totalEdit) totalEdit.value = fmt(total);
+  }
+
+  async function cargarAcciones(idOrden) {
+    try {
+      const res = await fetch(`/pagos/acciones/${idOrden}`);
+      const data = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        accionesText.textContent = 'SIN ACCIONES';
+        return;
+      }
+
+      const texto = data
+        .map(x => (x.accionRealizada ? x.accionRealizada : (x.descripcion ? x.descripcion : 'ACCIÓN')))
+        .join(', ');
+
+      accionesText.textContent = texto;
+
+    } catch (e) {
+      accionesText.textContent = 'ERROR AL CARGAR';
+    }
+  }
+
+  async function cargarMateriales(idOrden) {
+    tbody.innerHTML = '<tr><td colspan="3">Cargando...</td></tr>';
+
+    try {
+      const res = await fetch(`/pagos/materiales/${idOrden}`);
+      const data = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3">No hay materiales registrados para esta orden</td></tr>`;
+        totalMat.value = '0.00';
+        recalcular();
+        return;
+      }
+
+      let total = 0;
+      let html = '';
+
+      data.forEach(it => {
+        const cant = toNum(it.cantidad);
+        const precio = toNum(it.costoVenta);
+        total += (cant * precio);
+
+        const nombre = it.materialNombre ? it.materialNombre : ('Material #' + (it.idMaterial || ''));
+
+        html += `
+          <tr>
+            <td>${nombre}</td>
+            <td>${cant}</td>
+            <td>${fmt(precio)}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+      totalMat.value = fmt(total);
+      recalcular();
+
+    } catch (e) {
+      tbody.innerHTML = '<tr><td colspan="3">Error al cargar materiales</td></tr>';
+      totalMat.value = '0.00';
+      recalcular();
+    }
+  }
+
+  selOrden.addEventListener('change', async (ev) => {
+    const id = ev.target.value;
+
+    if (!id) {
+      clienteNombre.value = '';
+      abonos.value = '0.00';
+      accionesText.textContent = 'Seleccione una orden para ver acciones';
+      tbody.innerHTML = '<tr><td colspan="3">Seleccione una orden para ver materiales</td></tr>';
+      totalMat.value = '0.00';
+      recalcular();
+      return;
+    }
+
+    const opt = selOrden.options[selOrden.selectedIndex];
+    clienteNombre.value = opt.getAttribute('data-cliente') || '';
+
+    // ✅ lo que tengas en data-abonos ahora sí afecta al total
+    abonos.value = fmt(toNum(opt.getAttribute('data-abonos')));
+
+    await cargarAcciones(id);
+    await cargarMateriales(id);
+  });
+
+  if (manoObra) manoObra.addEventListener('input', recalcular);
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const id = selOrden.value;
+    if (id) {
+      const opt = selOrden.options[selOrden.selectedIndex];
+      clienteNombre.value = opt.getAttribute('data-cliente') || '';
+      abonos.value = fmt(toNum(opt.getAttribute('data-abonos')));
+
+      await cargarAcciones(id);
+      await cargarMateriales(id);
+    }
+    recalcular();
+  });
+
+  recalcular();
+</script>
+
+</div>
+</body>
+</html>

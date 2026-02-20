@@ -1,0 +1,188 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title th:text="${modo == 'editar' ? 'Editar Usuario' : 'Añadir Usuario'}">Añadir Usuario</title>
+
+  <style>
+    .form-actions{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:center;
+      margin-top:22px;
+      padding-bottom: 10px;
+    }
+    .pass-wrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn-eye{
+      border: 1px solid rgba(0,0,0,0.25);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ✅ SOLO ESTILO DE COMBOBOX (IGUAL A TUS HTML ANTERIORES) */
+    :root { --mdc-theme-primary: #fbc02d; }
+
+    .select-beauty{
+      width: 420px;
+      max-width: 100%;
+      padding: 10px 42px 10px 14px;
+      border-radius: 14px;
+      border: 1px solid #d6d6d6;
+      background: #fff;
+      outline: none;
+      transition: .15s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    }
+    .select-beauty:focus{
+      border-color: #fbc02d;
+      box-shadow: 0 0 0 3px rgba(251,192,45,.25);
+    }
+    .select-wrap{
+      position: relative;
+      display: inline-block;
+      width: 420px;
+      max-width: 100%;
+    }
+    .select-wrap::after{
+      content: "";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-right: 3px solid #333;
+      border-bottom: 3px solid #333;
+      transform: translateY(-55%) rotate(45deg);
+      pointer-events: none;
+      opacity: .7;
+    }
+
+    /* por si tu form es full width, que el combo se adapte */
+    .select-wrap{ width: 100%; }
+    .select-beauty{ width: 100%; }
+  </style>
+</head>
+
+<body>
+<div layout:fragment="espaciopaginas">
+
+  <h2>
+    <span class="material-icons">add_circle</span>
+    <span th:text="${modo == 'editar' ? 'Editar Usuario' : 'Añadir Usuario'}">Añadir Usuario</span>
+  </h2>
+
+  <form class="form-centronet"
+        th:object="${usuario}"
+        th:action="${modo == 'editar'} ? @{/usuarios/actualizar} : @{/usuarios/guardar}"
+        method="post">
+
+    <!-- id oculto para editar -->
+    <input type="hidden" th:field="*{idUsuario}"/>
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" th:field="*{nombre}" placeholder="Ingrese el nombre" required>
+    </div>
+
+    <div class="form-group">
+      <label>Apellido</label>
+      <input type="text" th:field="*{apellido}" placeholder="Ingrese el apellido" required>
+    </div>
+
+    <div class="form-group">
+      <label>Rol</label>
+      <div class="select-wrap">
+        <select class="select-beauty" th:field="*{rol}" required>
+          <option value="" selected>Seleccione</option>
+          <option value="ADMIN">ADMIN</option>
+          <option value="TECNICO">TECNICO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input type="text" th:field="*{telefono}" placeholder="Ingrese el teléfono" required>
+    </div>
+
+    <div class="form-group">
+      <label>Correo</label>
+      <input type="email" th:field="*{correo}" placeholder="correo@ejemplo.com" required>
+    </div>
+
+    <div class="form-group">
+      <label>Estado</label>
+      <div class="select-wrap">
+        <select class="select-beauty" th:field="*{estado}">
+          <option th:value="true">Activo</option>
+          <option th:value="false">Inactivo</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input type="text" th:field="*{usuario}" placeholder="Ingrese el usuario" required>
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña</label>
+
+      <div class="pass-wrap">
+        <input id="password" type="password" th:field="*{password}" placeholder="Ingrese contraseña"
+               th:required="${modo != 'editar'}">
+
+        <button class="btn-eye" type="button" onclick="togglePassword()" title="Ver contraseña">
+          <i class="fa-solid fa-eye"></i>
+        </button>
+      </div>
+
+      <small th:if="${modo == 'editar'}" style="display:block; margin-top:6px; opacity:.75;">
+        Si no vas a cambiar la contraseña, déjala vacía
+      </small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-centronet">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Guardar
+      </button>
+
+      <a th:href="@{/usuarios}" class="btn-outline">
+        <i class="fa fa-times"></i> Cancelar
+      </a>
+    </div>
+
+  </form>
+
+  <script>
+    function togglePassword(){
+      const input = document.getElementById("password")
+      const icon = event.currentTarget.querySelector("i")
+      if(input.type === "password"){
+        input.type = "text"
+        if(icon){ icon.classList.remove("fa-eye"); icon.classList.add("fa-eye-slash") }
+      }else{
+        input.type = "password"
+        if(icon){ icon.classList.remove("fa-eye-slash"); icon.classList.add("fa-eye") }
+      }
+    }
+  </script>
+
+</div>
+</body>
+</html>

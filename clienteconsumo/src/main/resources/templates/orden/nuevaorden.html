@@ -1,0 +1,399 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+
+<head>
+<style>
+:root {
+	--mdc-theme-primary: #fbc02d;
+}
+</style>
+
+<meta charset="utf-8">
+
+<title>Nueva Orden</title>
+</head>
+<body>
+
+	<div layout:fragment="espaciopaginas">
+
+		<!-- MENSAJES -->
+		<div th:if="${msg}"
+			style="margin: 10px 0; padding: 10px; border-radius: 10px; border: 1px solid #b7e1c1; background: #eaf7ee; color: #0a7a2f;">
+			<span th:text="${msg}"></span>
+		</div>
+
+		<div th:if="${error}"
+			style="margin: 10px 0; padding: 10px; border-radius: 10px; border: 1px solid #f1b6b6; background: #fdecec; color: #b00020;">
+			<span th:text="${error}"></span>
+		</div>
+
+		<h2>
+			<span class="material-icons">add_circle</span> <span
+				th:text="${modoEditar} ? 'Editar Orden' : 'Añadir Orden'"></span>
+		</h2>
+
+		<form class="form-centronet"
+			th:action="${modoEditar} ? @{/ordenes/guardar} : @{/ordenes/guardar-continuar}"
+			th:object="${orden}" method="post">
+
+			<input type="hidden" th:field="*{idOrden}"> <input
+				type="hidden" th:field="*{codigoOrden}">
+
+			<h3>Datos de la orden</h3>
+
+			<div class="form-group">
+				<label>Estado de la Orden</label>
+
+				<div id="selEstadoMdc" class="mdc-select"
+					data-mdc-auto-init="MDCSelect">
+					<input type="hidden" id="selEstado" th:field="*{estadoOrden}">
+					<i class="mdc-select__dropdown-icon"></i>
+					<div class="mdc-select__selected-text"></div>
+
+					<div class="mdc-select__menu mdc-menu-surface">
+						<ul class="mdc-list">
+							<li class="mdc-list-item mdc-list-item--selected"
+								data-value="INGRESADO" aria-selected="true">Ingresado</li>
+							<li class="mdc-list-item" data-value="DIAGNOSTICO">Diagnóstico</li>
+							<li class="mdc-list-item" data-value="REPARACION">Reparación</li>
+							<li class="mdc-list-item" data-value="ENTREGA">Entrega</li>
+						</ul>
+					</div>
+
+					<div class="mdc-line-ripple"></div>
+				</div>
+			</div>
+
+			<hr>
+
+			<h3>Cliente</h3>
+
+			<div class="form-group">
+				<label>Seleccionar Cliente</label>
+
+				<div id="selClienteMdc" class="mdc-select"
+					data-mdc-auto-init="MDCSelect">
+
+					<input type="hidden" id="selCliente"
+						th:field="*{fkCliente.idCliente}"> <i
+						class="mdc-select__dropdown-icon"></i>
+					<div class="mdc-select__selected-text"></div>
+
+					<div class="mdc-select__menu mdc-menu-surface">
+						<ul class="mdc-list">
+							<li class="mdc-list-item mdc-list-item--selected" data-value="0"
+								aria-selected="true">Seleccione un cliente</li>
+
+							<li th:each="c : ${listarCliente}" class="mdc-list-item"
+								th:attr="data-value=${c.idCliente},
+                         data-nombre=${c.nombre},
+                         data-apellido=${c.apellido},
+                         data-ci=${c.ci},
+                         data-telefono=${c.telefono}"
+								th:text="${c.nombre + ' ' + c.apellido + ' - ' + c.ci}"></li>
+						</ul>
+					</div>
+
+					<div class="mdc-line-ripple"></div>
+
+				</div>
+			</div>
+
+			<div
+				style="display: flex; gap: 10px; align-items: center; margin: 10px 0 14px;">
+				<a th:href="@{'/clientes/nuevo?returnTo=' + ${returnToCliente}}"
+					class="btn-guardar"
+					style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+					
+					<span class="material-icons" style="font-size: 18px;">person_add</span>
+					Añadir Cliente
+				</a> <a th:href="@{/clientes}" class="btn-cancelar"
+					style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+					
+					<span class="material-icons" style="font-size: 18px;">search</span>
+					Buscar / Ver Clientes
+				</a>
+			</div>
+
+			<div class="ui-card" style="margin-top: 8px;">
+				<div class="ui-card-header"
+					style="display: flex; align-items: center; gap: 8px;">
+					<span class="material-icons">person</span> <strong>Cliente
+						seleccionado</strong>
+				</div>
+
+				<div class="ui-card-body" style="margin-top: 8px; line-height: 1.8;">
+					<div>
+						<strong>Nombre:</strong> <span id="cliNombre">—</span>
+					</div>
+					<div>
+						<strong>CI:</strong> <span id="cliCi">—</span>
+					</div>
+					<div>
+						<strong>Teléfono:</strong> <span id="cliTel">—</span>
+					</div>
+				</div>
+			</div>
+
+			<hr style="margin: 18px 0;">
+
+			<h3>Técnico</h3>
+
+			<div class="form-group">
+				<label>Seleccionar Técnico</label>
+
+				<div id="selTecnicoMdc" class="mdc-select"
+					data-mdc-auto-init="MDCSelect">
+					<input type="hidden" id="selTecnico"
+						th:field="*{fkUsuario.idUsuario}"> <i
+						class="mdc-select__dropdown-icon"></i>
+					<div class="mdc-select__selected-text"></div>
+
+					<div class="mdc-select__menu mdc-menu-surface">
+						<ul class="mdc-list">
+							<li class="mdc-list-item mdc-list-item--selected" data-value="0"
+								aria-selected="true">Seleccione un técnico</li>
+
+							<li th:each="u : ${listarUsuario}" class="mdc-list-item"
+								th:attr="data-value=${u.idUsuario},
+                         data-nombre=${u.nombre},
+                         data-apellido=${u.apellido},
+                         data-usuario=${u.usuario},
+                         data-telefono=${u.telefono}"
+								th:text="${u.nombre + ' ' + u.apellido + ' - ' + u.usuario}">
+							</li>
+						</ul>
+					</div>
+
+					<div class="mdc-line-ripple"></div>
+				</div>
+			</div>
+
+			<div
+				style="display: flex; gap: 10px; align-items: center; margin: 10px 0 14px;">
+				<a th:href="@{/usuarios}" class="btn-cancelar"
+					style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+					<span class="material-icons" style="font-size: 18px;">search</span>
+					Buscar / Ver Técnicos
+				</a>
+			</div>
+
+			<div class="ui-card" style="margin-top: 8px;">
+				<div class="ui-card-header"
+					style="display: flex; align-items: center; gap: 8px;">
+					<span class="material-icons">engineering</span> <strong>Técnico
+						seleccionado</strong>
+				</div>
+
+				<div class="ui-card-body" style="margin-top: 8px; line-height: 1.8;">
+					<div>
+						<strong>Nombre:</strong> <span id="tecNombre">—</span>
+					</div>
+					<div>
+						<strong>Usuario:</strong> <span id="tecUser">—</span>
+					</div>
+					<div>
+						<strong>Teléfono:</strong> <span id="tecTel">—</span>
+					</div>
+				</div>
+			</div>
+
+			<hr style="margin: 18px 0;">
+
+			<h3>Descripción del problema</h3>
+
+			<div class="form-group">
+				<label for="txtdetalleProblema" class="form-label"> Detalle
+					del Problema </label> <input th:field="*{detalleProblema}" type="text"
+					class="form-control" id="txtdetalleProblema">
+			</div>
+
+			<div class="form-group">
+				<label for="txtobservaciones" class="form-label">
+					Observaciones </label> <input th:field="*{observaciones}" type="text"
+					class="form-control" id="txtobservaciones">
+			</div>
+
+			<div class="form-group">
+				<label for="txttotalCobro" class="form-label"> Total Cobro </label>
+				<input th:field="*{totalCobro}" type="number" step="0.01" min="0"
+					required class="form-control" id="txttotalCobro">
+			</div>
+
+
+			<div class="form-group">
+				<label>Estado de pago</label>
+
+				<div class="form-check d-flex align-items-center gap-2 mt-2">
+					<input class="form-check-input" type="checkbox" id="chkPagado"
+						th:field="*{pagado}"> <label class="form-check-label mb-0"
+						for="chkPagado"> Abona </label>
+				</div>
+			</div>
+
+
+			<div
+				style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px;">
+				<button type="submit" class="btn-guardar"
+					style="display: inline-flex; align-items: center; gap: 8px;">
+					<span class="material-icons">save</span> <span
+						th:text="${modoEditar} ? 'Guardar cambios' : 'Guardar y continuar'"></span>
+				</button>
+
+				<a th:href="@{/ordenes}" class="btn-cancelar"
+					style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+					<span class="material-icons">close</span> Cancelar
+				</a>
+			</div>
+
+		</form>
+
+		<script>
+  function pintarClienteDesdeLI(li) {
+    if (!li) return;
+
+    const v = (li.getAttribute("data-value") || "0").toString();
+    if (v === "0") {
+      document.getElementById("cliNombre").textContent = "—";
+      document.getElementById("cliCi").textContent = "—";
+      document.getElementById("cliTel").textContent = "—";
+      return;
+    }
+
+    const nombre = ((li.getAttribute("data-nombre") || "") + " " + (li.getAttribute("data-apellido") || "")).trim();
+
+    document.getElementById("cliNombre").textContent = nombre || "—";
+    document.getElementById("cliCi").textContent = li.getAttribute("data-ci") || "—";
+    document.getElementById("cliTel").textContent = li.getAttribute("data-telefono") || "—";
+
+    const hidden = document.getElementById("selCliente");
+    if (hidden) hidden.value = v;
+  }
+
+  function pintarTecnicoDesdeLI(li) {
+    if (!li) return;
+
+    const v = (li.getAttribute("data-value") || "0").toString();
+    if (v === "0") {
+      document.getElementById("tecNombre").textContent = "—";
+      document.getElementById("tecUser").textContent = "—";
+      document.getElementById("tecTel").textContent = "—";
+      return;
+    }
+
+    const nombre = ((li.getAttribute("data-nombre") || "") + " " + (li.getAttribute("data-apellido") || "")).trim();
+
+    document.getElementById("tecNombre").textContent = nombre || "—";
+    document.getElementById("tecUser").textContent = li.getAttribute("data-usuario") || "—";
+    document.getElementById("tecTel").textContent = li.getAttribute("data-telefono") || "—";
+
+    const hidden = document.getElementById("selTecnico");
+    if (hidden) hidden.value = v;
+  }
+
+  function normalizarAbonoYCheck() {
+    const txt = document.getElementById("txttotalCobro");
+    const chk = document.getElementById("chkPagado");
+    if (!txt || !chk) return;
+
+    let v = (txt.value ?? "").toString().trim();
+    if (v === "") v = "0";
+
+    const num = parseFloat(v);
+    const valorFinal = isNaN(num) ? 0 : num;
+
+    txt.value = valorFinal.toFixed(2);
+    chk.checked = valorFinal > 0;
+  }
+
+  function validarAntesDeEnviar() {
+    const detalle = document.getElementById("txtdetalleProblema");
+    const obs = document.getElementById("txtobservaciones");
+
+    const d = (detalle?.value ?? "").trim();
+    const o = (obs?.value ?? "").trim();
+
+    if (d === "") {
+      alert("Completa el Detalle del Problema");
+      detalle?.focus();
+      return false;
+    }
+
+    if (o === "") {
+      alert("Completa Observaciones");
+      obs?.focus();
+      return false;
+    }
+
+    return true;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+  
+    const inpEstado = document.getElementById("selEstado");
+    if (inpEstado && (!inpEstado.value || inpEstado.value.trim() === "")) {
+      inpEstado.value = "INGRESADO";
+    }
+
+    const estadoMdc = document.getElementById("selEstadoMdc");
+    if (estadoMdc) {
+      estadoMdc.classList.add("mdc-select--disabled");
+      estadoMdc.setAttribute("aria-disabled","true");
+      estadoMdc.style.pointerEvents = "none";
+      estadoMdc.style.opacity = "0.85";
+    }
+
+  
+    const txt = document.getElementById("txttotalCobro");
+    if (txt) {
+      if (txt.value == null || txt.value === "") txt.value = "0.00";
+      normalizarAbonoYCheck();
+      txt.addEventListener("blur", normalizarAbonoYCheck);
+      txt.addEventListener("input", () => {
+        const chk = document.getElementById("chkPagado");
+        if (!chk) return;
+        const n = parseFloat(txt.value);
+        chk.checked = (!isNaN(n) && n > 0);
+      });
+    }
+
+
+    const form = document.querySelector("form.form-centronet");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        normalizarAbonoYCheck();
+        if (!validarAntesDeEnviar()) {
+          e.preventDefault();
+          return false;
+        }
+      });
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const li = e.target.closest(".mdc-list-item");
+    if (!li) return;
+
+    const v = li.getAttribute("data-value");
+    if (!v) return;
+
+    // si tiene data-ci, es cliente
+    if (li.hasAttribute("data-ci")) {
+      setTimeout(() => pintarClienteDesdeLI(li), 0);
+      return;
+    }
+
+    // si tiene data-usuario, es técnico
+    if (li.hasAttribute("data-usuario")) {
+      setTimeout(() => pintarTecnicoDesdeLI(li), 0);
+      return;
+    }
+  });
+</script>
+	</div>
+
+</body>
+</html>

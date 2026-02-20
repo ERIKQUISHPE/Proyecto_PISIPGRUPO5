@@ -1,0 +1,124 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+<meta charset="utf-8">
+<title>GESTIÓN DE DIAGNÓSTICOS</title>
+</head>
+
+<body>
+  <div layout:fragment="espaciopaginas">
+
+    <h2>Lista de Diagnósticos</h2>
+
+    <a th:href="@{/diagnosticos/nuevo}" class="btn-centronet">
+      <i class="material-symbols-outlined">troubleshoot</i>
+      Añadir Diagnóstico
+    </a>
+
+    <div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+      <div class="mdc-card p-0">
+        <div class="table-responsive">
+
+          <table class="table table-hover table-dark-mdc">
+            <thead>
+              <tr>
+                <th># Orden</th>
+                <th>Técnico</th>
+                <th>Estado</th>
+                <th>Diagnóstico</th>
+                <th>Observaciones</th>
+                <th>Fecha creación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr th:if="${#lists.isEmpty(listadiagnostico)}">
+                <td colspan="7" class="text-center">No existen diagnósticos registrados</td>
+              </tr>
+
+              <tr th:each="d : ${listadiagnostico}">
+                <td th:text="${d.textoOrden != null ? d.textoOrden : ('Interna #' + d.idOrdenInterna)}">Orden</td>
+
+                <td th:text="${(d.tecnicoNombre != null and d.tecnicoApellido != null)
+                      ? (d.tecnicoNombre + ' ' + d.tecnicoApellido)
+                      : ('ID ' + d.tecnicoId)}">
+                  Técnico
+                </td>
+                <td th:text="${d.estadoOrden != null ? d.estadoOrden : ''}">EN PROCESO</td>
+
+                <td th:text="${d.diagnostico != null and #strings.length(d.diagnostico) > 45
+                      ? (#strings.substring(d.diagnostico,0,45) + '...')
+                      : d.diagnostico}">
+                  Diagnóstico
+                </td>
+
+                <td th:text="${d.observaciones != null and #strings.length(d.observaciones) > 45
+                      ? (#strings.substring(d.observaciones,0,45) + '...')
+                      : d.observaciones}">
+                  Observaciones
+                </td>
+
+                <td th:text="${d.creadoEn != null ? #temporals.format(d.creadoEn, 'dd/MM/yyyy HH:mm') : ''}">
+                  01/02/2026
+                </td>
+
+				<td class="text-center">
+			
+				  <span th:if="${d.estadoOrden != null and #strings.equalsIgnoreCase(d.estadoOrden,'INGRESADO')}">
+				    <a th:href="@{/diagnosticos/editar(idOrdenInterna=${d.idOrdenInterna})}"
+				       class="btn btn-sm btn-warning"
+				       title="Diagnosticar">
+				      <i class="fa-solid fa-stethoscope"></i>
+				    </a>
+				  </span>
+				
+
+				  <span th:if="${d.estadoOrden != null and #strings.equalsIgnoreCase(d.estadoOrden,'EN PROCESO')}">
+				
+				    <a th:href="@{/diagnosticos/editar(idOrdenInterna=${d.idOrdenInterna})}"
+				       class="btn btn-sm btn-primary"
+				       title="Editar">
+				      <i class="fa-solid fa-pen-to-square"></i>
+				    </a>
+				
+				    <a th:href="@{/diagnosticos/eliminar(idOrdenInterna=${d.idOrdenInterna})}"
+				       class="btn btn-sm btn-danger"
+				       onclick="return confirm('Seguro que deseas eliminar este diagnóstico?');"
+				       title="Eliminar">
+				      <i class="fa-solid fa-trash"></i>
+				    </a>
+				
+				  </span>
+				
+
+				  <span th:if="${d.estadoOrden != null and #strings.equalsIgnoreCase(d.estadoOrden,'FINALIZADO')}"
+				        title="Bloqueado">
+				    <i class="fa-solid fa-lock"></i>
+				  </span>
+				
+
+				  <span th:if="${d.estadoOrden == null or !(#strings.equalsIgnoreCase(d.estadoOrden,'INGRESADO') or #strings.equalsIgnoreCase(d.estadoOrden,'EN PROCESO') or #strings.equalsIgnoreCase(d.estadoOrden,'FINALIZADO'))}"
+				        title="Bloqueado">
+				    <i class="fa-solid fa-lock"></i>
+				  </span>
+				
+				</td>
+
+
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

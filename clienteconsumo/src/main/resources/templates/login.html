@@ -1,0 +1,328 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Iniciar sesión</title>
+
+  <link rel="stylesheet" th:href="@{/assets/vendors/mdi/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendors/css/vendor.bundle.base.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/demo/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/diseno.css}">
+
+  <style>
+    :root{
+      --centro-orange:#f2a31b;
+      --centro-orange-2:#f7b23a;
+      --centro-border: rgba(0,0,0,.12);
+      --centro-text:#111827;
+      --centro-muted:#6b7280;
+      --centro-bg:#f6f7fb;
+      --centro-card:#ffffff;
+    }
+
+    body{
+      margin:0;
+      background:var(--centro-bg);
+      color:var(--centro-text);
+    }
+
+    .login-topbar{
+      height:72px;
+      background:linear-gradient(90deg,var(--centro-orange),var(--centro-orange-2));
+      display:flex;
+      align-items:center;
+      padding:0 22px;
+      box-shadow:0 8px 22px rgba(0,0,0,.10);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#111;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .brand .logo{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      background:rgba(255,255,255,.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 14px rgba(0,0,0,.10);
+      border:1px solid rgba(0,0,0,.10);
+    }
+
+    .brand small{
+      display:block;
+      font-weight:600;
+      color:rgba(0,0,0,.65);
+      margin-top:2px;
+    }
+
+    .login-page{
+      min-height:calc(100vh - 72px);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:120px 16px 28px;
+    }
+
+    .login-card{
+      width:min(980px, 100%);
+      background:var(--centro-card);
+      border:1px solid var(--centro-border);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 20px 50px rgba(0,0,0,.08);
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+    }
+
+    .left-panel{
+      padding:28px;
+      background:linear-gradient(180deg, rgba(242,163,27,.18), rgba(242,163,27,.06));
+      border-right:1px solid var(--centro-border);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:14px;
+    }
+
+    .left-title{
+      font-size:30px;
+      font-weight:900;
+      margin:0;
+    }
+
+    .left-sub{
+      margin:0;
+      color:var(--centro-muted);
+      font-weight:600;
+      line-height:1.4;
+    }
+
+    .hero-box{
+      margin-top:10px;
+      border-radius:16px;
+      border:1px solid rgba(0,0,0,.10);
+      background:rgba(255,255,255,.65);
+      padding:16px;
+    }
+
+    .right-panel{
+      padding:32px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .right-panel h2{
+      margin:0 0 10px 0;
+      font-weight:900;
+      font-size:26px;
+    }
+
+    .hint{
+      margin:0 0 18px 0;
+      color:var(--centro-muted);
+      font-weight:600;
+    }
+
+    .msg-error{
+      background:rgba(176,0,32,.08);
+      border:1px solid rgba(176,0,32,.20);
+      color:#7a0016;
+      padding:10px 12px;
+      border-radius:12px;
+      margin-bottom:12px;
+      font-weight:700;
+    }
+
+    .msg-ok{
+      background:rgba(10,122,47,.08);
+      border:1px solid rgba(10,122,47,.20);
+      color:#0a7a2f;
+      padding:10px 12px;
+      border-radius:12px;
+      margin-bottom:12px;
+      font-weight:700;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    .field label{
+      display:block;
+      font-weight:800;
+      margin-bottom:6px;
+      color:#1f2937;
+    }
+
+    .input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,.18);
+      outline:none;
+      transition:.15s;
+      background:#fff;
+    }
+
+    .input:focus{
+      border-color:var(--centro-orange);
+      box-shadow:0 0 0 4px rgba(242,163,27,.20);
+    }
+
+    .btn-login{
+      width:100%;
+      padding:12px 14px;
+      border:none;
+      border-radius:12px;
+      background:var(--centro-orange);
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 14px 26px rgba(242,163,27,.28);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .btn-login:hover{
+      filter:brightness(.98);
+    }
+
+    .footer-note{
+      margin-top:14px;
+      color:var(--centro-muted);
+      font-weight:600;
+      font-size:13px;
+    }
+
+    @media (max-width: 900px){
+      .login-card{
+        grid-template-columns:1fr;
+      }
+      .left-panel{
+        border-right:none;
+        border-bottom:1px solid var(--centro-border);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="login-topbar">
+    <div class="brand">
+      <div class="logo">
+        <span class="mdi mdi-laptop"></span>
+      </div>
+      <div>
+        <div>Centronet</div>
+        <small>Gestión de Reparación de Equipos</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-page">
+
+    <div class="login-card">
+
+     
+      <div class="left-panel">
+        <h3 class="left-title">Bienvenido</h3>
+        <p class="left-sub">
+          Inicia sesión para acceder al sistema, gestionar clientes, órdenes y tickets, todo en un solo lugar
+        </p>
+
+        <div class="hero-box" aria-hidden="true">
+          <!-- SVG simple, sin depender de imagen externa -->
+          <svg viewBox="0 0 640 280" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#f2a31b" stop-opacity=".9"/>
+                <stop offset="1" stop-color="#ffd48a" stop-opacity=".8"/>
+              </linearGradient>
+            </defs>
+
+            <rect x="0" y="0" width="640" height="280" rx="18" fill="url(#g1)" opacity=".25"/>
+            <rect x="70" y="70" width="360" height="150" rx="14" fill="#ffffff" opacity=".9"/>
+            <rect x="92" y="92" width="316" height="92" rx="10" fill="#111827" opacity=".9"/>
+            <rect x="140" y="205" width="220" height="16" rx="8" fill="#111827" opacity=".18"/>
+
+            <!-- destornillador -->
+            <rect x="470" y="95" width="18" height="120" rx="9" fill="#111827" opacity=".85"/>
+            <rect x="462" y="80" width="34" height="25" rx="9" fill="#f2a31b" opacity=".95"/>
+            <rect x="466" y="220" width="26" height="18" rx="9" fill="#111827" opacity=".35"/>
+
+            <!-- chip -->
+            <rect x="480" y="40" width="110" height="70" rx="14" fill="#111827" opacity=".85"/>
+            <rect x="505" y="60" width="60" height="30" rx="8" fill="#ffffff" opacity=".15"/>
+            <g opacity=".55" fill="#111827">
+              <rect x="480" y="35" width="10" height="12" rx="4"/>
+              <rect x="505" y="35" width="10" height="12" rx="4"/>
+              <rect x="530" y="35" width="10" height="12" rx="4"/>
+              <rect x="555" y="35" width="10" height="12" rx="4"/>
+              <rect x="580" y="35" width="10" height="12" rx="4"/>
+            </g>
+
+            
+            <circle cx="120" cy="115" r="6" fill="#f2a31b"/>
+            <circle cx="140" cy="115" r="6" fill="#ffd48a"/>
+            <circle cx="160" cy="115" r="6" fill="#ffffff" opacity=".6"/>
+          </svg>
+        </div>
+      </div>
+
+    
+      <div class="right-panel">
+
+        <h2>Iniciar sesión</h2>
+        <p class="hint">Ingresa tus credenciales para continuar</p>
+
+        <div th:if="${param.error}" class="msg-error">
+          Usuario o contraseña incorrectos
+        </div>
+
+        <div th:if="${param.logout}" class="msg-ok">
+          Sesión cerrada correctamente
+        </div>
+
+        <form th:action="@{/doLogin}" method="post">
+
+          <div class="field">
+            <label>Usuario</label>
+            <input class="input" name="usuario" type="text" placeholder="Escribe tu usuario" required>
+          </div>
+
+          <div class="field">
+            <label>Contraseña</label>
+            <input class="input" name="password" type="password" placeholder="Escribe tu contraseña" required>
+          </div>
+
+          <button type="submit" class="btn-login">
+            <span class="mdi mdi-login"></span>
+            Entrar
+          </button>
+
+          <div class="footer-note">
+            CentroNet, acceso seguro, si no tienes cuenta pide al administrador que te registre
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

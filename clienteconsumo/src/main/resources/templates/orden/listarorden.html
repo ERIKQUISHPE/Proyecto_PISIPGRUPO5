@@ -1,0 +1,160 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+  <meta charset="utf-8">
+  <title>LISTA DE ÓRDENES</title>
+</head>
+
+<body>
+<div layout:fragment="espaciopaginas">
+
+  <div th:if="${msg != null and !#strings.isEmpty(msg)}"
+       class="alert alert-success"
+       th:text="${msg}">
+  </div>
+
+  <div th:if="${error != null and !#strings.isEmpty(error)}"
+       class="alert alert-danger"
+       th:text="${error}">
+  </div>
+
+  <h2>Lista de Órdenes</h2>
+
+  <a th:href="@{/ordenes/nuevo}" class="btn-centronet">
+    <i class="material-symbols-outlined">list_alt_add</i>
+    Añadir Orden
+  </a>
+
+  <div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+    <div class="mdc-card p-0">
+      <div class="table-responsive">
+
+        <table class="table table-hover table-dark-mdc">
+          <thead>
+            <tr>
+              <th># de Orden</th>
+              <th>Cliente</th>
+              <th>Estado</th>
+              <th>Técnico</th>
+              <th>Problema</th>
+              <th>Total Abono</th>
+              <th>Abona</th>
+              <th>Ingreso</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="ordendato : ${listaorden}">
+
+              <td th:text="'Orden #' + ${ordendato.codigoOrden != null ? ordendato.codigoOrden : ordendato.idOrden}"></td>
+
+              <td>
+                <div th:if="${ordendato.fkCliente != null}">
+                  <div th:text="${ordendato.fkCliente.nombre + ' ' + ordendato.fkCliente.apellido}"></div>
+                  <small class="text-muted"
+                         th:text="${'CI: ' + ordendato.fkCliente.ci + ' , Tel: ' + ordendato.fkCliente.telefono}">
+                  </small>
+                </div>
+                <span th:if="${ordendato.fkCliente == null}">—</span>
+              </td>
+
+              <td>
+                <span th:text="${ordendato.estadoOrden}"></span>
+              </td>
+
+              <td th:text="${ordendato.fkUsuario != null ? ordendato.fkUsuario.nombre + ' ' + ordendato.fkUsuario.apellido : '—'}"></td>
+
+              <td th:text="${ordendato.detalleProblema != null ? #strings.abbreviate(ordendato.detalleProblema, 35) : '—'}"></td>
+
+              <td>
+                <span th:if="${ordendato.totalCobro == null or ordendato.totalCobro.compareTo(T(java.math.BigDecimal).ZERO) <= 0}"
+                      class="badge bg-warning text-dark">
+                  Pendiente
+                </span>
+
+                <span th:if="${ordendato.totalCobro != null and ordendato.totalCobro.compareTo(T(java.math.BigDecimal).ZERO) > 0}"
+                      class="badge bg-success">
+                  $ <span th:text="${ordendato.totalCobro}"></span>
+                </span>
+              </td>
+
+              <td>
+                <span th:if="${ordendato.pagado}" class="badge bg-success">Sí</span>
+                <span th:unless="${ordendato.pagado}">No</span>
+              </td>
+
+              <td th:text="${ordendato.fechaIngreso != null ? #strings.substring(#strings.replace(ordendato.fechaIngreso.toString(),'T',' '),0,16) : '—'}"></td>
+
+            
+              
+<td class="text-center">
+
+  <span th:if="${ordendato.estadoOrden != null and #strings.equalsIgnoreCase(ordendato.estadoOrden,'FINALIZADO')}">
+    <a th:href="@{/ordenes/eliminar(idOrden=${ordendato.idOrden})}"
+       class="btn btn-sm btn-danger"
+       title="Eliminar"
+       onclick="return confirm('Seguro que deseas Eliminar?');">
+      <i class="fa-solid fa-trash"></i>
+    </a>
+  </span>
+
+  <span th:if="${ordendato.estadoOrden != null and #strings.equalsIgnoreCase(ordendato.estadoOrden,'EN PROCESO')}"
+       title="Orden en proceso">
+    <i class="fa-solid fa-lock" style="color:black;"></i>
+  </span>
+  <span th:if="${ordendato.estadoOrden != null and #strings.equalsIgnoreCase(ordendato.estadoOrden,'INGRESADO')}">	
+  <span th:if="${!ordendato.tieneEquipo}"
+        class="text-muted small me-2"
+        title="Falta añadir equipo">
+    Pendiente añadir equipo
+  </span>
+  <span class="ms-2">
+    <a th:if="${!ordendato.tieneEquipo}"
+       th:href="@{/equipos/nuevo(ordenId=${ordendato.idOrden})}"
+       class="btn btn-sm btn-success"
+       title="Agregar equipo">
+      <i class="fa-solid fa-plus"></i>
+    </a>
+
+    <a th:href="@{/ordenes/editar(idOrden=${ordendato.idOrden})}"
+       class="btn btn-sm btn-primary"
+       title="Editar">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </a>
+
+    <a th:href="@{/ordenes/eliminar(idOrden=${ordendato.idOrden})}"
+       class="btn btn-sm btn-danger"
+       title="Eliminar"
+       onclick="return confirm('Seguro que deseas Eliminar?');">
+      <i class="fa-solid fa-trash"></i>
+    </a>
+
+  </span>
+
+
+  </span>
+  <span th:if="${ordendato.estadoOrden == null or !(#strings.equalsIgnoreCase(ordendato.estadoOrden,'INGRESADO') or #strings.equalsIgnoreCase(ordendato.estadoOrden,'EN PROCESO') or #strings.equalsIgnoreCase(ordendato.estadoOrden,'FINALIZADO'))}"
+        class="text-muted small"
+        title="Sin acciones">
+    <i class="fa-solid fa-lock" style="color:black;"></i>
+  </span>
+
+</td>
+
+
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+
+<head>
+<meta charset="utf-8">
+<title>GESTIÓN DE PROVEEDORES</title>
+</head>
+
+<body>
+	<div layout:fragment="espaciopaginas">
+
+		<h2>Lista de Proveedores</h2>
+
+
+		<a th:href="@{/proveedores/nuevo}" class="btn-centronet"> <i
+			class="fa-solid fa-user-plus"></i> Añadir Proveedor
+		</a>
+
+		<div
+			class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+			<div class="mdc-card p-0">
+				<div class="table-responsive">
+					<table class="table table-hover table-dark-mdc">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Nombre</th>
+								<th>Contacto</th>
+								<th>Apellido</th>
+								<th>Teléfono</th>
+								<th>Correo</th>
+								<th>Notas</th>
+								<th>Fecha de creación</th>
+								<th>Estado</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="proveedordato : ${listaproveedor}">
+								<td th:text="${proveedordato.idProveedor}"></td>
+								<td th:text="${proveedordato.proveedor}"></td>
+								<td th:text="${proveedordato.nombreContacto}"></td>
+								<td th:text="${proveedordato.apellidoContacto}"></td>
+								<td th:text="${proveedordato.telefono}"></td>
+								<td th:text="${proveedordato.correo}"></td>
+								<td th:text="${proveedordato.notas}"></td>
+								<td th:text="${#temporals.format(proveedordato.creadoEn, 'dd/MM/yyyy HH:mm:ss')}"></td>
+								<td th:text="${proveedordato.estado ? 'Activo' : 'Inactivo'}"></td>
+
+								<td><a
+									th:href="@{/proveedores/editar(idProveedor=${proveedordato.idProveedor})}"
+									class="btn btn-sm btn-primary" title="Editar"> <i
+										class="fa-solid fa-pen-to-square"></i>
+								</a> <a
+									th:href="@{/proveedores/eliminar(idProveedor=${proveedordato.idProveedor})}"
+									class="btn btn-sm btn-danger" title="Eliminar"
+									onclick="return confirm('Seguro que deseas eliminar este proveedor?');">
+										<i class="fa-solid fa-trash"></i>
+								</a></td>
+
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

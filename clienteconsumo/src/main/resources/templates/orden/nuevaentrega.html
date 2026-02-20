@@ -1,0 +1,188 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+
+    <style>
+        :root {
+            --mdc-theme-primary: #fbc02d;
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <title>Nueva Entrega</title>
+
+</head>
+
+<body>
+
+<div layout:fragment="espaciopaginas">
+
+    <h2>
+        <span class="material-icons">add_circle</span>
+        Nueva Entrega
+    </h2>
+
+    <!-- Mensajes -->
+    <div th:if="${error != null}"
+         style="margin:10px 0;padding:10px;border-radius:10px;border:1px solid #f1b6b6;background:#fdecec;color:#b00020;">
+        <span th:text="${error}"></span>
+    </div>
+
+    <div th:if="${msg != null}"
+         style="margin:10px 0;padding:10px;border-radius:10px;border:1px solid #b7e1c1;background:#eaf7ee;color:#0a7a2f;">
+        <span th:text="${msg}"></span>
+    </div>
+
+    <form class="form-centronet"
+          th:action="@{/entregas/guardar}"
+          th:object="${entrega}"
+          method="post">
+
+        <input type="hidden" th:field="*{idEntrega}">
+
+        <div class="form-group">
+            <label>Orden</label>
+
+            <div id="selOrdenEntrega" class="mdc-select" data-mdc-auto-init="MDCSelect">
+
+                <input type="hidden" th:field="*{fkOrden.idOrden}" id="ordenEntregaHidden">
+
+                <i class="mdc-select__dropdown-icon"></i>
+
+                <div class="mdc-select__selected-text">
+                    Seleccione una orden
+                </div>
+
+                <div class="mdc-select__menu mdc-menu-surface">
+                    <ul class="mdc-list">
+                        <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                            Seleccione una orden
+                        </li>
+
+                        <li th:each="o : ${listaorden}"
+                            class="mdc-list-item"
+                            th:attr="data-value=${o.idOrden}"
+                            th:text="${o.idOrden + ' - ' + o.detalleProblema}">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <label>Entregado por (Administrador)</label>
+
+            <div id="selEntregadoPor" class="mdc-select" data-mdc-auto-init="MDCSelect">
+
+                <input type="hidden" th:field="*{entregadoPor.idUsuario}" id="entregadoPorHidden">
+
+                <i class="mdc-select__dropdown-icon"></i>
+
+                <div class="mdc-select__selected-text">
+                    Seleccione usuario
+                </div>
+
+                <div class="mdc-select__menu mdc-menu-surface">
+                    <ul class="mdc-list">
+
+                        <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                            Seleccione usuario
+                        </li>
+
+                        <li th:each="u : ${listausuario}"
+                        th:if="${u.rol == 'ADMIN'}"
+                            class="mdc-list-item"
+                            th:attr="data-value=${u.idUsuario}"
+                            th:text="${u.nombre + ' ' + u.apellido}">
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Recibido por</label>
+
+            <input type="text"
+                   class="form-control"
+                   th:field="*{recibidoPor}"
+                   placeholder="Nombre de quien recibe el equipo"
+                   required>
+        </div>
+
+
+        <div class="form-group">
+            <label>Fecha entrega</label>
+
+            <input type="text"
+                   class="form-control"
+                   th:value="${fecha}"
+                   readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Notas</label>
+
+            <input type="text"
+                   class="form-control"
+                   th:field="*{notas}"
+                   placeholder="Ingrese notas de la entrega">
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="btn-centronet">
+                <i class="fa fa-save"></i>
+                Guardar
+            </button>
+
+            <a th:href="@{/entregas}" class="btn-outline">
+                <i class="fa fa-times"></i>
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+    <script>
+        document.addEventListener("click", function(e) {
+
+            const orden = e.target.closest("#selOrdenEntrega .mdc-list-item");
+            if (orden) {
+                const value = orden.getAttribute("data-value");
+                const texto = orden.innerText;
+                document.getElementById("ordenEntregaHidden").value = value;
+                document.querySelector("#selOrdenEntrega .mdc-select__selected-text").innerText = texto;
+            }
+
+            const entregado = e.target.closest("#selEntregadoPor .mdc-list-item");
+            if (entregado) {
+                const value = entregado.getAttribute("data-value");
+                const texto = entregado.innerText;
+                document.getElementById("entregadoPorHidden").value = value;
+                document.querySelector("#selEntregadoPor .mdc-select__selected-text").innerText = texto;
+            }
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector("#selOrdenEntrega .mdc-select__selected-text").innerText = "Seleccione una orden";
+            document.querySelector("#selEntregadoPor .mdc-select__selected-text").innerText = "Seleccione usuario";
+        });
+    </script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/plantilla/plantillaui">
+
+<head>
+    <meta charset="utf-8">
+    <title>Equipos</title>
+</head>
+
+<body>
+    <div layout:fragment="espaciopaginas">
+
+        <h2>Lista de Equipos</h2>
+        
+        <div class="mdc-layout-grid_cell stretch-card mdc-layout-grid_cell--span-12">
+            <div class="mdc-card p-0">
+                <div class="table-responsive">
+                     <table class="table table-hover table-dark-mdc">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Serial</th>
+                                <th>Estado del Equipo</th>
+                                <th>Orden</th>
+                                <th>Observaciones</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="equipodato: ${listaequipo}">
+                                <td th:text="${equipodato.idEquipo}"></td>
+                                <td th:text="${equipodato.tipo}"></td>
+                                <td th:text="${equipodato.marca}"></td>
+                                <td th:text="${equipodato.modelo}"></td>
+                                <td th:text="${equipodato.serial}"></td>
+                                <td th:text="${equipodato.estadoEquipo}"></td>
+                                <td th:text="${equipodato.fkOrden != null ? equipodato.fkOrden.idOrden : ''}"></td>
+                                <td th:text="${equipodato.observaciones}"></td>
+							<td class="mdc-data-table__cell">
+
+							  <a th:href="@{/equipos/editar/{id}(id=${equipodato.idEquipo})}"
+							     class="btn btn-sm btn-primary">
+							      <i class="fa-solid fa-pen-to-square"></i>
+							  </a>
+							
+							  <a th:href="@{/equipos/eliminar/{id}(id=${equipodato.idEquipo})}"
+							     class="btn btn-sm btn-danger"
+							     onclick="return confirm('Seguro que deseas eliminar?');">
+							      <i class="fa-solid fa-trash"></i>
+							  </a>
+							
+							</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
