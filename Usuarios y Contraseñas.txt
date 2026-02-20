@@ -1,0 +1,9 @@
+Usuarios y Contraseñas para el ingreso:
+
+Rol Admin
+Usuario: admin
+Contraseña: 123456
+
+Rol Técnico
+Usuario: tecnico
+Contraseña: 1234
