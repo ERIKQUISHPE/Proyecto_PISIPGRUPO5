@@ -106,12 +106,12 @@
 				<a th:href="@{'/clientes/nuevo?returnTo=' + ${returnToCliente}}"
 					class="btn-guardar"
 					style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-					
+
 					<span class="material-icons" style="font-size: 18px;">person_add</span>
 					Añadir Cliente
 				</a> <a th:href="@{/clientes}" class="btn-cancelar"
 					style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-					
+
 					<span class="material-icons" style="font-size: 18px;">search</span>
 					Buscar / Ver Clientes
 				</a>
@@ -157,11 +157,12 @@
 								aria-selected="true">Seleccione un técnico</li>
 
 							<li th:each="u : ${listarUsuario}" class="mdc-list-item"
+								th:if="${u.rol != null and #strings.equalsIgnoreCase(u.rol,'TECNICO')}"
 								th:attr="data-value=${u.idUsuario},
-                         data-nombre=${u.nombre},
-                         data-apellido=${u.apellido},
-                         data-usuario=${u.usuario},
-                         data-telefono=${u.telefono}"
+					             data-nombre=${u.nombre},
+					             data-apellido=${u.apellido},
+					             data-usuario=${u.usuario},
+					             data-telefono=${u.telefono}"
 								th:text="${u.nombre + ' ' + u.apellido + ' - ' + u.usuario}">
 							</li>
 						</ul>
