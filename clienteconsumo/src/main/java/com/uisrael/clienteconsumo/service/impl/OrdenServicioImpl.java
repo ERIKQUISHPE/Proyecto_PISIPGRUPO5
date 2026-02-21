@@ -99,5 +99,14 @@ public class OrdenServicioImpl implements IOrdenServicio {
 		return webclient.get().uri("/orden/disponibles").retrieve().bodyToFlux(OrdenResponseDTO.class).collectList()
 				.block();
 	}
+	
+	@Override
+	public void cambiarEstado(int idOrden, String estado) {
+	  webclient.put()
+	    .uri("/orden/{id}/estado/{estado}", idOrden, estado)
+	    .retrieve()
+	    .toBodilessEntity()
+	    .block();
+	}
 
 }

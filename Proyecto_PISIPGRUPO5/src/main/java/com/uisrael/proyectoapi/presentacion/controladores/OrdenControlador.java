@@ -217,22 +217,24 @@ public class OrdenControlador {
   @Transactional
   public void eliminar(@PathVariable int id) {
 
-    try {
-      accionReparacionJpaRepositorio.deleteByFkOrden_IdOrden(id);
-      ordenInternaJpaRepositorio.deleteByFkOrden_IdOrden(id);
-      ordenMaterialJpaRepositorio.deleteByFkOrden_IdOrden(id);
-      pagoJpaRepositorio.deleteByFkOrden_IdOrden(id);
-      entregaJpaRepositorio.deleteByFkOrden_IdOrden(id);
-      equipoJpaRepositorio.deleteByFkOrden_IdOrden(id);
+    Orden actual = ordenCasoUso.obtenerPorId(id);
 
-      ordenCasoUso.eliminar(id);
+    if ("ELIMINADO".equalsIgnoreCase(actual.getEstadoOrden())) return;
 
-    } catch (DataIntegrityViolationException e) {
-      throw new ResponseStatusException(
-        HttpStatus.CONFLICT,
-        "No se pudo eliminar por integridad, revisa relaciones"
-      );
-    }
+    Orden editada = new Orden(
+      id,
+      actual.getFechaIngreso(),
+      actual.getFechaSalida(),
+      actual.getDetalleProblema(),
+      actual.getObservaciones(),
+      actual.getTotalCobro(),
+      actual.isPagado(),
+      "ELIMINADO",
+      actual.getFkCliente(),
+      actual.getFkUsuario()
+    );
+
+    ordenCasoUso.crear(editada);
   }
 
   @GetMapping("/dashboard")

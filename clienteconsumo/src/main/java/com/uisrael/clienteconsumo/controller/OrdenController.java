@@ -31,6 +31,11 @@ public class OrdenController {
   @GetMapping
   public String listar(Model model, @ModelAttribute("msg") String msg, @ModelAttribute("error") String error) {
     List<OrdenResponseDTO> resultado = ordenServicio.listarOrden();
+    
+    resultado = resultado.stream()
+    	    .filter(o -> o.getEstadoOrden() == null || !"ELIMINADO".equalsIgnoreCase(o.getEstadoOrden()))
+    	    .toList();
+    
     model.addAttribute("listaorden", resultado);
     return "/orden/listarorden";
   }
@@ -191,11 +196,11 @@ public class OrdenController {
   @GetMapping("/eliminar")
   public String eliminar(@RequestParam("idOrden") int idOrden, RedirectAttributes ra) {
     try {
-      ordenServicio.eliminarOrden(idOrden);
+      ordenServicio.cambiarEstado(idOrden, "ELIMINADO");
       ra.addFlashAttribute("msg", "Orden eliminada");
     } catch (WebClientResponseException ex) {
       if (ex.getStatusCode().value() == 409) {
-        ra.addFlashAttribute("error", "No se puede eliminar la orden, tiene registros asociados, por ejemplo equipos");
+        ra.addFlashAttribute("error", "No se puede eliminar la orden, tiene registros asociados");
       } else {
         ra.addFlashAttribute("error", "No se pudo eliminar la orden, " + ex.getStatusCode());
       }
