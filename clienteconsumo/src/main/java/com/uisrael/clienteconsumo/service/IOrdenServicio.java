@@ -17,5 +17,6 @@ public interface IOrdenServicio {
   List<OrdenResponseDTO> listarOrdenDisponibles();
   
   void cambiarEstado(int idOrden, String estado);
+  
 
 }

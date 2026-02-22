@@ -51,20 +51,40 @@ public class DashboardServicioImpl implements IDashboardServicio {
 
     long ingresado = activas.stream().filter(o -> es(o, "INGRESADO")).count();
     long enProceso = activas.stream().filter(o -> es(o, "EN_PROCESO", "EN PROCESO")).count();
+
+    long reparacion = activas.stream().filter(o -> es(o, "REPARACION", "REPARACIÓN")).count();
+    long listoEntrega = activas.stream().filter(o -> es(o, "LISTO ENTREGA", "LISTO_ENTREGA")).count();
+
     long finalizado = activas.stream().filter(o -> es(o, "FINALIZADO")).count();
-    return new DashboardResumenDTO(ingresado, enProceso, 0, 0, finalizado);
+    long entregado = activas.stream().filter(o -> es(o, "ENTREGADO")).count();
+
+    DashboardResumenDTO dto = new DashboardResumenDTO();
+    dto.setPendientes(ingresado);
+    dto.setDiagnostico(enProceso);
+    dto.setReparacion(reparacion);
+    dto.setListoEntrega(listoEntrega);
+    dto.setFinalizados(finalizado);
+    dto.setEntregados(entregado);
+    return dto;
   }
 
   @Override
   public Map<String, Long> porEstado() {
     DashboardResumenDTO r = resumen();
     Map<String, Long> map = new LinkedHashMap<>();
+
     map.put("Ingresado", r.getPendientes());
     map.put("En proceso", r.getDiagnostico());
-    map.put("Finalizado", r.getEntregadas());
+
+    // opcionales, si no quieres que salgan en gráfico, borra estas 2 líneas
+    if (r.getReparacion() > 0) map.put("Reparación", r.getReparacion());
+    if (r.getListoEntrega() > 0) map.put("Listo entrega", r.getListoEntrega());
+
+    map.put("Finalizado", r.getFinalizados());
+    map.put("Entregado", r.getEntregados());
+
     return map;
   }
-
 
   @Override
   public List<String> labelsMeses(int meses) {

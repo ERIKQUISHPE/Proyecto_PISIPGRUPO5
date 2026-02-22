@@ -11,4 +11,8 @@ public class DashboardResumenDTO {
   private long reparacion;
   private long listoEntrega;
   private long entregadas;
+  private long finalizados;    
+  private long entregados;
+  public DashboardResumenDTO() {
+  }
 }

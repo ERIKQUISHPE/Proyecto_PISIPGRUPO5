@@ -21,100 +21,115 @@ import com.uisrael.clienteconsumo.service.IUsuarioServicio;
 @RequestMapping("/entregas")
 public class EntregaController {
 
-	@Autowired
-	private IEntregaServicio entregaServicio;
+  @Autowired
+  private IEntregaServicio entregaServicio;
 
-	@Autowired
-	private IOrdenServicio ordenServicio;
+  @Autowired
+  private IOrdenServicio ordenServicio;
 
-	@Autowired
-	private IUsuarioServicio usuarioServicio;
+  @Autowired
+  private IUsuarioServicio usuarioServicio;
 
-	@GetMapping
-	public String listar(Model model) {
-		List<EntregaResponseDTO> resultado = entregaServicio.listarEntrega();
-		model.addAttribute("listaentrega", resultado);
-		return "orden/listarentrega";
-	}
+  @GetMapping
+  public String listar(Model model) {
+    List<EntregaResponseDTO> resultado = entregaServicio.listarEntrega();
+    model.addAttribute("listaentrega", resultado);
+    return "orden/listarentrega";
+  }
 
-	@GetMapping("/nuevo")
-	public String crear(Model model) {
-		List<OrdenResponseDTO> ordenes = ordenServicio.listarOrdenDisponibles();
-		List<UsuarioResponseDTO> usuarios = usuarioServicio.listarUsuario();
+  @GetMapping("/nuevo")
+  public String crear(Model model) {
+    List<OrdenResponseDTO> ordenes = ordenServicio.listarOrdenDisponibles();
+    List<UsuarioResponseDTO> usuarios = usuarioServicio.listarUsuario();
 
-		EntregaRequestDTO entrega = new EntregaRequestDTO();
-		entrega.setFkOrden(new OrdenRequestDTO());
-		entrega.setEntregadoPor(new UsuarioRequestDTO());
+    EntregaRequestDTO entrega = new EntregaRequestDTO();
+    entrega.setFkOrden(new OrdenRequestDTO());
+    entrega.setEntregadoPor(new UsuarioRequestDTO());
 
-		model.addAttribute("entrega", entrega);
-		model.addAttribute("listaorden", ordenes);
-		model.addAttribute("listausuario", usuarios);
-		model.addAttribute("fecha", "Se genera al guardar la entrega");
-		return "orden/nuevaentrega";
-	}
+    model.addAttribute("entrega", entrega);
+    model.addAttribute("listaorden", ordenes);
+    model.addAttribute("listausuario", usuarios);
+    model.addAttribute("fecha", "Se genera al guardar la entrega");
+    return "orden/nuevaentrega";
+  }
 
-	@PostMapping("/guardar")
-	public String guardarEntrega(@ModelAttribute("entrega") EntregaRequestDTO dto, Model model) {
-		if (dto.getFkOrden().getIdOrden() == 0 || dto.getEntregadoPor().getIdUsuario() == 0|| dto.getRecibidoPor() == null|| dto.getRecibidoPor().trim().isEmpty()) 
+  @PostMapping("/guardar")
+  public String guardarEntrega(@ModelAttribute("entrega") EntregaRequestDTO dto, Model model) {
 
-		 {
-			model.addAttribute("error", "Debe seleccionar Orden, Entregado por y escribir Recibido por");
-			model.addAttribute("entrega", dto);
-			model.addAttribute("listaorden", ordenServicio.listarOrdenDisponibles());
-			model.addAttribute("listausuario", usuarioServicio.listarUsuario());
+    if (dto.getFkOrden().getIdOrden() == 0
+        || dto.getEntregadoPor().getIdUsuario() == 0
+        || dto.getRecibidoPor() == null
+        || dto.getRecibidoPor().trim().isEmpty()) {
 
-			return "orden/nuevaentrega";
-		}
-		if (dto.getIdEntrega() > 0) {
-			entregaServicio.actualizarEntrega(dto.getIdEntrega(), dto);
-		} else {
-			entregaServicio.crearEntrega(dto);
-		}
-		return "redirect:/entregas";
-	}
+      model.addAttribute("error", "Debe seleccionar Orden, Entregado por y escribir Recibido por");
+      model.addAttribute("entrega", dto);
+      model.addAttribute("listaorden", ordenServicio.listarOrdenDisponibles());
+      model.addAttribute("listausuario", usuarioServicio.listarUsuario());
+      model.addAttribute("fecha", "Se genera al guardar la entrega"); 
+      return "orden/nuevaentrega";
+    }
 
-	@GetMapping("/editar")
-	public String editar(@RequestParam int idEntrega, Model model) {
-		EntregaResponseDTO entregaResp = entregaServicio.buscarPorId(idEntrega);
+    if (dto.getIdEntrega() > 0) {
+      entregaServicio.actualizarEntrega(dto.getIdEntrega(), dto);
+    } else {
+      entregaServicio.crearEntrega(dto);
+    }
 
-		EntregaRequestDTO entrega = new EntregaRequestDTO();
-		entrega.setIdEntrega(idEntrega);
-		entrega.setNotas(entregaResp.getNotas());
+    int idOrden = dto.getFkOrden().getIdOrden();
+    ordenServicio.cambiarEstado(idOrden, "ENTREGADO"); 
 
-		if (entregaResp.getFkOrden() != null) {
-			OrdenRequestDTO orden = new OrdenRequestDTO();
-			orden.setIdOrden(entregaResp.getFkOrden().getIdOrden());
-			entrega.setFkOrden(orden);
-		} else {
-			entrega.setFkOrden(new OrdenRequestDTO());
-		}
+    return "redirect:/entregas";
+  }
 
-		if (entregaResp.getEntregadoPor() != null) {
-		    UsuarioRequestDTO admin = new UsuarioRequestDTO();
-		    admin.setIdUsuario(entregaResp.getEntregadoPor().getIdUsuario());
-		    entrega.setEntregadoPor(admin);
-		} else {
-		    entrega.setEntregadoPor(new UsuarioRequestDTO());
-		}
-		
-		entrega.setRecibidoPor(entregaResp.getRecibidoPor() != null ? entregaResp.getRecibidoPor() : "");
+  @GetMapping("/editar")
+  public String editar(@RequestParam int idEntrega, Model model) {
+    EntregaResponseDTO entregaResp = entregaServicio.buscarPorId(idEntrega);
 
-		model.addAttribute("entrega", entrega);
-		model.addAttribute("listaorden", ordenServicio.listarOrden());
-		model.addAttribute("listausuario", usuarioServicio.listarUsuario());
+    EntregaRequestDTO entrega = new EntregaRequestDTO();
+    entrega.setIdEntrega(idEntrega);
+    entrega.setNotas(entregaResp.getNotas());
 
-		return "orden/nuevaentrega";
-	}
+    if (entregaResp.getFkOrden() != null) {
+      OrdenRequestDTO orden = new OrdenRequestDTO();
+      orden.setIdOrden(entregaResp.getFkOrden().getIdOrden());
+      entrega.setFkOrden(orden);
+    } else {
+      entrega.setFkOrden(new OrdenRequestDTO());
+    }
 
-	@PostMapping("/actualizar/{id}")
-	public String actualizar(@PathVariable int id, @ModelAttribute("entrega") EntregaRequestDTO dto) {
-		entregaServicio.actualizarEntrega(id, dto);
-		return "redirect:/entregas";
-	}
+    if (entregaResp.getEntregadoPor() != null) {
+      UsuarioRequestDTO admin = new UsuarioRequestDTO();
+      admin.setIdUsuario(entregaResp.getEntregadoPor().getIdUsuario());
+      entrega.setEntregadoPor(admin);
+    } else {
+      entrega.setEntregadoPor(new UsuarioRequestDTO());
+    }
 
-	@GetMapping("/eliminar")
-	public String eliminar(@RequestParam int idEntrega) {
-		entregaServicio.eliminarEntrega(idEntrega);
-		return "redirect:/entregas";
-	}
+    entrega.setRecibidoPor(entregaResp.getRecibidoPor() != null ? entregaResp.getRecibidoPor() : "");
+
+    model.addAttribute("entrega", entrega);
+
+    model.addAttribute("listaorden", ordenServicio.listarOrdenDisponibles());
+
+    model.addAttribute("listausuario", usuarioServicio.listarUsuario());
+    model.addAttribute("fecha", "Se genera al guardar la entrega");
+    return "orden/nuevaentrega";
+  }
+
+  @PostMapping("/actualizar/{id}")
+  public String actualizar(@PathVariable int id, @ModelAttribute("entrega") EntregaRequestDTO dto) {
+    entregaServicio.actualizarEntrega(id, dto);
+
+    if (dto.getFkOrden() != null && dto.getFkOrden().getIdOrden() > 0) {
+      ordenServicio.cambiarEstado(dto.getFkOrden().getIdOrden(), "ENTREGADO");
+    }
+
+    return "redirect:/entregas";
+  }
+
+  @GetMapping("/eliminar")
+  public String eliminar(@RequestParam int idEntrega) {
+    entregaServicio.eliminarEntrega(idEntrega);
+    return "redirect:/entregas";
+  }
 }

@@ -21,4 +21,5 @@ public class OrdenResponseDTO {
 
   private ClienteResponseDTO fkCliente;   
   private UsuarioResponseDTO fkUsuario;   
+  private BigDecimal montoPago;
 }

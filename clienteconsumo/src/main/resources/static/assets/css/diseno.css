@@ -1,129 +1,101 @@
-/*DISEÑO PERSONALIZADO*/
+/* =========================================================
+   diseno.css COMPLETO, limpio, sin repetidos, sin romper nada
+   mantiene colores originales, moderniza UI
+   tabla header como menú pero un poquito más claro, sin negrita
+   logo con marco pegado, rectangular, e iconos horizontales arriba de “net”
+   ========================================================= */
 
-/* TABLAS */
+/* ====== VARIABLES ====== */
+:root{
+  --ui-radius: 16px;
+  --ui-radius-sm: 12px;
+  --ui-border: rgba(0,0,0,.08);
+  --ui-shadow: 0 12px 28px rgba(0,0,0,.10);
+  --ui-shadow-sm: 0 10px 18px rgba(0,0,0,.08);
+  --ui-text: #111827;
+  --ui-muted: #6b7280;
 
-.table-dark-mdc .mdc-data-table__header-row,
-.table-dark-mdc .mdc-data-table__header-cell{
-  background-color: #A59D95 !important;
-  color: #1c243c !important;
-}
-.table-dark-mdc{
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  overflow: hidden; /* para que el header no se salga de las esquinas */
-  background: #fff;
-}
-.table-dark-mdc .mdc-data-table__cell,
-.table-dark-mdc .mdc-data-table__header-cell{
-  border-right: 1px solid #e6e6e6;
-}
-.table-dark-mdc .mdc-data-table__cell:last-child,
-.table-dark-mdc .mdc-data-table__header-cell:last-child{
-  border-right: none;
-}
-.table-dark-mdc .mdc-data-table__row{
-  border-bottom: 1px solid #e6e6e6;
-}
-.table-dark-mdc .mdc-data-table__row:last-child{
-  border-bottom: none;
-}
-.table-dark-mdc .mdc-data-table__header-row{
-  border-bottom: 1px solid #cfcfcf;
-}
-.table-dark-mdc .mdc-data-table__row:hover{
-  background: #fafafa;
-}
-.table-dark-mdc{
-  margin-top: 38px !important;
+  /* colores originales del proyecto */
+  --centro-topbar: #f5a623;
+  --centro-sidebar: #5a464c;
+
+  /* header tablas, un poquito más claro que el menú */
+  --centro-table-head: #625158;
+
+  --centro-text-dark: #1c243c;
 }
 
-/* header */
-.table-dark-mdc thead th{
-  background-color: #A59D95 !important;
-  color: #1c243c !important;
-  border-bottom: 1px solid #cfcfcf !important;
+/* ====== BASE ====== */
+html, body{
+  background:#ffffff !important;
+}
+
+body{
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* fondo blanco general */
+.body-wrapper,
+.main-wrapper,
+.page-wrapper,
+.content-wrapper{
+  background:#ffffff !important;
+}
+
+/* Layout general */
+.content-wrapper{
+  min-height: calc(100vh - 70px);
+  padding: 26px !important;
+  box-sizing: border-box;
+}
+
+/* ====== CARDS GENERAL ====== */
+.mdc-card{
+  border-radius: var(--ui-radius) !important;
+  box-shadow: var(--ui-shadow) !important;
+  border: 1px solid var(--ui-border) !important;
+}
+
+/* ====== TOP BAR ====== */
+.mdc-top-app-bar{
+  background-color: var(--centro-topbar) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,.14) !important;
+}
+
+/* título top bar */
+.mdc-top-app-bar__title{
+  color: var(--centro-text-dark) !important;
   font-weight: 700;
 }
 
-/* borde y cuerpo */
-.table-dark-mdc.table{
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-}
-
-/* celdas */
-.table-dark-mdc td,
-.table-dark-mdc th{
-  border-right: 1px solid #e6e6e6 !important;
-  vertical-align: middle;
-}
-
-.table-dark-mdc td:last-child,
-.table-dark-mdc th:last-child{
-  border-right: none !important;
-}
-
-/* filas */
-.table-dark-mdc tbody tr{
-  border-bottom: 1px solid #e6e6e6;
-}
-
-.table-dark-mdc tbody tr:last-child{
-  border-bottom: none;
-}
-
-.table-dark-mdc tbody tr:hover{
-  background: #fafafa;
-}
-
-
-/* TOP BAR */
-
-.mdc-top-app-bar{
-  background-color: #f5a623 !important;
-  color: #ffffff !important;
-}
-
-/* titulo */
-.mdc-top-app-bar__title{
-  color: #1c243c !important;
-  font-weight: 600;
-}
-
-
-/* ICONOS TOP BAR */
-
+/* iconos top bar */
 .mdc-top-app-bar .material-icons,
-.mdc-top-app-bar i{
+.mdc-top-app-bar i,
+.mdc-top-app-bar .mdi{
   color: #ffffff !important;
 }
 
-
-/* BUSCADOR TOP BAR */
-
+/* buscador top bar */
 .mdc-top-app-bar .mdc-text-field{
   background-color: rgba(255,255,255,0.25);
-  border-radius: 20px;
+  border-radius: 999px !important;
+  overflow: hidden;
+  box-shadow: 0 10px 18px rgba(0,0,0,.08);
 }
 
-/* texto */
 .mdc-top-app-bar .mdc-text-field__input,
 .mdc-top-app-bar .mdc-floating-label{
   color: #000 !important;
 }
 
-/* placeholder */
 .mdc-top-app-bar input::placeholder{
   color: rgba(255,255,255,0.85);
 }
 
-
-/* SIDEBAR */
-
+/* ====== SIDEBAR ====== */
 .mdc-drawer{
-  background: #5a464c !important;
+  background: var(--centro-sidebar) !important;
 }
 
 .mdc-drawer .mdc-drawer__content{
@@ -131,374 +103,503 @@
   padding-top: 8px;
 }
 
-
-/* ITEMS SIDEBAR */
-
+/* items sidebar */
 .mdc-drawer .mdc-drawer-item{
   border-top: 1px solid rgba(255,255,255,0.06);
 }
-
 .mdc-drawer .mdc-drawer-item:last-child{
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-/* enlaces */
+/* links sidebar */
 .mdc-drawer .mdc-drawer-link{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 44px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  height:46px;
   padding: 0 16px;
-  color: #cfd6dd !important;
-  font-weight: 500;
-  text-decoration: none;
+
+  color:#cfd6dd !important;
+  font-weight:600;
+  text-decoration:none;
+
+  border-radius:14px;
+  margin: 6px 10px;
+  transition: .15s ease;
 }
-
-/* iconos */
-.mdc-drawer .mdc-drawer-link .material-icons,
-.mdc-drawer .mdc-drawer-link i{
-  color: #9aa4ad !important;
-  font-size: 20px;
-}
-
-
-/* HOVER Y ACTIVO */
 
 .mdc-drawer .mdc-drawer-link:hover{
   background: rgba(255,255,255,0.06) !important;
-  color: #ffffff !important;
+  color:#ffffff !important;
+  transform: translateX(2px);
+  filter: brightness(1.03);
+}
+
+/* iconos sidebar */
+.mdc-drawer .mdc-drawer-link .material-icons,
+.mdc-drawer .mdc-drawer-link i,
+.mdc-drawer .mdc-drawer-link .material-symbols-outlined{
+  color:#9aa4ad !important;
+  font-size:20px;
 }
 
 .mdc-drawer .mdc-drawer-link:hover .material-icons,
-.mdc-drawer .mdc-drawer-link:hover i{
-  color: #ffffff !important;
+.mdc-drawer .mdc-drawer-link:hover i,
+.mdc-drawer .mdc-drawer-link:hover .material-symbols-outlined{
+  color:#ffffff !important;
 }
 
-/* activo */
+/* activo sidebar */
 .mdc-drawer .mdc-drawer-item--active .mdc-drawer-link{
-  background: rgba(76, 175, 80, 0.12) !important;
-  color: #4caf50 !important;
-  font-weight: 600;
+  background: rgba(255,255,255,0.10) !important;
+  color:#ffffff !important;
+  font-weight:700;
+  border: 1px solid rgba(255,255,255,.10);
 }
-
 .mdc-drawer .mdc-drawer-item--active .mdc-drawer-link .material-icons,
-.mdc-drawer .mdc-drawer-item--active .mdc-drawer-link i{
-  color: #4caf50 !important;
+.mdc-drawer .mdc-drawer-item--active .mdc-drawer-link i,
+.mdc-drawer .mdc-drawer-item--active .mdc-drawer-link .material-symbols-outlined{
+  color:#ffffff !important;
 }
 
-
-/* SUBMENÚ */
-
+/* submenú */
 .mdc-drawer .mdc-drawer-submenu{
   padding-left: 5px !important;
   border-left: 2px solid rgba(255,255,255,0.08);
   margin-left: 14px;
 }
-
-/* enlaces submenu */
 .mdc-drawer .mdc-drawer-submenu .mdc-drawer-link{
-  padding-left: 8px !important; 
+  padding-left: 8px !important;
   height: 40px;
   color: #b8c0c8 !important;
 }
 
-
-/* HEADER USUARIOS */
-
-.header-usuarios{
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 28px;
+/* ====== LOGO, marco pegado, iconos horizontales ======
+   IMPORTANTE, para que salgan los iconos, en tu plantilla pon dentro del <a>:
+   <span class="logo-icons"><i class="fa-solid fa-laptop"></i><i class="fa-solid fa-screwdriver-wrench"></i></span>
+*/
+.mdc-drawer__header{
+  padding: 10px 12px !important;
+  background: transparent !important;
 }
 
+/* cuadro del logo */
+.brand-logo--clean{
+  width: 100%;
+  max-width: 275px;
+  margin: 0 auto;
 
-/* BOTÓN NARANJA */
+  position: relative;
+  overflow: hidden;
 
-.btn-centronet{
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
   border-radius: 10px;
-  background: #f5a623;
-  color: #000;
-  font-weight: 700;
-  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+
+  padding: 10px 12px 8px;                 /* ✅ sin aire arriba */
+  border-bottom: 2px solid rgba(245,166,35,.70); /* ✅ subrayado naranja */
+
+  box-shadow: 0 10px 22px rgba(0,0,0,.20);
+}
+
+/* brillo suave */
+.brand-logo--clean::after{
+  content:"";
+  position:absolute;
+  inset:-70% -40%;
+  background: radial-gradient(circle at 25% 25%, rgba(255,255,255,.12), transparent 55%);
+  pointer-events:none;
+}
+
+/* logo centrado */
+.brand-logo--clean .logo-img{
+  max-height: 54px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  margin:0;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,.20));
+}
+
+/* iconos arriba del “net”, en horizontal */
+.brand-logo--clean .logo-icons{
+  position:absolute;
+  right: 18px;     /* mueve izquierda/derecha */
+  top: 10px;       /* mueve arriba/abajo */
+
+  display:flex;
+  gap: 8px;
+  align-items:center;
+
+  opacity:.38;
+  pointer-events:none;
+}
+
+.brand-logo--clean .logo-icons i{
+  font-size: 14px;
+  color: rgba(255,255,255,.95);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
+
+/* ====== TABLAS ====== */
+.table-responsive{
+  border-radius: var(--ui-radius) !important;
+  overflow:hidden;
+  border: 1px solid var(--ui-border) !important;
+  box-shadow: var(--ui-shadow) !important;
+  background:#fff;
+}
+
+/* tabla base */
+.table-dark-mdc{
+  border: 1px solid #d9d9d9;
+  border-radius: var(--ui-radius-sm);
+  overflow: hidden;
+  background:#fff;
+  margin-top: 38px !important;
+}
+
+/* header bootstrap */
+.table-dark-mdc thead th{
+  background: var(--centro-table-head) !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;            /* ✅ sin negrita */
+  letter-spacing: .10px;
+  border-bottom: 1px solid rgba(255,255,255,.14) !important;
+}
+
+/* header MDC DataTable si alguna vista lo usa */
+.table-dark-mdc .mdc-data-table__header-row,
+.table-dark-mdc .mdc-data-table__header-cell{
+  background: var(--centro-table-head) !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;            /* ✅ sin negrita */
+  letter-spacing: .10px;
+  border-bottom: 1px solid rgba(255,255,255,.14) !important;
+}
+
+/* líneas del header */
+.table-dark-mdc thead th,
+.table-dark-mdc .mdc-data-table__header-cell{
+  border-right: 1px solid rgba(255,255,255,.10) !important;
+}
+.table-dark-mdc thead th:last-child,
+.table-dark-mdc .mdc-data-table__header-cell:last-child{
+  border-right: none !important;
+}
+
+/* cuerpo tabla */
+.table-dark-mdc td,
+.table-dark-mdc th{
+  border-right: 1px solid #e6e6e6 !important;
+  vertical-align: middle;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+.table-dark-mdc td:last-child,
+.table-dark-mdc th:last-child{
+  border-right: none !important;
+}
+.table-dark-mdc tbody tr{
+  border-bottom: 1px solid #e6e6e6;
+}
+.table-dark-mdc tbody tr:last-child{
+  border-bottom:none;
+}
+.table-dark-mdc tbody tr:hover{
+  filter: brightness(1.03);
+}
+
+/* ====== BOTONES ====== */
+.btn-centronet{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: var(--centro-topbar);
+  color:#000;
+
+  font-weight:800;
+  text-decoration:none;
   width: fit-content;
-  box-shadow: 0 6px 14px rgba(0,0,0,.15);
-}
 
-/* icono botón */
+  box-shadow: 0 14px 28px rgba(0,0,0,.14);
+  transition:.15s ease;
+}
 .btn-centronet i{
-  font-size: 16px;
+  font-size:16px;
 }
-
-/* hover */
 .btn-centronet:hover{
   filter: brightness(.95);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-/* LOGO SIDEBAR */
-.mdc-drawer__header .logo-img{
-  max-width: 200px;   /* controla el ancho */
-  max-height: 60px;   /* controla la altura */
-  width: auto;
-  height: auto;
-  display: block;
-  margin: 0 auto;     /* centra el logo */
-  object-fit: contain;
+.btn-outline{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  height:44px;
+  padding: 0 18px;
+
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+
+  background: transparent;
+  color:#6b7280;
+
+  font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+}
+.btn-outline:hover{
+  background:#f3f4f6;
+  color:#111827;
 }
 
-
-
-/* SIMBOLOS */
-
+/* ====== ICONOS SIMBOLOS ====== */
 .material-symbols-outlined{
-  font-size: 20px;
-  line-height: 1;
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
+  font-size:20px;
+  line-height:1;
+  vertical-align:middle;
+  display:inline-flex;
+  align-items:center;
 }
 
-/*TITULO*/
+/* ====== TITULOS ====== */
 .page-header{
   margin-bottom: 28px;
   padding-bottom: 16px;
   border-bottom: 2px solid #e5e7eb;
 }
-
 .page-title{
-  margin: 0;
+  margin:0;
   font-size: 28px;
-  font-weight: 700;
-  color: #111827;
+  font-weight:800;
+  color:#111827;
 }
 
-/*FORM*/
+/* ====== FORMULARIOS ====== */
 .form-centronet{
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  border-radius: 0;
-  box-sizing: border-box;
+  width:100%;
+  margin:0;
+  padding:0;
+  background:transparent;
+  box-shadow:none;
+  border-radius:0;
+  box-sizing:border-box;
 }
-
 .ui-form{
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  width:100%;
+  margin:0;
+  padding:0;
 }
 
-/*CAMPOS*/
 .form-group{
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 16px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:16px;
 }
-
 .form-group label{
-  width: 220px;
-  min-width: 220px;
-  margin: 0;
-  font-weight: 600;
+  width:220px;
+  min-width:220px;
+  margin:0;
+  font-weight:700;
 }
-
-.form-group input{
-  flex: 1;
-  height: 44px;
+.form-group input,
+.form-group select{
+  flex:1;
+  height:46px;
   padding: 0 14px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
+  border-radius:12px;
+  border: 1px solid rgba(0,0,0,.14);
+  box-shadow: 0 8px 16px rgba(0,0,0,.06);
+}
+.form-group input:focus,
+.form-group select:focus{
+  outline:none;
+  border-color:#f59e0b;
+  box-shadow: 0 0 0 4px rgba(245,166,35,.22);
 }
 
-.form-group input:focus{
-  outline: none;
-  border-color: #f59e0b;
-  box-shadow: 0 0 0 3px rgba(245,158,11,.25);
-}
-
-/*BOTONES*/
 .form-actions{
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-top: 26px;
+  display:flex;
+  justify-content:center;
+  gap:50px;
+  margin-top:40px;
 }
 
-/*RESPONSIVE*/
+/* responsive */
 @media (max-width: 768px){
   .form-group{
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction:column;
+    align-items:flex-start;
   }
-
   .form-group label{
-    width: 100%;
-    min-width: 0;
+    width:100%;
+    min-width:0;
   }
-}
-
-/*FONDO*/
-.content-wrapper,
-.main-panel,
-.page-body-wrapper,
-.main-content{
-  background: #ffffff !important;
-}
-
-.content-wrapper{
-  min-height: calc(100vh - 70px);
-  padding: 24px;
-  box-sizing: border-box;
-}
-.btn-outline{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  height: 44px;
-  padding: 0 18px;
-
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-
-  background: transparent;
-  color: #6b7280;
-
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn-outline:hover{
-  background: #f3f4f6;
-  color: #111827;
-}
-
-/*QUITAR FONDO GRIS INFERIOR*/
-html, body{
-  background: #ffffff !important;
-}
-
-.body-wrapper,
-.main-wrapper,
-.page-wrapper,
-.content-wrapper{
-  background: #ffffff !important;
 }
 
 /* ====== MATERIALES OPCIONALES REPARACION ====== */
-
-.material-row {
-    display: inline-flex;
-    align-items: center;
-    gap: 1px;
-    margin-top:6px;
+.material-row{
+  display:inline-flex;
+  align-items:center;
+  gap:1px;
+  margin-top:6px;
+}
+.material-check{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.material-check input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  cursor:pointer;
+  accent-color:#f4a100;
+}
+.material-select{
+  width:170px;
+  min-width:unset;
+  padding: 6px 10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:14px;
+  transition: all .2s ease;
+  box-shadow: 0 8px 16px rgba(0,0,0,.06);
+}
+.material-select:focus{
+  border-color:#f4a100;
+  box-shadow: 0 0 0 4px rgba(244,161,0,.18);
+  outline:none;
+}
+.material-select:disabled{
+  background-color:#f2f2f2;
+  color:#888;
+  cursor:not-allowed;
 }
 
-.material-check {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-   
-}
-
-.material-check input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    accent-color: #f4a100;
-}
-
-.material-select {
-    width: 170px;            
-    min-width: unset;        
-    padding: 6px 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    transition: all .2s ease;
-}
-
-.material-select:focus {
-    border-color: #f4a100;
-    box-shadow: 0 0 0 3px rgba(244,161,0,.2);
-    outline: none;
-}
-
-.material-select:disabled {
-    background-color: #f2f2f2;
-    color: #888;
-    cursor: not-allowed;
-}
-  .form-actions{
-    margin-top:40px;       
-  }
-  
-  /* ===== Select elegante para MDC ===== */
+/* ===== Select elegante para MDC ===== */
 .mdc-select{
-  width: 420px;
-  max-width: 100%;
-  border-radius: 14px;
-  overflow: hidden;
+  width:420px;
+  max-width:100%;
+  border-radius:14px;
+  overflow:hidden;
 }
-
 .mdc-select .mdc-select__anchor{
-  height: 48px;
-  border-radius: 14px !important;
-  background: #ffffff;
-  border: 1px solid #e6e6e6 !important;
+  height:48px;
+  border-radius:14px !important;
+  background:#ffffff;
+  border:1px solid #e6e6e6 !important;
   box-shadow: 0 6px 16px rgba(0,0,0,.06);
   transition: all .15s ease;
 }
-
 .mdc-select:hover .mdc-select__anchor{
-  border-color: #d0d0d0 !important;
+  border-color:#d0d0d0 !important;
   box-shadow: 0 8px 20px rgba(0,0,0,.08);
 }
-
 .mdc-select.mdc-select--focused .mdc-select__anchor{
   border-color: var(--mdc-theme-primary) !important;
   box-shadow: 0 0 0 4px rgba(251,192,45,.18);
 }
-
 .mdc-select .mdc-select__selected-text{
-  padding-left: 14px;
-  font-weight: 600;
-  color: #1f1f1f;
+  padding-left:14px;
+  font-weight:700;
+  color:#1f1f1f;
 }
-
 .mdc-select__dropdown-icon{
   filter: grayscale(1);
-  opacity: .85;
+  opacity:.85;
 }
-
 .mdc-select .mdc-select__menu{
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius:14px;
+  overflow:hidden;
   box-shadow: 0 16px 40px rgba(0,0,0,.18);
 }
-
 .mdc-select .mdc-list-item{
   padding: 12px 14px;
-  font-weight: 600;
+  font-weight:700;
 }
-
 .mdc-select .mdc-list-item:hover{
   background: rgba(251,192,45,.12);
 }
-
 .mdc-select .mdc-list-item--selected{
   background: rgba(251,192,45,.18);
 }
-
 .mdc-select .mdc-line-ripple{
-  display: none;
+  display:none;
 }
-  
+
+/* ====== DASHBOARD ICON CENTRADO, no se sale ====== */
+.dash-card .icon{
+  width:56px;
+  height:56px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  flex: 0 0 56px;
+}
+.dash-card .icon .material-icons,
+.dash-card .icon .material-symbols-outlined,
+.dash-card .icon i{
+  font-size:24px !important;
+  line-height:1 !important;
+  width:24px;
+  height:24px;
+  display:block;
+}
+.dash-card .icon img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+  display:block;
+}
+
+
+/* ===== LOGO LIMPIO FINAL ===== */
+
+.brand-logo--clean{
+  position: relative;
+  padding: 10px 14px;
+  border: none !important;
+  box-shadow: none !important;
+
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    rgba(255,255,255,.16) 0%,
+    transparent 70%
+  ) !important;
+}
+
+.brand-logo--clean::before{
+  display: none !important;
+}
+
+.brand-logo--clean::after{
+  display: none !important;
+}
+
+.brand-logo--clean .logo-icons{
+  display: none !important;
+}
+
+.brand-logo--clean .logo-img{
+  max-height: 54px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.25));
+}

@@ -1,6 +1,7 @@
 package com.uisrael.proyectoapi.aplicacion.casosuso.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IPagoCasoUso;
 import com.uisrael.proyectoapi.dominio.entidades.Pago;
@@ -48,6 +49,11 @@ public class PagoCasoUsoImpl implements IPagoCasoUso {
 	    @Override
 	    public void eliminar(int idPago) {
 	        repositorio.eliminar(idPago);
+	    }
+	    
+	    @Override
+	    public Optional<Pago> buscarPorOrden(int idOrden) {
+	      return repositorio.buscarPorOrden(idOrden);
 	    }
 	}
 

@@ -9,104 +9,152 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.uisrael.clienteconsumo.model.dto.request.OrdenRequestDTO;
 import com.uisrael.clienteconsumo.model.dto.response.OrdenResponseDTO;
+import com.uisrael.clienteconsumo.model.dto.response.PagoResponseDTO;
 import com.uisrael.clienteconsumo.service.IOrdenServicio;
 
 @Service
 public class OrdenServicioImpl implements IOrdenServicio {
 
-	private final WebClient webclient;
+  private final WebClient webclient;
 
-	public OrdenServicioImpl(WebClient webclient) {
-		this.webclient = webclient;
-	}
+  public OrdenServicioImpl(WebClient webclient) {
+    this.webclient = webclient;
+  }
 
-	@Override
-	public List<OrdenResponseDTO> listarOrden() {
+  @Override
+  public List<OrdenResponseDTO> listarOrden() {
 
-		List<OrdenResponseDTO> lista = webclient.get().uri("/orden").retrieve().bodyToFlux(OrdenResponseDTO.class)
-				.collectList().block();
+    List<OrdenResponseDTO> lista = webclient.get()
+        .uri("/orden")
+        .retrieve()
+        .bodyToFlux(OrdenResponseDTO.class)
+        .collectList()
+        .block();
 
-		if (lista != null) {
+    if (lista != null) {
 
-			for (OrdenResponseDTO orden : lista) {
+      for (OrdenResponseDTO orden : lista) {
 
-				Boolean tieneEquipo = webclient.get().uri("/equipo/por-orden/" + orden.getIdOrden()).retrieve()
-						.bodyToMono(Boolean.class).block();
+        try {
+          Boolean tieneEquipo = webclient.get()
+              .uri("/equipo/por-orden/{idOrden}", orden.getIdOrden())
+              .retrieve()
+              .bodyToMono(Boolean.class)
+              .block();
 
-				orden.setTieneEquipo(tieneEquipo != null && tieneEquipo);
-			}
-		}
+          orden.setTieneEquipo(tieneEquipo != null && tieneEquipo);
 
-		return lista;
-	}
+        } catch (Exception e) {
+          orden.setTieneEquipo(false);
+        }
 
-	@Override
-	public OrdenResponseDTO buscarPorId(int idOrden) {
-		return webclient.get().uri("/orden/{id}", idOrden).retrieve().bodyToMono(OrdenResponseDTO.class).block();
-	}
+        try {
+          PagoResponseDTO pago = webclient.get()
+              .uri("/pago/por-orden/{idOrden}", orden.getIdOrden())
+              .retrieve()
+              .bodyToMono(PagoResponseDTO.class)
+              .block();
 
-	@Override
-	public OrdenResponseDTO crearOrden(OrdenRequestDTO dto) {
-		Map<String, Object> body = armarBody(dto);
+          if (pago != null) {
+            orden.setMontoPago(pago.getMonto());
+          } else {
+            orden.setMontoPago(null);
+          }
 
-		return webclient.post().uri("/orden").bodyValue(body).retrieve().bodyToMono(OrdenResponseDTO.class).block();
-	}
+        } catch (Exception e) {
+          orden.setMontoPago(null);
+        }
+      }
+    }
 
-	@Override
-	public OrdenResponseDTO actualizarOrden(int idOrden, OrdenRequestDTO dto) {
-		Map<String, Object> body = armarBody(dto);
+    return lista;
+  }
 
-		return webclient.put().uri("/orden/{id}", idOrden).bodyValue(body).retrieve().bodyToMono(OrdenResponseDTO.class)
-				.block();
-	}
+  @Override
+  public OrdenResponseDTO buscarPorId(int idOrden) {
+    return webclient.get()
+        .uri("/orden/{id}", idOrden)
+        .retrieve()
+        .bodyToMono(OrdenResponseDTO.class)
+        .block();
+  }
 
-	@Override
-	public void eliminarOrden(int idOrden) {
-		webclient.delete().uri("/orden/{id}", idOrden).retrieve().toBodilessEntity().block();
-	}
+  @Override
+  public OrdenResponseDTO crearOrden(OrdenRequestDTO dto) {
+    Map<String, Object> body = armarBody(dto);
 
-	private Map<String, Object> armarBody(OrdenRequestDTO dto) {
-		Map<String, Object> body = new HashMap<>();
+    return webclient.post()
+        .uri("/orden")
+        .bodyValue(body)
+        .retrieve()
+        .bodyToMono(OrdenResponseDTO.class)
+        .block();
+  }
 
-		body.put("codigoOrden", dto.getCodigoOrden());
-		body.put("detalleProblema", dto.getDetalleProblema());
-		body.put("observaciones", dto.getObservaciones());
-		body.put("estadoOrden", dto.getEstadoOrden());
-		body.put("totalCobro", dto.getTotalCobro());
-		body.put("pagado", dto.isPagado());
+  @Override
+  public OrdenResponseDTO actualizarOrden(int idOrden, OrdenRequestDTO dto) {
+    Map<String, Object> body = armarBody(dto);
 
-		Integer idCliente = null;
-		Integer idUsuario = null;
+    return webclient.put()
+        .uri("/orden/{id}", idOrden)
+        .bodyValue(body)
+        .retrieve()
+        .bodyToMono(OrdenResponseDTO.class)
+        .block();
+  }
 
-		if (dto.getFkCliente() != null)
-			idCliente = dto.getFkCliente().getIdCliente();
-		if (dto.getFkUsuario() != null)
-			idUsuario = dto.getFkUsuario().getIdUsuario();
+  @Override
+  public void eliminarOrden(int idOrden) {
+    webclient.delete()
+        .uri("/orden/{id}", idOrden)
+        .retrieve()
+        .toBodilessEntity()
+        .block();
+  }
 
-		body.put("idCliente", idCliente);
-		body.put("idUsuario", idUsuario);
+  private Map<String, Object> armarBody(OrdenRequestDTO dto) {
+    Map<String, Object> body = new HashMap<>();
 
-		return body;
-	}
+    body.put("codigoOrden", dto.getCodigoOrden());
+    body.put("detalleProblema", dto.getDetalleProblema());
+    body.put("observaciones", dto.getObservaciones());
+    body.put("estadoOrden", dto.getEstadoOrden());
+    body.put("totalCobro", dto.getTotalCobro());
+    body.put("pagado", dto.isPagado());
 
-	@Override
-	public void cambiarEstadoOrden(int idOrden, String estado) {
-		webclient.put().uri("/orden/{id}/estado/{estado}", idOrden, estado).retrieve().toBodilessEntity().block();
-	}
+    Integer idCliente = null;
+    Integer idUsuario = null;
 
-	@Override
-	public List<OrdenResponseDTO> listarOrdenDisponibles() {
-		return webclient.get().uri("/orden/disponibles").retrieve().bodyToFlux(OrdenResponseDTO.class).collectList()
-				.block();
-	}
-	
-	@Override
-	public void cambiarEstado(int idOrden, String estado) {
-	  webclient.put()
-	    .uri("/orden/{id}/estado/{estado}", idOrden, estado)
-	    .retrieve()
-	    .toBodilessEntity()
-	    .block();
-	}
+    if (dto.getFkCliente() != null) idCliente = dto.getFkCliente().getIdCliente();
+    if (dto.getFkUsuario() != null) idUsuario = dto.getFkUsuario().getIdUsuario();
 
+    body.put("idCliente", idCliente);
+    body.put("idUsuario", idUsuario);
+
+    return body;
+  }
+
+  @Override
+  public void cambiarEstado(int idOrden, String estado) {
+    webclient.put()
+        .uri("/orden/{id}/estado/{estado}", idOrden, estado)
+        .retrieve()
+        .toBodilessEntity()
+        .block();
+  }
+
+  @Override
+  public void cambiarEstadoOrden(int idOrden, String estado) {
+    cambiarEstado(idOrden, estado);
+  }
+
+  @Override
+  public List<OrdenResponseDTO> listarOrdenDisponibles() {
+    return webclient.get()
+        .uri("/orden/disponibles")
+        .retrieve()
+        .bodyToFlux(OrdenResponseDTO.class)
+        .collectList()
+        .block();
+  }
 }

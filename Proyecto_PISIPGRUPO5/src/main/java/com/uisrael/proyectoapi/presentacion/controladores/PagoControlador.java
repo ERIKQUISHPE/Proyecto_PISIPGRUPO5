@@ -3,6 +3,7 @@ package com.uisrael.proyectoapi.presentacion.controladores;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IPagoCasoUso;
@@ -90,4 +91,13 @@ public class PagoControlador {
     public void eliminar(@PathVariable int id) {
         pagoCasoUso.eliminar(id);
     }
+    
+    @GetMapping("/por-orden/{idOrden}")
+    public ResponseEntity<PagoResponseDTO> buscarPorOrden(@PathVariable int idOrden) {
+
+      return pagoCasoUso.buscarPorOrden(idOrden)
+          .map(p -> ResponseEntity.ok(mapper.toResponseDto(p)))
+          .orElseGet(() -> ResponseEntity.noContent().build()); 
+    }
+    
 }

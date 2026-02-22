@@ -16,5 +16,6 @@ public interface IPagoRepositorio {
 	void eliminar(int idPago);
 	
 	boolean existePagoParaOrden(int idOrden);
+	Optional<Pago> buscarPorOrden(int idOrden);
 
 }

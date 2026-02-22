@@ -45,5 +45,11 @@ public class PagoRepositorioImpl implements IPagoRepositorio{
 	public boolean existePagoParaOrden(int idOrden) {
 	    return jpaRepositorio.existsByFkOrden_IdOrden(idOrden);
 	}
+	
+	@Override
+	public Optional<Pago> buscarPorOrden(int idOrden) {
+	  return jpaRepositorio.findFirstByFkOrden_IdOrden(idOrden)
+	      .map(entityMapper::toDomain);
+	}
 
 }
